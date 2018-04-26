@@ -21,12 +21,12 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-    manager.requestSerializer.timeoutInterval = 10;
+    manager.requestSerializer.timeoutInterval = 5;
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager GET:url parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
         
-        NSLog(@"Why no excute?");
+        NSLog(@"Why not excute?");
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;

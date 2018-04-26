@@ -7,6 +7,7 @@
 //
 
 #import "SettingVC.h"
+#import "NewCommunityVC.h"
 
 @interface SettingVC ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -18,12 +19,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = BACK_COLOR;
     [self tableView];
     
 }
 
 #pragma mark UITableViewDelegate
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return CGFLOAT_MIN;
+    }else {
+        return 10;
+    }
+}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;
 }
@@ -62,6 +71,14 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        [self.navigationController pushViewController:[NewCommunityVC new] animated:YES];
+    }else if (indexPath.section == 0 && indexPath.row == 1) {
+        
+    }else if (indexPath.section == 0 && indexPath.row == 2) {
+        //跳转到App Store评价
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1253355672?mt=8"]];
+    }
     if (indexPath.section == 1 && indexPath.row == 0) {
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         [userDefaults setBool:NO forKey:@"status"];
@@ -80,12 +97,12 @@
     _tableView.dataSource = self;
     _tableView.backgroundColor = [UIColor clearColor];
     //去掉cell之间的横线
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    _tableView.separatorColor = [UIColor grayColor];
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    _tableView.separatorColor = [UIColor lightGrayColor];
     
 //    CGRect frame = CGRectMake(0, 0, 0,CGFLOAT_MIN);
-    CGRect frame = CGRectMake(0, 0, 0,10);
-    _tableView.tableHeaderView = [[UIView alloc]initWithFrame:frame];
+//    CGRect frame = CGRectMake(0, 0, 0,10);
+//    _tableView.tableHeaderView = [[UIView alloc]initWithFrame:frame];
     
     return _tableView;
 }

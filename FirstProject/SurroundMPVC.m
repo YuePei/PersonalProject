@@ -21,6 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    self.navigationItem.title = @"周边";
     //声明SWRevealViewController
     SWRevealViewController *revealVC = self.revealViewController;
     //让手势左右滑动即可调出SWRevealViewController

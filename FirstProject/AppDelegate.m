@@ -24,7 +24,7 @@
     MainPageVC *mpVC = [[MainPageVC alloc] init];
     mpVC.view.backgroundColor = [UIColor grayColor];
     CustomNavigationController *nav1 = [[CustomNavigationController alloc]initWithRootViewController:mpVC];
-    [nav1.navigationBar setBackgroundImage:[UIImage imageNamed:@"导航栏"] forBarMetrics:UIBarMetricsDefault];
+//    [nav1.navigationBar setBackgroundImage:[UIImage imageNamed:@"导航栏"] forBarMetrics:UIBarMetricsDefault];
     [nav1 setTabBarItem:[[UITabBarItem alloc]initWithTitle:@"首页" image:[UIImage imageNamed:@"帽子(g)"] selectedImage:[UIImage imageNamed:@"帽子"]]];
     [tb addChildViewController:nav1];
     
@@ -32,13 +32,13 @@
     CommunityVC *communityVC = [[CommunityVC alloc] init];
     CustomNavigationController *nav2 = [[CustomNavigationController alloc]initWithRootViewController:communityVC];
     [nav2 setTabBarItem:[[UITabBarItem alloc]initWithTitle:@"足迹" image:[UIImage imageNamed:@"拖鞋(g)"] selectedImage:[UIImage imageNamed:@"拖鞋"]]];
-    [nav2.navigationBar setBackgroundImage:[UIImage imageNamed:@"导航栏"] forBarMetrics:UIBarMetricsDefault];
+//    [nav2.navigationBar setBackgroundImage:[UIImage imageNamed:@"导航栏"] forBarMetrics:UIBarMetricsDefault];
     [tb addChildViewController:nav2];
     
     //动画
     SurroundMPVC *sMPVC = [[SurroundMPVC alloc]init];
     CustomNavigationController *nav3 = [[CustomNavigationController alloc]initWithRootViewController:sMPVC];
-    [nav3.navigationBar setBackgroundImage:[UIImage imageNamed:@"导航栏"] forBarMetrics:UIBarMetricsDefault];
+//    [nav3.navigationBar setBackgroundImage:[UIImage imageNamed:@"导航栏"] forBarMetrics:UIBarMetricsDefault];
     SWRevealViewController *revealVC = [[SWRevealViewController alloc]initWithRearViewController:[LeftVC new] frontViewController:nav3];
     revealVC.rearViewRevealWidth = 200;
     [revealVC setFrontViewPosition:FrontViewPositionLeft animated:YES];
@@ -48,7 +48,7 @@
     //个人中心
     PersonCenterVC *pcVC = [[PersonCenterVC alloc]init];
     CustomNavigationController *nav4 = [[CustomNavigationController alloc]initWithRootViewController:pcVC];
-    [nav4.navigationBar setBackgroundImage:[UIImage imageNamed:@"导航栏"] forBarMetrics:UIBarMetricsDefault];
+//    [nav4.navigationBar setBackgroundImage:[UIImage imageNamed:@"导航栏"] forBarMetrics:UIBarMetricsDefault];
     [nav4 setTabBarItem:[[UITabBarItem alloc]initWithTitle:@"个人中心" image:[UIImage imageNamed:@"指南针(g)"] selectedImage:[UIImage imageNamed:@"指南针"]]];
     [tb addChildViewController:nav4];
     

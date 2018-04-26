@@ -43,10 +43,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIScreenEdgePanGestureRecognizer *leftEdgeGesture = [[UIScreenEdgePanGestureRecognizer alloc]initWithTarget:self action:@selector(handleLeftGesture)];
-    leftEdgeGesture.edges = UIRectEdgeLeft;
-    [self.view addGestureRecognizer:leftEdgeGesture];
-    //[self.tabBarItem setBadgeValue:@"3"];
+    
     [self setUpUI];
     [self refreshData];
 }
@@ -181,10 +178,6 @@
     [self searchBar];
     //隐藏掉navigationBar上的黑线
     [[UINavigationBar appearance] setShadowImage:[UIImage new]];
-//    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithRed:2/255.0 green:119/255.0 blue:255/255.0 alpha:1]];
-    //正常的刷新方式
-//    MJRefreshNormalHeader *nomalHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
-//    nomalHeader.lastUpdatedTimeLabel.hidden = YES;
 
     //gif刷新方式
     MJRefreshGifHeader *gifHeader = [MJRefreshGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshData)];
@@ -196,8 +189,6 @@
     [gifHeader setImages:self.imagesArray duration:0.7 forState:MJRefreshStateRefreshing];
     
     self.tableView.mj_header = gifHeader;
-    //是否一进入页面就刷新操作
-    //[self.tableView.mj_header beginRefreshing];
     
     //上拉加载更多
     MJRefreshAutoGifFooter *gifFooter = [MJRefreshAutoGifFooter footerWithRefreshingBlock:^{
@@ -236,7 +227,9 @@
             //请求失败做些什么？
             [self.tableView.mj_header endRefreshing];
             //请求按钮
-            self.failedBtn.hidden = NO;
+            [UIView animateWithDuration:0.3 animations:^{
+                self.failedBtn.hidden = NO;
+            }];
         }
     }];
 }
@@ -245,7 +238,6 @@
 }
 
 - (void)startCountDown {
-    self.failedBtn.hidden = NO;
     [self.failedBtn countDownTime:10 withNomalTitle:@"Click here to refresh!" countDownTitle:@"waiting" finishBlock:^{
         
     } isInteraction:NO];

@@ -19,9 +19,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = BACK_COLOR;
     [self collectionView];
-    
+    self.navigationItem.title = @"足迹";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -40,6 +40,7 @@
     if (!cell) {
         cell = [[CommunityCell alloc]init];
     }
+    
     if (indexPath.row == 0) {
         cell.bottomIV.image = [UIImage imageNamed:@"stars"];
     }else if (indexPath.row == 1 ){
@@ -121,9 +122,10 @@
     }
     [_collectionView registerClass:[CommunityCell class] forCellWithReuseIdentifier:@"cell"];
     [_collectionView registerClass:[CustomCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerView"];
+    
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
-    _collectionView.backgroundColor = [UIColor whiteColor];
+    _collectionView.backgroundColor = [UIColor clearColor];
     
     return _collectionView;
 }

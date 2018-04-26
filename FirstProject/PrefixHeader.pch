@@ -92,7 +92,6 @@
 //工具类
 #import "FQLHttpTools.h"
 #import "SWRevealViewController.h"
-#import "AppBasicTools.h"
 #import "Basic.h"
 
 //登录

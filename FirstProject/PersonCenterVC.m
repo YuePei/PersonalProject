@@ -7,6 +7,7 @@
 //
 
 #import "PersonCenterVC.h"
+#import "PCTableViewCell.h"
 
 @interface PersonCenterVC ()<UITableViewDelegate,UITableViewDataSource,BringBackUserNameDelegate>
 //tableVIew
@@ -54,10 +55,9 @@
 }
 #pragma mark Tool Methods
 - (void)setUpUI {
-    //设置顶部导航栏的icon的颜色
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    
     //设置barButtonItem的字体大小和颜色
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName : [UIFont systemFontOfSize:21]};
+//    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName : [UIFont systemFontOfSize:21]};
     
     //设置右边的设置控件
     UIBarButtonItem *settingItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"设置"] style:UIBarButtonItemStylePlain target:self action:@selector(goToSettingPage)];
@@ -114,36 +114,37 @@
     return 6;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    PCTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"pcCell"];
     if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
+        cell = [[NSBundle mainBundle] loadNibNamed:@"PCTableViewCell" owner:self options:nil].firstObject;
     }
-    cell.textLabel.font = [UIFont fontWithName:@"AppleGothic" size:15];
+    cell.titleLabel.font = [UIFont fontWithName:@"AppleGothic" size:15];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if(indexPath.section == 0 && indexPath.row == 0) {
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.textLabel.text = @"修改个人资料";
+        
+        cell.iconIV.image = [UIImage imageNamed:@"修改"];
+        cell.titleLabel.text = @"修改个人资料";
     }else if(indexPath.section == 0 && indexPath.row == 1) {
-        cell.textLabel.text = @"关于我们";
-        
+        cell.titleLabel.text = @"关于我们";
+        cell.iconIV.image = [UIImage imageNamed:@"关于我们"];
     }else if(indexPath.section == 0 && indexPath.row == 2) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.textLabel.font = [UIFont fontWithName:@"AppleGothic" size:15];
-        cell.detailTextLabel.font = [UIFont fontWithName:@"AppleGothic" size:15];
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2lf",(long)[[SDImageCache sharedImageCache] getSize]];
-        
-        cell.textLabel.text = @"清除缓存";
+        cell.rightLabel.hidden = NO;
+        cell.rightLabel.text = [NSString stringWithFormat:@"%.2lf",(long)[[SDImageCache sharedImageCache] getSize]];
+        cell.titleLabel.text = @"清除缓存";
+        cell.iconIV.image = [UIImage imageNamed:@"清除"];
     }else if(indexPath.section == 0 && indexPath.row == 3) {
-        
-        cell.textLabel.text = @"帮助与反馈";
+
+        cell.titleLabel.text = @"帮助与反馈";
+        cell.iconIV.image = [UIImage imageNamed:@"帮助"];
     }else if(indexPath.section == 0 && indexPath.row == 4) {
-        
-        cell.textLabel.text = @"消息通知";
+
+        cell.titleLabel.text = @"消息通知";
+        cell.iconIV.image = [UIImage imageNamed:@"消息"];
     }else if(indexPath.section == 0 && indexPath.row == 5) {
-        
-        cell.textLabel.text = @"其他";
+
+        cell.titleLabel.text = @"其他";
+        cell.iconIV.image = [UIImage imageNamed:@"其它"];
     }
     
     return cell;
@@ -163,9 +164,16 @@
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return SCREEN_HEIGHT / 15;
+    return 55;
 }
-
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+//    return 20;
+//}
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+//    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 20)];
+//    view.backgroundColor = BACK_COLOR;
+//    return view;
+//}
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     float offsetY = scrollView.contentOffset.y;
     //设置圆图的缩放
@@ -204,14 +212,14 @@
         _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStyleGrouped];
     }
     [self.view addSubview:_tableView];
-    UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
-    [_tableView registerClass:[cell class] forCellReuseIdentifier:@"cell"];
+
+    [_tableView registerClass:[PCTableViewCell class] forCellReuseIdentifier:@"cell"];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.backgroundColor = [UIColor clearColor];
     //去掉cell之间的横线
     _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    _tableView.separatorColor = [UIColor grayColor];
+    _tableView.separatorColor = [UIColor lightGrayColor];
     //设置顶部的偏移量
     _tableView.contentInset = UIEdgeInsetsMake(100, 0, 0, 0);
     _tableView.scrollIndicatorInsets = UIEdgeInsetsMake(136, 0, 0, 0);

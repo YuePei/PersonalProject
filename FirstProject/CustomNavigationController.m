@@ -34,39 +34,41 @@
     UIBarButtonItem *barButtonItem = [UIBarButtonItem appearance];
     // 设置字体颜色
     [barButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor], NSFontAttributeName : [UIFont systemFontOfSize:14]} forState:UIControlStateNormal];
-    [barButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blueColor]} forState:UIControlStateHighlighted];
+    [barButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor darkGrayColor]} forState:UIControlStateHighlighted];
     [barButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor lightGrayColor]} forState:UIControlStateDisabled];
-    
 }
 
 #pragma mark -  设置导航栏主题
 + (void)setupNavigationBarTheme {
     UINavigationBar * navBar = [UINavigationBar appearance];
-    // 设置导航栏title属性
-    [navBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     // 设置导航栏颜色
-    [navBar setBarTintColor:[UIColor brownColor]];
+    [navBar setBarTintColor:[UIColor whiteColor]];
+    // 设置导航栏title属性
+    [navBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor darkGrayColor]}];
+    //下面是设置导航栏透明
+//    [navBar setTranslucent:YES];
+//    [navBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+//    [navBar setShadowImage:[UIImage new]];
     
-    UIImage *image = [UIImage imageNamed:@"nav_64"];
-    
+    UIImage *image = [UIImage imageNamed:@"white"];
     [navBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
+    [navBar setShadowImage:[UIImage new]];
 }
 
 
 #pragma mark -  拦截所有push方法
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    
+    //注意这个方法每次push进入某个页面都会调用, 所以此处的self.viewControllers.count可以用来大致识别是否为rootViewController
     if (self.viewControllers.count > 0) {
         // 如果navigationController的字控制器个数大于两个就隐藏
         viewController.hidesBottomBarWhenPushed = YES;
-        
-        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:UIBarButtonItemStyleDone target:self action:@selector(back)];
+        //设置返回按钮
+        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+        viewController.navigationItem.leftBarButtonItem = leftItem;
         //1.解决了自定义的返回按钮导致屏幕左侧的右滑手势失效的bug,但是首页右滑会导致crash
         if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
             self.interactivePopGestureRecognizer.delegate = nil;
         }
-        viewController.navigationItem.leftBarButtonItem =leftItem;
-        
         //2.解决首页右滑会导致crash的bug
         UIScreenEdgePanGestureRecognizer *leftEdgeGesture = [[UIScreenEdgePanGestureRecognizer alloc]initWithTarget:self action:@selector(handleLeftGesture)];
         leftEdgeGesture.edges = UIRectEdgeLeft;
@@ -81,9 +83,6 @@
     //这里就可以自行修改返回按钮的各种属性等
 }
 
-- (void)setLeftBarButtonItemWithImage:(UIImage *)image {
-    
-}
 - (void)handleLeftGesture {
     NSLog(@"-------右滑------");
 }

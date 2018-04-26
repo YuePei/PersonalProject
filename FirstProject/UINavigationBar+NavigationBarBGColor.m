@@ -11,6 +11,7 @@
 @implementation UINavigationBar (NavigationBarBGColor)
 static char overlayKey;
 
+//这里是用runtime创建一个新的view
 - (UIView *)overlay
 {
     return objc_getAssociatedObject(self, &overlayKey);
@@ -23,6 +24,7 @@ static char overlayKey;
 
 - (void)lt_setBackgroundColor:(UIColor *)backgroundColor
 {
+    //对runtime创建的view进行初始化
     if (!self.overlay) {
         [self setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
         self.overlay = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) + 20)];
