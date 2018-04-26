@@ -93,17 +93,6 @@
     UIBarButtonItem *shareItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"分享"] style:UIBarButtonItemStylePlain target:self action:@selector(systemShare)];
     NSArray *itemArray = [NSArray arrayWithObjects:shareItem, nil];
     [self.navigationItem setRightBarButtonItems:itemArray];
-    
-    UIBarButtonItem *barItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"返回"] style:UIBarButtonItemStylePlain target:self action:@selector(popBack)];
-    [self.navigationItem setLeftBarButtonItem:barItem];
-    //设置barButtonItem文字颜色
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    //设置barButtonItem的字体大小和颜色
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName : [UIFont systemFontOfSize:21]};
-    //解决自定义的左侧返回按钮导致左侧的返回手势失效
-    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        self.navigationController.interactivePopGestureRecognizer.delegate = nil;
-    }
 }
 
 - (void)clickToGetUserName {

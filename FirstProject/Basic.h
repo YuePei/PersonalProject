@@ -15,7 +15,7 @@
 
 
 //https://uat.faqile.com/api/article/list?page=1&size=5&type=-1
-#define BASIC_URL @"https://uat.faqile.com/api/"
+#define BASIC_URL @"http://app.faqile.com/api/"
 //文章列表字段
 #define ARTICLE_BASIC_URL @"article/list"
 //文章详情页字段

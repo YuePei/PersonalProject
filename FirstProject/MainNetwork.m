@@ -51,10 +51,10 @@
     
     
     [FQLHttpTools get:[NSString stringWithFormat:@"%@%@?mongoId=%@&articleId=%ld&type=%ld",BASIC_URL,ARTICLE_DETAIL_URL,mongold,articleId,type] parameters:nil success:^(id obj) {
-        [hud hide:YES afterDelay:3];
+        [hud hide:YES];
         callBock(obj,nil);
     } failure:^(NSError *error) {
-        
+        [hud hide:YES];
         callBock(nil,error);
     }];
 }

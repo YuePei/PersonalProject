@@ -138,7 +138,6 @@
     dpVC.mongold = [self.articleVM getMongoldWithIndex:indexPath.section];
     dpVC.articleId = [self.articleVM getArticleIdWithIndex:indexPath.section];
     dpVC.aType = [self.articleVM getArticleTypeWithIndex:indexPath.section];
-    dpVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:dpVC animated:YES];
 
 }

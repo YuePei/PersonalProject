@@ -30,16 +30,16 @@
     
     [self collectionView];
     [self setUpUI];
-    MBProgressHUD *hud = [[MBProgressHUD alloc]init];
-    [self.view addSubview:hud];
-    hud.mode = MBProgressHUDModeAnnularDeterminate;
-    hud.opacity = 1;
-    [hud show:YES];
+//    MBProgressHUD *hud = [[MBProgressHUD alloc]init];
+//    [self.view addSubview:hud];
+//    hud.mode = MBProgressHUDModeAnnularDeterminate;
+//    hud.opacity = 1;
+//    [hud show:YES];
     [self.viewModel getGoodsListWithType:1 CallBack:^(NSError *error) {
         if (!error) {
             //成功
             [self.collectionView reloadData];
-            [hud hide:YES];
+//            [hud hide:YES];
         }
     }];
 }

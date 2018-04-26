@@ -19,7 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = BACK_COLOR;
+    self.view.backgroundColor = [UIColor whiteColor];
     [self collectionView];
     self.navigationItem.title = @"足迹";
 }
