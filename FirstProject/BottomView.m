@@ -20,8 +20,14 @@
             make.bottom.mas_equalTo(0);
             make.width.mas_equalTo(SCREEN_WIDTH / 4.0);
         }];
+        [_collectBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+        [_collectBtn setTitle:@"收藏" forState:UIControlStateNormal];
+        [_collectBtn setImage:[UIImage imageNamed:@"收藏"] forState:UIControlStateNormal];
+        [_collectBtn.titleLabel setFont:[UIFont systemFontOfSize:10]];
+        [self setButtonStyle:_collectBtn];
+        [_collectBtn addTarget:self action:@selector(collectFunction) forControlEvents:UIControlEventTouchUpInside];
     }
-    [_collectBtn setTitle:@"收藏" forState:UIControlStateNormal];
+    
     return _collectBtn;
 }
 - (UIButton *)commentBtn {
@@ -34,8 +40,14 @@
             make.bottom.mas_equalTo(0);
             make.width.mas_equalTo(SCREEN_WIDTH / 4.0);
         }];
+        [_commentBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+        [_commentBtn setImage:[UIImage imageNamed:@"评论"] forState:UIControlStateNormal];
+        [_commentBtn setTitle:@"评论" forState:UIControlStateNormal];
+        [_commentBtn.titleLabel setFont:[UIFont systemFontOfSize:10]];
+        [self setButtonStyle:_commentBtn];
+        
     }
-    [_commentBtn setTitle:@"评论" forState:UIControlStateNormal];
+    
     return _commentBtn;
 }
 - (UIButton *)likeBtn {
@@ -48,12 +60,13 @@
             make.bottom.mas_equalTo(0);
             make.width.mas_equalTo(SCREEN_WIDTH / 4.0);
         }];
+        [_likeBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+        [_likeBtn.titleLabel setFont:[UIFont systemFontOfSize:10]];
+        [_likeBtn setImage:[UIImage imageNamed:@"喜欢"] forState:UIControlStateNormal];
+        [_likeBtn setTitle:@"喜欢" forState:UIControlStateNormal];
+        [self setButtonStyle:_likeBtn];
+        [_likeBtn addTarget:self action:@selector(likeFunction) forControlEvents:UIControlEventTouchUpInside];
     }
-    [_likeBtn setBackgroundColor:[UIColor purpleColor]];
-    [_likeBtn.titleLabel setFont:[UIFont systemFontOfSize:10]];
-    [self setButtonStyle:_likeBtn];
-    [_likeBtn setImage:[UIImage imageNamed:@"其它"] forState:UIControlStateNormal];
-    [_likeBtn setTitle:@"喜欢" forState:UIControlStateNormal];
     
     return _likeBtn;
 }
@@ -67,8 +80,12 @@
             make.bottom.mas_equalTo(0);
             make.width.mas_equalTo(SCREEN_WIDTH / 4.0);
         }];
+        [_shareBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+        [_shareBtn setTitle:@"分享" forState:UIControlStateNormal];
+        [_shareBtn setImage:[UIImage imageNamed:@"分享"] forState:UIControlStateNormal];
+        [_shareBtn.titleLabel setFont:[UIFont systemFontOfSize:10]];
+        [self setButtonStyle:_shareBtn];
     }
-    [_shareBtn setTitle:@"分享" forState:UIControlStateNormal];
     return _shareBtn;
 }
 //必须重写
@@ -80,12 +97,27 @@
 }
 
 -(void)setButtonStyle:(UIButton*)btn{
-    btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;//使图片和文字水平居中显示
-    [btn setImageEdgeInsets:UIEdgeInsetsMake(-15, btn.frame.size.width / 2.0 - btn.imageView.frame.origin.x - btn.imageView.frame.size.width / 2.0,0,0)];
-    [btn setTitleEdgeInsets:UIEdgeInsetsMake(btn.frame.size.height / 2.0,-(btn.titleLabel.frame.origin.x + btn.titleLabel.frame.size.width / 2.0 - btn.frame.size.width / 2.0), 0.0,0.0)];//文字距离上边框的距离增加imageView的高度，距离左边框减少imageView的宽度，距离下边框和右边框距离不变
+    CGSize imageSize = btn.imageView.frame.size;
+    CGSize titleSize = btn.titleLabel.frame.size;
+    //图片 向右移动的距离是标题宽度的一半,向上移动的距离是图片高度的一半
+    [btn setImageEdgeInsets:UIEdgeInsetsMake(-imageSize.height/2, titleSize.width/2, imageSize.height/2, -titleSize.width/2)];
+    //标题 向左移动的距离是图片宽度的一半,向下移动的距离是标题高度的一半
+    [btn setTitleEdgeInsets:UIEdgeInsetsMake(titleSize.height/2 + 10, -imageSize.width/2, -titleSize.height/2, imageSize.width/2)];
     
 }
 
-
-
+- (void)likeFunction {
+    if ([self.likeBtn.imageView.image isEqual: [UIImage imageNamed:@"喜欢"]]) {
+        [_likeBtn setImage:[UIImage imageNamed:@"喜欢1"] forState:UIControlStateNormal];
+    }else {
+        [_likeBtn setImage:[UIImage imageNamed:@"喜欢"] forState:UIControlStateNormal];
+    }
+}
+- (void)collectFunction {
+    if ([self.collectBtn.imageView.image isEqual: [UIImage imageNamed:@"收藏"]]) {
+        [self.collectBtn setImage:[UIImage imageNamed:@"收藏1"] forState:UIControlStateNormal];
+    }else {
+        [self.collectBtn setImage:[UIImage imageNamed:@"收藏"] forState:UIControlStateNormal];
+    }
+}
 @end

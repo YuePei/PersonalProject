@@ -136,7 +136,7 @@
 //        [_bottomView setFrame:CGRectMake(0, SCREEN_HEIGHT - 50 * SCREEN_PROPORTION - 64, SCREEN_WIDTH, 50 * SCREEN_PROPORTION)];
         _bottomView = [[BottomView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 50 * SCREEN_PROPORTION - 64, SCREEN_WIDTH, 50 * SCREEN_PROPORTION)];
         [self.view insertSubview:_bottomView aboveSubview:self.wkWebView];
-        _bottomView.backgroundColor = [UIColor redColor];
+        _bottomView.backgroundColor = BACK_COLOR;
     }
     return _bottomView;
 }
