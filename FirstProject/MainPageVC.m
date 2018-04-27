@@ -50,10 +50,6 @@
 - (void)goodMethods {
     
 }
-- (void)handleLeftGesture {
-    NSLog(@"用户触发了首页左侧的右滑手势！");
-//    do Nothing...
-}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -126,7 +122,7 @@
             cell.contentLabel.text = [self.articleVM getContentLabelWithIndex:indexPath.section];
             //设置label的行间距
             [UILabel changeLineSpacingForLabel:cell.contentLabel WithSpace:11];
-//            [cell.contentIV sd_setImageWithURL:[NSURL URLWithString:[self.articleVM getBigImageWithIndex:indexPath.section]] placeholderImage:[UIImage imageNamed:@"test"]];
+            
             [cell.contentIV sd_setImageWithURL:[NSURL URLWithString:[self.articleVM getBigImageWithIndex:indexPath.section]]];
         }];
     }
@@ -241,7 +237,66 @@
         
     } isInteraction:NO];
 }
-
+//裁剪图片
+- (UIImage *)cutImageWithImage:(UIImage *)image targetSize:(CGSize )targetSize {
+    
+    UIImage *image1 = image;
+    //原图片尺寸
+    CGFloat imageWidth = image1.size.width;
+    CGFloat imageHeight = image1.size.height;
+    //目标尺寸
+    CGFloat targetWidth = targetSize.width;
+    CGFloat targetHeight = targetSize.height;
+    //最终比例
+    CGFloat scaleFactor = 0;
+    CGPoint startPoint = CGPointMake(0, 0);
+    
+    //如果图片是竖着的，即图片高度大于宽度
+    if (imageWidth < imageHeight) {
+        CGFloat tempW = targetWidth;
+        CGFloat tempH = targetHeight;
+        
+        targetWidth = tempH;
+        targetHeight = tempW;
+    }
+    //如果图片大小 < 目标图片大小, 那就返回该图片,不做切割
+    if (targetWidth > imageWidth && targetHeight > imageHeight) {
+        return image1;
+    }
+    if (CGSizeEqualToSize(CGSizeMake(imageWidth, imageHeight), CGSizeMake(targetWidth, targetHeight)) == NO) {
+        //如果两个尺寸不同则可以开始切割
+        CGFloat widthFactor = targetWidth / imageWidth;
+        CGFloat heightFactor = targetHeight / imageHeight;
+        if (widthFactor < 1 && heightFactor < 1) {
+            //源图片尺寸宽高都比目标尺寸的宽高都大
+            //判断哪个比例更小, 按照更小的比例
+            if (widthFactor < heightFactor) {
+                scaleFactor = widthFactor;
+            }else {
+                scaleFactor = heightFactor;
+            }
+        }else if (widthFactor > 1 && heightFactor < 1) {
+            //
+            scaleFactor = widthFactor;
+        }else if(widthFactor < 1 && heightFactor > 1) {
+            //
+            scaleFactor = heightFactor;
+        }else {
+            //目标尺寸的宽高都大于原始图片的尺寸的宽高, 建议不要做放大处理, 图片易失真
+        }
+    }
+    targetHeight = scaleFactor * imageHeight;
+    targetWidth = scaleFactor * imageWidth;
+    UIGraphicsBeginImageContext(CGSizeMake(targetWidth, targetHeight));
+    CGRect thumbnailRect = CGRectZero;
+    thumbnailRect.origin= startPoint;
+    thumbnailRect.size.width = targetWidth;
+    thumbnailRect.size.height = targetHeight;
+    [image1 drawInRect:thumbnailRect];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    return newImage;
+    
+}
 #pragma mark lazy
 - (ArticleVideModel *)articleVM {
     if (!_articleVM) {
@@ -322,7 +377,7 @@
     if (!_searchBar) {
         _searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(20, 2, SCREEN_WIDTH - 40, 40)];
         
-        [self.navigationController.navigationBar addSubview:_searchBar];
+//        [self.navigationController.navigationBar addSubview:_searchBar];
         UIView *searchBarFirstSubView = _searchBar.subviews.firstObject;
         UIView *secondSubview = [searchBarFirstSubView.subviews firstObject];
         [secondSubview removeFromSuperview];

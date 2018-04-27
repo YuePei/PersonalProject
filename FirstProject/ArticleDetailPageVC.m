@@ -8,6 +8,7 @@
 
 #import "ArticleDetailPageVC.h"
 #import <WebKit/WebKit.h>
+#import "BottomView.h"
 
 @interface ArticleDetailPageVC ()
 
@@ -17,6 +18,9 @@
 @property (nonatomic , strong) ArticleDataModel *dataModel;
 //WKWebView
 @property (nonatomic , strong) UIWebView *wkWebView;
+//bottomView
+@property (nonatomic, strong)BottomView *bottomView;
+
 
 @end
 
@@ -24,10 +28,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = [UIColor whiteColor];
     [self setNavigationBarAndGoBackWithGesture];
     [self wkWebView];
-    
+    [self bottomView];
     //毛玻璃效果
 //    UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
 //    UIVisualEffectView *effectView = [[UIVisualEffectView alloc]initWithEffect:blur];
@@ -36,16 +41,13 @@
 //    [self.view addSubview:effectView];
     
     [self getDetailPageData];
-    
 }
 
 - (void)popBack {
     [self.navigationController popViewControllerAnimated:YES];
 }
+//调用系统的分享功能
 - (void)systemShare{
-//    NSArray *imagesArray = @[[UIImage imageNamed:@"设置.png"],[UIImage imageNamed:@"分享.png"]];
-//    UIActivityViewController *activityVC = [[UIActivityViewController alloc]initWithActivityItems:imagesArray applicationActivities:nil];
-//    [self.navigationController presentViewController:activityVC animated:YES completion:nil];
     
     NSArray *images = @[[UIImage imageNamed:@"beauty"]];
     UIActivityViewController *activityController=[[UIActivityViewController alloc]initWithActivityItems:images applicationActivities:nil];
@@ -123,9 +125,19 @@
             make.bottom.mas_equalTo(0);
         }];
         _wkWebView.scrollView.showsHorizontalScrollIndicator = NO;
-        
+        _wkWebView.backgroundColor = [UIColor whiteColor];
     }
     return _wkWebView;
 }
 
+- (BottomView *)bottomView {
+    if (!_bottomView) {
+//        _bottomView = [[NSBundle mainBundle] loadNibNamed:@"BottomView" owner:self options:nil].firstObject;
+//        [_bottomView setFrame:CGRectMake(0, SCREEN_HEIGHT - 50 * SCREEN_PROPORTION - 64, SCREEN_WIDTH, 50 * SCREEN_PROPORTION)];
+        _bottomView = [[BottomView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 50 * SCREEN_PROPORTION - 64, SCREEN_WIDTH, 50 * SCREEN_PROPORTION)];
+        [self.view insertSubview:_bottomView aboveSubview:self.wkWebView];
+        _bottomView.backgroundColor = [UIColor redColor];
+    }
+    return _bottomView;
+}
 @end

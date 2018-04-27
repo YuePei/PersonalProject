@@ -19,6 +19,9 @@
 		9F07345820902C28005173A3 /* SlideTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F07345720902C28005173A3 /* SlideTableViewCell.m */; };
 		9F07345B2090599F005173A3 /* DetailCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F07345A2090599F005173A3 /* DetailCollectionViewCell.m */; };
 		9F3EE7B7205F8B3C002B5527 /* CustomNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3EE7B6205F8B3C002B5527 /* CustomNavigationController.m */; };
+		9F7AA8222092FFE7003D0C5A /* BottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7AA8202092FFE7003D0C5A /* BottomView.m */; };
+		9F7AA8242092FFF8003D0C5A /* BottomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7AA8232092FFF8003D0C5A /* BottomView.xib */; };
+		9F7AA827209315DD003D0C5A /* CustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7AA826209315DD003D0C5A /* CustomButton.m */; };
 		9FFB1F1D2091B91800641F49 /* PCTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFB1F1B2091B91800641F49 /* PCTableViewCell.m */; };
 		9FFB1F1E2091B91800641F49 /* PCTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFB1F1C2091B91800641F49 /* PCTableViewCell.xib */; };
 		D00FFE191FBF1D2700886330 /* KeyFrameAnimationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D00FFE181FBF1D2700886330 /* KeyFrameAnimationVC.m */; };
@@ -125,6 +128,11 @@
 		9F07345A2090599F005173A3 /* DetailCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailCollectionViewCell.m; sourceTree = "<group>"; };
 		9F3EE7B5205F8B3C002B5527 /* CustomNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNavigationController.h; sourceTree = "<group>"; };
 		9F3EE7B6205F8B3C002B5527 /* CustomNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNavigationController.m; sourceTree = "<group>"; };
+		9F7AA8202092FFE7003D0C5A /* BottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomView.m; sourceTree = "<group>"; };
+		9F7AA8212092FFE7003D0C5A /* BottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomView.h; sourceTree = "<group>"; };
+		9F7AA8232092FFF8003D0C5A /* BottomView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BottomView.xib; sourceTree = "<group>"; };
+		9F7AA825209315DD003D0C5A /* CustomButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomButton.h; sourceTree = "<group>"; };
+		9F7AA826209315DD003D0C5A /* CustomButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomButton.m; sourceTree = "<group>"; };
 		9FFB1F1A2091B91800641F49 /* PCTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PCTableViewCell.h; sourceTree = "<group>"; };
 		9FFB1F1B2091B91800641F49 /* PCTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PCTableViewCell.m; sourceTree = "<group>"; };
 		9FFB1F1C2091B91800641F49 /* PCTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PCTableViewCell.xib; sourceTree = "<group>"; };
@@ -324,6 +332,18 @@
 				9F07345420902B9D005173A3 /* NewCommunityVC.m */,
 			);
 			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		9F4F16A52092D01F00AF98C6 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				9F7AA8212092FFE7003D0C5A /* BottomView.h */,
+				9F7AA8202092FFE7003D0C5A /* BottomView.m */,
+				9F7AA8232092FFF8003D0C5A /* BottomView.xib */,
+				9F7AA825209315DD003D0C5A /* CustomButton.h */,
+				9F7AA826209315DD003D0C5A /* CustomButton.m */,
+			);
+			name = Tools;
 			sourceTree = "<group>";
 		};
 		9FFB1F1F2091B9AC00641F49 /* Views */ = {
@@ -589,6 +609,7 @@
 		D083263D1F95A98C008AF378 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				9F4F16A52092D01F00AF98C6 /* Tools */,
 				D03E9C7C1FF4EE280079E311 /* Category */,
 				D03A33431FE2177C00D1D384 /* Network */,
 				D06439AD1FAABF6F005BDCB2 /* model */,
@@ -814,6 +835,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D08326171F95A0E4008AF378 /* LaunchScreen.storyboard in Resources */,
+				9F7AA8242092FFF8003D0C5A /* BottomView.xib in Resources */,
 				D07984B7200753C9004193C6 /* Assets.xcassets in Resources */,
 				9FFB1F1E2091B91800641F49 /* PCTableViewCell.xib in Resources */,
 				D08326121F95A0E4008AF378 /* Main.storyboard in Resources */,
@@ -1002,6 +1024,7 @@
 				9F3EE7B7205F8B3C002B5527 /* CustomNavigationController.m in Sources */,
 				D083260F1F95A0E4008AF378 /* ViewController.m in Sources */,
 				D0906D451FBD59BC00A04904 /* SWRevealViewController.m in Sources */,
+				9F7AA827209315DD003D0C5A /* CustomButton.m in Sources */,
 				D083F1C4202C4386009BA395 /* UINavigationBar+NavigationBarBGColor.m in Sources */,
 				D083260C1F95A0E4008AF378 /* AppDelegate.m in Sources */,
 				D0A3C4851F9F07FC00747C67 /* CommunityVC.m in Sources */,
@@ -1015,6 +1038,7 @@
 				D0906D4D1FBD5DC000A04904 /* LeftVC.m in Sources */,
 				9CA91B5B205ACAAD00B0CB8A /* ArticleDetailModel.m in Sources */,
 				D011A71D1FC41CB000C857C5 /* ComprehensiveAnimationVC.m in Sources */,
+				9F7AA8222092FFE7003D0C5A /* BottomView.m in Sources */,
 				D0CB2F3B20204A2E0049DED6 /* UIButton+CountButton.m in Sources */,
 				D0906D4A1FBD5D3200A04904 /* AnimationCenterVC.m in Sources */,
 				D09617A11FA311CF00F0DC7B /* FQLHttpTools.m in Sources */,
@@ -1204,7 +1228,7 @@
 				INFOPLIST_FILE = FirstProject/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = BJTec.FirstProject;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Peyton.FirstProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1226,7 +1250,7 @@
 				INFOPLIST_FILE = FirstProject/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = BJTec.FirstProject;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Peyton.FirstProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
