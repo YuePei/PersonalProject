@@ -11,16 +11,13 @@
 #import "UIButton+CountButton.h"
 #import <objc/runtime.h>
 #import <objc/message.h>
-
+#import "FMDB.h"
 
 #define NAVBAR_CHANGE_POINT 10
 
 @interface MainPageVC ()<UITableViewDelegate,UITableViewDataSource>
 
-
 @property(nonatomic,strong)UITableView *tableView;
-
-@property(nonatomic,strong)UIButton *loginBtn;
 
 @property(nonatomic,strong)NSMutableArray<UIImage *> *imagesArray;
 
@@ -31,25 +28,26 @@
 @property(nonatomic,strong)ArticleVideModel *articleVM;
 
 @property(nonatomic,strong)UISearchBar *searchBar;
-//faildBtn
-@property(nonatomic,strong)UIButton *failedBtn;
 //page
 @property(nonatomic,assign)NSInteger page;
+//FMDB
+@property (nonatomic, strong)FMDatabase *db;
 
 @end
 
 
 @implementation MainPageVC
 
+static int networkSituation = 1;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self setUpUI];
+    [self configFMDB];
     [self refreshData];
+    NSLog(@"-------%ld",[self getTitlesFromFMDB].count);
 }
-- (void)goodMethods {
-    
-}
+
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -61,79 +59,118 @@
 }
 #pragma mark TableView Delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
-    return [self.articleVM getArticlesNumber];
+    if (networkSituation) {
+        return [self.articleVM getArticlesNumber];
+    }else {
+        return [self getTitlesFromFMDB].count;
+    }
+    
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 1;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-
-    if([[self.articleVM getBigImageWithIndex:indexPath.section] isEqualToString:@""]){
-        //无图
+    if (networkSituation) {
+        if([[self.articleVM getBigImageWithIndex:indexPath.section] isEqualToString:@""]){
+            //无图
+            NoPictureTVCell *cell = [tableView dequeueReusableCellWithIdentifier:@"noPicCell"];
+            if (!cell) {
+                cell = [[NoPictureTVCell alloc]init];
+            }
+            //为cell赋值
+            cell.userName.text = [self.articleVM getArticleTitleWithIndex:indexPath.section];
+            [UILabel changeWordSpaceForLabel:cell.userName WithSpace:1];
+            cell.contentLabel.text = [self.articleVM getContentLabelWithIndex:indexPath.section];
+            //设置行间距和字间距
+            [UILabel changeLineSpacingForLabel:cell.contentLabel WithSpace:11];
+            return cell;
+        }else {
+            //如果有图
+            FirstKindTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
+            if (cell == nil) {
+                cell = [[FirstKindTableViewCell alloc]init];
+            }
+            //为cell赋值
+            cell.userName.text = [self.articleVM getArticleTitleWithIndex:indexPath.section];
+            [UILabel changeWordSpaceForLabel:cell.userName WithSpace:1];
+            cell.contentLabel.text = [self.articleVM getContentLabelWithIndex:indexPath.section];
+            //设置行间距和字间距
+            [UILabel changeLineSpacingForLabel:cell.contentLabel WithSpace:11];
+            [cell.contentIV sd_setImageWithURL:[NSURL URLWithString:[self.articleVM getBigImageWithIndex:indexPath.section]]];
+            return cell;
+        }
+    }else {
+        //网络不好,用本地数据,采用无图cell
         NoPictureTVCell *cell = [tableView dequeueReusableCellWithIdentifier:@"noPicCell"];
         if (!cell) {
             cell = [[NoPictureTVCell alloc]init];
         }
         //为cell赋值
-        cell.userName.text = [self.articleVM getArticleTitleWithIndex:indexPath.section];
-        [UILabel changeWordSpaceForLabel:cell.userName WithSpace:1];
-        cell.contentLabel.text = [self.articleVM getContentLabelWithIndex:indexPath.section];
-        //设置行间距和字间距
-        [UILabel changeLineSpacingForLabel:cell.contentLabel WithSpace:11];
-        return cell;
-    }else {
-        //如果有图
-        FirstKindTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
-        if (cell == nil) {
-            cell = [[FirstKindTableViewCell alloc]init];
+        NSLog(@"--------------;;;;;%ld",[self getTitlesFromFMDB].count);
+        if ([self getTitlesFromFMDB].count > 0 && [self getAbstractFromFMDB].count > 0) {
+            cell.userName.text = [self getTitlesFromFMDB][indexPath.section];
+            cell.contentLabel.text = [self getAbstractFromFMDB][indexPath.section];
+            //设置行间距和字间距
+            [UILabel changeWordSpaceForLabel:cell.userName WithSpace:1];
+            [UILabel changeLineSpacingForLabel:cell.contentLabel WithSpace:11];
         }
-        //为cell赋值
-        cell.userName.text = [self.articleVM getArticleTitleWithIndex:indexPath.section];
-        [UILabel changeWordSpaceForLabel:cell.userName WithSpace:1];
-        cell.contentLabel.text = [self.articleVM getContentLabelWithIndex:indexPath.section];
-        //设置行间距和字间距
-        [UILabel changeLineSpacingForLabel:cell.contentLabel WithSpace:11];
-//        [cell.contentIV sd_setImageWithURL:[NSURL URLWithString:[self.articleVM getBigImageWithIndex:indexPath.section]] placeholderImage:[UIImage imageNamed:@"test"]];
-        [cell.contentIV sd_setImageWithURL:[NSURL URLWithString:[self.articleVM getBigImageWithIndex:indexPath.section]]];
         
         return cell;
     }
-    
 }
 
 //设置cell的高度自适应
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if([[self.articleVM getBigImageWithIndex:indexPath.section] isEqualToString:@""]){
+    if(networkSituation) {
+        if([[self.articleVM getBigImageWithIndex:indexPath.section] isEqualToString:@""]){
+            return [tableView fd_heightForCellWithIdentifier:@"noPicCell" cacheByIndexPath:indexPath configuration:^(NoPictureTVCell *cell) {
+                //无图
+                NSLog(@"无图");
+                cell.userName.text = [self.articleVM getArticleTitleWithIndex:indexPath.section];
+                cell.contentLabel.text = [self.articleVM getContentLabelWithIndex:indexPath.section];
+                [UILabel changeLineSpacingForLabel:cell.contentLabel WithSpace:11];
+            }];
+            
+        }else {
+            return [tableView fd_heightForCellWithIdentifier:@"cell1" cacheByIndexPath:indexPath configuration:^(FirstKindTableViewCell * cell) {
+                //如果有图
+                NSLog(@"有图");
+                cell.userName.text = [self.articleVM getArticleTitleWithIndex:indexPath.section];
+                cell.contentLabel.text = [self.articleVM getContentLabelWithIndex:indexPath.section];
+                //设置label的行间距
+                [UILabel changeLineSpacingForLabel:cell.contentLabel WithSpace:11];
+                //            [cell.contentIV sd_setImageWithURL:[NSURL URLWithString:[self.articleVM getBigImageWithIndex:indexPath.section]] placeholderImage:[UIImage imageNamed:@"test"]];
+                [cell.contentIV sd_setImageWithURL:[NSURL URLWithString:[self.articleVM getBigImageWithIndex:indexPath.section]]];
+            }];
+        }
+    }else {
         return [tableView fd_heightForCellWithIdentifier:@"noPicCell" cacheByIndexPath:indexPath configuration:^(NoPictureTVCell *cell) {
             //无图
             NSLog(@"无图");
-            cell.userName.text = [self.articleVM getArticleTitleWithIndex:indexPath.section];
-            cell.contentLabel.text = [self.articleVM getContentLabelWithIndex:indexPath.section];
-            [UILabel changeLineSpacingForLabel:cell.contentLabel WithSpace:11];
-        }];
-        
-    }else {
-        return [tableView fd_heightForCellWithIdentifier:@"cell1" cacheByIndexPath:indexPath configuration:^(FirstKindTableViewCell * cell) {
-            //如果有图
-            NSLog(@"有图");
-            cell.userName.text = [self.articleVM getArticleTitleWithIndex:indexPath.section];
-            cell.contentLabel.text = [self.articleVM getContentLabelWithIndex:indexPath.section];
-            //设置label的行间距
-            [UILabel changeLineSpacingForLabel:cell.contentLabel WithSpace:11];
-            
-            [cell.contentIV sd_setImageWithURL:[NSURL URLWithString:[self.articleVM getBigImageWithIndex:indexPath.section]]];
+            if ([self getTitlesFromFMDB].count > 0 && [self getAbstractFromFMDB].count > 0) {
+                cell.userName.text = [self getTitlesFromFMDB][indexPath.section];
+                cell.contentLabel.text = [self getAbstractFromFMDB][indexPath.section];
+                //设置行间距和字间距
+                [UILabel changeWordSpaceForLabel:cell.userName WithSpace:1];
+                [UILabel changeLineSpacingForLabel:cell.contentLabel WithSpace:11];
+            }
         }];
     }
-    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     ArticleDetailPageVC *dpVC = [[ArticleDetailPageVC alloc]init];
-    dpVC.mongold = [self.articleVM getMongoldWithIndex:indexPath.section];
-    dpVC.articleId = [self.articleVM getArticleIdWithIndex:indexPath.section];
-    dpVC.aType = [self.articleVM getArticleTypeWithIndex:indexPath.section];
+    if (networkSituation) {
+        dpVC.mongold = [self.articleVM getMongoldWithIndex:indexPath.section];
+        dpVC.articleId = [self.articleVM getArticleIdWithIndex:indexPath.section];
+        dpVC.aType = [self.articleVM getArticleTypeWithIndex:indexPath.section];
+    }else {
+        dpVC.mongold = [self getMongoIdFromFMDB][indexPath.section];
+        dpVC.articleId = [self getArticleIdFromFMDB][indexPath.section];
+        dpVC.aType = [self getATypeFromFMDB][indexPath.section];
+    }
+    
+    
     [self.navigationController pushViewController:dpVC animated:YES];
 
 }
@@ -167,13 +204,84 @@
 //        }
 //    }
 //}
-#pragma mark Tool Methods
+
+#pragma mark FMDB
+//配置FMDB
+- (void)configFMDB {
+    NSString *sqlFilePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject stringByAppendingPathComponent:@"TodayNextYear3.sqlite"];
+    if(!_db) {
+        _db = [FMDatabase databaseWithPath:sqlFilePath];
+    }
+    if ([self.db open]) {
+        NSLog(@"--%@",NSHomeDirectory());
+        NSLog(@"Open database succeed!");
+        BOOL success = [self.db executeUpdate:@"create table if not exists articles2 ('id' integer PRIMARY KEY AUTOINCREMENT,'authorName' text not null,'abstractWords' text,'mongoId' text,'articleId' double,'aType' double)"];
+        if (success) {
+            NSLog(@"Create table succeed!");
+        }else {
+            NSLog(@"Create table failed!");
+        }
+    }else {
+        NSLog(@"Open database failed!");
+    }
+}
+
+- (NSArray *)getTitlesFromFMDB {
+    FMResultSet *result = [self.db executeQuery:@"select * from articles2"];
+    NSMutableArray *array = [NSMutableArray array];
+    while ([result next]) {
+        NSString *nameString = [result stringForColumn:@"authorName"];
+        [array addObject:nameString];
+    }
+    return array;
+}
+
+- (NSArray *)getAbstractFromFMDB {
+    FMResultSet *result = [self.db executeQuery:@"select * from articles2"];
+    NSMutableArray *array = [NSMutableArray array];
+    while ([result next]) {
+        NSString *abstract = [result stringForColumn:@"abstractWords"];
+        [array addObject:abstract];
+    }
+    return array;
+}
+
+- (NSArray *)getMongoIdFromFMDB {
+    FMResultSet *result = [self.db executeQuery:@"select * from articles2"];
+    NSMutableArray *array = [NSMutableArray array];
+    while ([result next]) {
+        NSString *abstract = [result stringForColumn:@"mongoId"];
+        [array addObject:abstract];
+    }
+    return array;
+}
+- (NSArray *)getArticleIdFromFMDB {
+    FMResultSet *result = [self.db executeQuery:@"select * from articles2"];
+    NSMutableArray *array = [NSMutableArray array];
+    while ([result next]) {
+        NSString *abstract = [result stringForColumn:@"articleId"];
+        [array addObject:abstract];
+    }
+    return array;
+}
+- (NSArray *)getATypeFromFMDB {
+    FMResultSet *result = [self.db executeQuery:@"select * from articles2"];
+    NSMutableArray *array = [NSMutableArray array];
+    while ([result next]) {
+        NSString *abstract = [result stringForColumn:@"aType"];
+        [array addObject:abstract];
+    }
+    return array;
+}
+
+- (void)setNoSignal {
+    networkSituation = 0;
+    [self.tableView reloadData];
+}
+#pragma mark ToolMethods
 - (void)setUpUI {
     [self tableView];
     [self searchBar];
-    //隐藏掉navigationBar上的黑线
-    [[UINavigationBar appearance] setShadowImage:[UIImage new]];
-
     //gif刷新方式
     MJRefreshGifHeader *gifHeader = [MJRefreshGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshData)];
     gifHeader.lastUpdatedTimeLabel.hidden = YES;
@@ -182,7 +290,6 @@
     [gifHeader setImages:self.imagesArray duration:10 forState:MJRefreshStateIdle];
     [gifHeader setImages:self.pullingArray duration:1 forState:MJRefreshStatePulling];
     [gifHeader setImages:self.imagesArray duration:0.7 forState:MJRefreshStateRefreshing];
-    
     self.tableView.mj_header = gifHeader;
     
     //上拉加载更多
@@ -195,8 +302,8 @@
     gifFooter.refreshingTitleHidden = YES;
     gifFooter.stateLabel.hidden = YES;
     self.tableView.mj_footer = gifFooter;
-    
 }
+
 //加载下一页内容
 - (void)loadNextPageData {
     self.page ++;
@@ -218,25 +325,26 @@
         if (!err) {
             [self.tableView.mj_header endRefreshing];
             [self.tableView reloadData];
+            
+            //1.删除过去的数据,清表
+            [self.db executeUpdate:@"DELETE FROM articles2"];
+            //2.插入新数据数据
+            for (int i = 0; i < 10; i++) {
+                BOOL success1 = [self.db executeUpdate:@"insert into articles2(authorName,abstractWords,mongold,articleId,aType) values(?, ?, ?, ?);",[self.articleVM getArticleTitleWithIndex:i],[self.articleVM getContentLabelWithIndex:i],[self.articleVM getMongoldWithIndex:i],[self.articleVM getArticleIdWithIndex:i],[self.articleVM getArticleTypeWithIndex:i]];
+                if (success1) {
+                    NSLog(@"insert data succeed!");
+                }
+            }
         }else {
+            NSLog(@"refresh failed");
             //请求失败做些什么？
             [self.tableView.mj_header endRefreshing];
-            //请求按钮
-            [UIView animateWithDuration:0.3 animations:^{
-                self.failedBtn.hidden = NO;
-            }];
+            //列表显示从FMDB中拿到的数据,可以通过通知的方式,告知代理方法,展示本地数据
+            [self setNoSignal];
         }
     }];
 }
-- (void)goToLogin{
-    [self.navigationController presentViewController:[[FQLLoginVC alloc]init] animated:YES completion:nil];
-}
 
-- (void)startCountDown {
-    [self.failedBtn countDownTime:10 withNomalTitle:@"Click here to refresh!" countDownTitle:@"waiting" finishBlock:^{
-        
-    } isInteraction:NO];
-}
 //裁剪图片
 - (UIImage *)cutImageWithImage:(UIImage *)image targetSize:(CGSize )targetSize {
     
@@ -326,25 +434,6 @@
     return _tableView;
 }
 
-- (UIButton *)loginBtn {
-    if (_loginBtn == nil) {
-        _loginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self.view addSubview:_loginBtn];
-        
-        [_loginBtn makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(self.view.centerX);
-            make.centerY.equalTo(self.view.centerY);
-            make.width.mas_equalTo(200);
-            make.height.mas_equalTo(300);
-        }];
-        [_loginBtn setTitle:@"Click Me To Login" forState:UIControlStateNormal];
-        [_loginBtn setBackgroundColor:[UIColor colorWithRed:0 green:154 / 255.0 blue:216 / 255.0 alpha:1]];
-    }
-    
-    [_loginBtn addTarget:self action:@selector(goToLogin) forControlEvents:UIControlEventTouchUpInside];
-    return _loginBtn;
-    
-}
 
 - (NSMutableArray<UIImage *> *)imagesArray {
     if (_imagesArray == nil) {
@@ -385,28 +474,6 @@
 //        _searchBar.hidden = YES;
     }
     return _searchBar;
-}
-
-- (UIButton *)failedBtn {
-    if (!_failedBtn) {
-        _failedBtn= [UIButton buttonWithType:UIButtonTypeCustom];
-    }
-    [self.view addSubview:_failedBtn];
-    [_failedBtn setTitle:@"Click here to refresh!" forState:UIControlStateNormal];
-    [_failedBtn setBackgroundColor:[UIColor brownColor]];
-    [_failedBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_failedBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.view.centerX);
-        make.centerY.equalTo(self.view.centerY);
-        make.height.mas_equalTo(50);
-        make.width.mas_equalTo(200);
-    }];
-    _failedBtn.layer.masksToBounds = YES;
-    _failedBtn.layer.cornerRadius = 6;
-    _failedBtn.hidden = YES;
-    [_failedBtn addTarget:self action:@selector(startCountDown) forControlEvents:UIControlEventTouchUpInside];
-    
-    return _failedBtn;
 }
 
 
