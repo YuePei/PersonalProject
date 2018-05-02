@@ -65,11 +65,11 @@
         _releaseTime = [UILabel new];
         [self.contentView addSubview:_releaseTime];
         [_releaseTime mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.userName.mas_left);
-            make.top.equalTo(self.userName.mas_bottom).offset(10);
+            make.left.mas_equalTo(self.userName.mas_left);
+            make.top.mas_equalTo(self.userName.mas_bottom).offset(10);
+            make.right.mas_equalTo(-20);
         }];
         _releaseTime.numberOfLines = 1;
-        
         NSDate *date = [[NSDate alloc]init];
         NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
         [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -85,11 +85,12 @@
         _contentLabel = [[UILabel alloc]init];
         [self.contentView addSubview:_contentLabel];
         [_contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.userName.mas_left);
-            make.top.equalTo(self.releaseTime.mas_bottom).offset(15);
+            make.left.mas_equalTo(self.userName.mas_left);
+            make.top.mas_equalTo(self.releaseTime.mas_bottom).offset(15);
             make.right.mas_equalTo(-20);
         }];
-        _contentLabel.numberOfLines = 0;
+        _contentLabel.numberOfLines = 3;
+        _contentLabel.lineBreakMode = NSLineBreakByTruncatingTail;
         _contentLabel.font = [UIFont systemFontOfSize:16];
         _contentLabel.font = [UIFont fontWithName:@"AppleGothic" size:15];
         _contentLabel.textColor = [UIColor darkGrayColor];

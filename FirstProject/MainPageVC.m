@@ -166,10 +166,9 @@ static int networkSituation = 1;
         dpVC.aType = [self.articleVM getArticleTypeWithIndex:indexPath.section];
     }else {
         dpVC.mongold = [self getMongoIdFromFMDB][indexPath.section];
-        dpVC.articleId = [self getArticleIdFromFMDB][indexPath.section];
-        dpVC.aType = [self getATypeFromFMDB][indexPath.section];
+        dpVC.articleId = [[self getArticleIdFromFMDB][indexPath.section] floatValue];
+        dpVC.aType = [[self getATypeFromFMDB][indexPath.section] floatValue];
     }
-    
     
     [self.navigationController pushViewController:dpVC animated:YES];
 
@@ -208,26 +207,27 @@ static int networkSituation = 1;
 #pragma mark FMDB
 //配置FMDB
 - (void)configFMDB {
-    NSString *sqlFilePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject stringByAppendingPathComponent:@"TodayNextYear3.sqlite"];
+    NSString *sqlFilePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject stringByAppendingPathComponent:@"TodayNextYear.sqlite"];
     if(!_db) {
         _db = [FMDatabase databaseWithPath:sqlFilePath];
     }
     if ([self.db open]) {
         NSLog(@"--%@",NSHomeDirectory());
-        NSLog(@"Open database succeed!");
-        BOOL success = [self.db executeUpdate:@"create table if not exists articles2 ('id' integer PRIMARY KEY AUTOINCREMENT,'authorName' text not null,'abstractWords' text,'mongoId' text,'articleId' double,'aType' double)"];
+        NSLog(@"Open database succeed!...................");
+//        BOOL success = [self.db executeUpdate:@"create table if not exists articles (id integer PRIMARY KEY AUTOINCREMENT,authorName text not null,abstractWords text,mongoId text,articleId float,aType float)"];
+        BOOL success = [self.db executeUpdate:@"create table if not exists articles (id integer PRIMARY KEY AUTOINCREMENT,authorName text not null,abstractWords text,mongoId text,articleId double,aType double)"];
         if (success) {
-            NSLog(@"Create table succeed!");
+            NSLog(@"Create table succeed!...................");
         }else {
-            NSLog(@"Create table failed!");
+            NSLog(@"Create table failed!...................");
         }
     }else {
-        NSLog(@"Open database failed!");
+        NSLog(@"Open database failed!...................");
     }
 }
 
 - (NSArray *)getTitlesFromFMDB {
-    FMResultSet *result = [self.db executeQuery:@"select * from articles2"];
+    FMResultSet *result = [self.db executeQuery:@"select * from articles"];
     NSMutableArray *array = [NSMutableArray array];
     while ([result next]) {
         NSString *nameString = [result stringForColumn:@"authorName"];
@@ -237,7 +237,7 @@ static int networkSituation = 1;
 }
 
 - (NSArray *)getAbstractFromFMDB {
-    FMResultSet *result = [self.db executeQuery:@"select * from articles2"];
+    FMResultSet *result = [self.db executeQuery:@"select * from articles"];
     NSMutableArray *array = [NSMutableArray array];
     while ([result next]) {
         NSString *abstract = [result stringForColumn:@"abstractWords"];
@@ -247,7 +247,7 @@ static int networkSituation = 1;
 }
 
 - (NSArray *)getMongoIdFromFMDB {
-    FMResultSet *result = [self.db executeQuery:@"select * from articles2"];
+    FMResultSet *result = [self.db executeQuery:@"select * from articles"];
     NSMutableArray *array = [NSMutableArray array];
     while ([result next]) {
         NSString *abstract = [result stringForColumn:@"mongoId"];
@@ -256,20 +256,20 @@ static int networkSituation = 1;
     return array;
 }
 - (NSArray *)getArticleIdFromFMDB {
-    FMResultSet *result = [self.db executeQuery:@"select * from articles2"];
+    FMResultSet *result = [self.db executeQuery:@"select * from articles"];
     NSMutableArray *array = [NSMutableArray array];
     while ([result next]) {
-        NSString *abstract = [result stringForColumn:@"articleId"];
-        [array addObject:abstract];
+        NSInteger abstract = [result longForColumn:@"articleId"];
+        [array addObject:@(abstract)];
     }
     return array;
 }
 - (NSArray *)getATypeFromFMDB {
-    FMResultSet *result = [self.db executeQuery:@"select * from articles2"];
+    FMResultSet *result = [self.db executeQuery:@"select * from articles"];
     NSMutableArray *array = [NSMutableArray array];
     while ([result next]) {
-        NSString *abstract = [result stringForColumn:@"aType"];
-        [array addObject:abstract];
+        NSInteger abstract = [result longForColumn:@"aType"];
+        [array addObject:@(abstract)];
     }
     return array;
 }
@@ -326,17 +326,19 @@ static int networkSituation = 1;
             [self.tableView.mj_header endRefreshing];
             [self.tableView reloadData];
             
-            //1.删除过去的数据,清表
-            [self.db executeUpdate:@"DELETE FROM articles2"];
-            //2.插入新数据数据
-            for (int i = 0; i < 10; i++) {
-                BOOL success1 = [self.db executeUpdate:@"insert into articles2(authorName,abstractWords,mongold,articleId,aType) values(?, ?, ?, ?);",[self.articleVM getArticleTitleWithIndex:i],[self.articleVM getContentLabelWithIndex:i],[self.articleVM getMongoldWithIndex:i],[self.articleVM getArticleIdWithIndex:i],[self.articleVM getArticleTypeWithIndex:i]];
-                if (success1) {
-                    NSLog(@"insert data succeed!");
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                //1.删除过去的数据,清表
+                [self.db executeUpdate:@"DELETE FROM articles"];
+                //2.插入新数据数据
+                for (int i = 0; i < 10; i++) {
+                    BOOL success1 = [self.db executeUpdate:@"insert into articles(authorName, abstractWords, mongoId, articleId, aType) values(?, ?, ?, ?, ?);",[self.articleVM getArticleTitleWithIndex:i], [self.articleVM getContentLabelWithIndex:i], [self.articleVM getMongoldWithIndex:i], @([self.articleVM getArticleIdWithIndex:i]), @([self.articleVM getArticleTypeWithIndex:i])];
+                    if (success1) {
+                        NSLog(@"insert data succeed!...................");
+                    }
                 }
-            }
+            });
         }else {
-            NSLog(@"refresh failed");
+            NSLog(@"refresh failed...................");
             //请求失败做些什么？
             [self.tableView.mj_header endRefreshing];
             //列表显示从FMDB中拿到的数据,可以通过通知的方式,告知代理方法,展示本地数据
@@ -434,7 +436,6 @@ static int networkSituation = 1;
     return _tableView;
 }
 
-
 - (NSMutableArray<UIImage *> *)imagesArray {
     if (_imagesArray == nil) {
         _imagesArray = [[NSMutableArray alloc]init];
@@ -442,7 +443,6 @@ static int networkSituation = 1;
             //未标题-7_0059_图层-1
             if (i > 50) {
                 UIImage *ima = [UIImage imageNamed:[NSString stringWithFormat:@"未标题-7_000%d_图层-%d",(60 - i),i]];
-                
                 [_imagesArray addObject:ima];
             }else {
                 UIImage *ima = [UIImage imageNamed:[NSString stringWithFormat:@"未标题-7_00%d_图层-%d",(60 - i),i]];
