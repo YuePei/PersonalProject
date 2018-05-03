@@ -12,6 +12,7 @@
 #import <objc/runtime.h>
 #import <objc/message.h>
 #import "FMDB.h"
+#import "MainPageHeaderView.h"
 
 #define NAVBAR_CHANGE_POINT 10
 
@@ -45,7 +46,7 @@ static int networkSituation = 1;
     [self setUpUI];
     [self configFMDB];
     [self refreshData];
-    NSLog(@"-------%ld",[self getTitlesFromFMDB].count);
+    
 }
 
 
@@ -169,15 +170,15 @@ static int networkSituation = 1;
         dpVC.articleId = [[self getArticleIdFromFMDB][indexPath.section] floatValue];
         dpVC.aType = [[self getATypeFromFMDB][indexPath.section] floatValue];
     }
-    
     [self.navigationController pushViewController:dpVC animated:YES];
-
 }
+
 //设置cell之间的灰色间隙高度
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     
     return 6;
 }
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if(section == 0) {
         return 0;
@@ -255,6 +256,7 @@ static int networkSituation = 1;
     }
     return array;
 }
+
 - (NSArray *)getArticleIdFromFMDB {
     FMResultSet *result = [self.db executeQuery:@"select * from articles"];
     NSMutableArray *array = [NSMutableArray array];
@@ -264,6 +266,7 @@ static int networkSituation = 1;
     }
     return array;
 }
+
 - (NSArray *)getATypeFromFMDB {
     FMResultSet *result = [self.db executeQuery:@"select * from articles"];
     NSMutableArray *array = [NSMutableArray array];
@@ -278,6 +281,7 @@ static int networkSituation = 1;
     networkSituation = 0;
     [self.tableView reloadData];
 }
+
 #pragma mark ToolMethods
 - (void)setUpUI {
     [self tableView];
@@ -432,6 +436,10 @@ static int networkSituation = 1;
         _tableView.estimatedRowHeight = 0;
         _tableView.estimatedSectionFooterHeight = 0;
         _tableView.estimatedSectionHeaderHeight = 0;
+        
+        MainPageHeaderView *view = [[MainPageHeaderView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200)];
+        view.backgroundColor = [UIColor whiteColor];
+        _tableView.tableHeaderView = view;
     }
     return _tableView;
 }

@@ -18,10 +18,10 @@
 		9F07345520902B9D005173A3 /* NewCommunityVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F07345420902B9D005173A3 /* NewCommunityVC.m */; };
 		9F07345820902C28005173A3 /* SlideTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F07345720902C28005173A3 /* SlideTableViewCell.m */; };
 		9F07345B2090599F005173A3 /* DetailCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F07345A2090599F005173A3 /* DetailCollectionViewCell.m */; };
+		9F13EA51209AA14D002158BA /* CommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F13EA50209AA14D002158BA /* CommentView.m */; };
 		9F3EE7B7205F8B3C002B5527 /* CustomNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3EE7B6205F8B3C002B5527 /* CustomNavigationController.m */; };
+		9F793BAD209AFE7D009EE379 /* MainPageHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F793BAC209AFE7D009EE379 /* MainPageHeaderView.m */; };
 		9F7AA8222092FFE7003D0C5A /* BottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7AA8202092FFE7003D0C5A /* BottomView.m */; };
-		9F7AA8242092FFF8003D0C5A /* BottomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F7AA8232092FFF8003D0C5A /* BottomView.xib */; };
-		9F7AA827209315DD003D0C5A /* CustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7AA826209315DD003D0C5A /* CustomButton.m */; };
 		9FFB1F1D2091B91800641F49 /* PCTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFB1F1B2091B91800641F49 /* PCTableViewCell.m */; };
 		9FFB1F1E2091B91800641F49 /* PCTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFB1F1C2091B91800641F49 /* PCTableViewCell.xib */; };
 		D00FFE191FBF1D2700886330 /* KeyFrameAnimationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D00FFE181FBF1D2700886330 /* KeyFrameAnimationVC.m */; };
@@ -126,13 +126,14 @@
 		9F07345720902C28005173A3 /* SlideTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SlideTableViewCell.m; sourceTree = "<group>"; };
 		9F0734592090599F005173A3 /* DetailCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailCollectionViewCell.h; sourceTree = "<group>"; };
 		9F07345A2090599F005173A3 /* DetailCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailCollectionViewCell.m; sourceTree = "<group>"; };
+		9F13EA4F209AA14D002158BA /* CommentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommentView.h; sourceTree = "<group>"; };
+		9F13EA50209AA14D002158BA /* CommentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommentView.m; sourceTree = "<group>"; };
 		9F3EE7B5205F8B3C002B5527 /* CustomNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNavigationController.h; sourceTree = "<group>"; };
 		9F3EE7B6205F8B3C002B5527 /* CustomNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNavigationController.m; sourceTree = "<group>"; };
+		9F793BAB209AFE7D009EE379 /* MainPageHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainPageHeaderView.h; sourceTree = "<group>"; };
+		9F793BAC209AFE7D009EE379 /* MainPageHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainPageHeaderView.m; sourceTree = "<group>"; };
 		9F7AA8202092FFE7003D0C5A /* BottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomView.m; sourceTree = "<group>"; };
 		9F7AA8212092FFE7003D0C5A /* BottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomView.h; sourceTree = "<group>"; };
-		9F7AA8232092FFF8003D0C5A /* BottomView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BottomView.xib; sourceTree = "<group>"; };
-		9F7AA825209315DD003D0C5A /* CustomButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomButton.h; sourceTree = "<group>"; };
-		9F7AA826209315DD003D0C5A /* CustomButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomButton.m; sourceTree = "<group>"; };
 		9FFB1F1A2091B91800641F49 /* PCTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PCTableViewCell.h; sourceTree = "<group>"; };
 		9FFB1F1B2091B91800641F49 /* PCTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PCTableViewCell.m; sourceTree = "<group>"; };
 		9FFB1F1C2091B91800641F49 /* PCTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PCTableViewCell.xib; sourceTree = "<group>"; };
@@ -339,9 +340,8 @@
 			children = (
 				9F7AA8212092FFE7003D0C5A /* BottomView.h */,
 				9F7AA8202092FFE7003D0C5A /* BottomView.m */,
-				9F7AA8232092FFF8003D0C5A /* BottomView.xib */,
-				9F7AA825209315DD003D0C5A /* CustomButton.h */,
-				9F7AA826209315DD003D0C5A /* CustomButton.m */,
+				9F13EA4F209AA14D002158BA /* CommentView.h */,
+				9F13EA50209AA14D002158BA /* CommentView.m */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -438,6 +438,12 @@
 				D0A3C4881F9F46FC00747C67 /* FirstKindTableViewCell.m */,
 				D0A8F92420416686005FBD48 /* NoPictureTVCell.h */,
 				D0A8F92520416686005FBD48 /* NoPictureTVCell.m */,
+				9F793BAB209AFE7D009EE379 /* MainPageHeaderView.h */,
+				9F793BAC209AFE7D009EE379 /* MainPageHeaderView.m */,
+				9F07345620902C28005173A3 /* SlideTableViewCell.h */,
+				9F07345720902C28005173A3 /* SlideTableViewCell.m */,
+				9F0734592090599F005173A3 /* DetailCollectionViewCell.h */,
+				9F07345A2090599F005173A3 /* DetailCollectionViewCell.m */,
 			);
 			name = cell;
 			sourceTree = "<group>";
@@ -500,10 +506,6 @@
 			children = (
 				D0525A7820317F26008421C1 /* CommunityCell.h */,
 				D0525A7920317F26008421C1 /* CommunityCell.m */,
-				9F07345620902C28005173A3 /* SlideTableViewCell.h */,
-				9F07345720902C28005173A3 /* SlideTableViewCell.m */,
-				9F0734592090599F005173A3 /* DetailCollectionViewCell.h */,
-				9F07345A2090599F005173A3 /* DetailCollectionViewCell.m */,
 				D03415D9203C6F00003186B4 /* PhotoCollectionViewCell.h */,
 				D03415DA203C6F00003186B4 /* PhotoCollectionViewCell.m */,
 				9C8C4DAD20597C870093380D /* CustomCollectionReusableView.h */,
@@ -835,7 +837,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D08326171F95A0E4008AF378 /* LaunchScreen.storyboard in Resources */,
-				9F7AA8242092FFF8003D0C5A /* BottomView.xib in Resources */,
 				D07984B7200753C9004193C6 /* Assets.xcassets in Resources */,
 				9FFB1F1E2091B91800641F49 /* PCTableViewCell.xib in Resources */,
 				D08326121F95A0E4008AF378 /* Main.storyboard in Resources */,
@@ -1025,7 +1026,6 @@
 				9F3EE7B7205F8B3C002B5527 /* CustomNavigationController.m in Sources */,
 				D083260F1F95A0E4008AF378 /* ViewController.m in Sources */,
 				D0906D451FBD59BC00A04904 /* SWRevealViewController.m in Sources */,
-				9F7AA827209315DD003D0C5A /* CustomButton.m in Sources */,
 				D083F1C4202C4386009BA395 /* UINavigationBar+NavigationBarBGColor.m in Sources */,
 				D083260C1F95A0E4008AF378 /* AppDelegate.m in Sources */,
 				D0A3C4851F9F07FC00747C67 /* CommunityVC.m in Sources */,
@@ -1044,6 +1044,7 @@
 				D0906D4A1FBD5D3200A04904 /* AnimationCenterVC.m in Sources */,
 				D09617A11FA311CF00F0DC7B /* FQLHttpTools.m in Sources */,
 				D0A8F92620416686005FBD48 /* NoPictureTVCell.m in Sources */,
+				9F13EA51209AA14D002158BA /* CommentView.m in Sources */,
 				D04B56512047C34600C95B0C /* GoodsModel.m in Sources */,
 				D06439BA1FAACC53005BDCB2 /* ArticleVideModel.m in Sources */,
 				D0906D501FBD730F00A04904 /* BasicAnimationVC.m in Sources */,
@@ -1052,6 +1053,7 @@
 				D04B564D2047C1BC00C95B0C /* SUNetwork.m in Sources */,
 				D04B56552047C55900C95B0C /* SurroundVM.m in Sources */,
 				9CA67CCC205BD5F00048B1AC /* AdversementView.m in Sources */,
+				9F793BAD209AFE7D009EE379 /* MainPageHeaderView.m in Sources */,
 				9C8C4DA920595EE50093380D /* SettingVC.m in Sources */,
 				D06439B61FAAC130005BDCB2 /* ArticleModel.m in Sources */,
 				D08326441F95D3C9008AF378 /* FQLLoginVC.m in Sources */,

@@ -9,8 +9,9 @@
 #import "ArticleDetailPageVC.h"
 #import <WebKit/WebKit.h>
 #import "BottomView.h"
+#import "CommentView.h"
 
-@interface ArticleDetailPageVC ()
+@interface ArticleDetailPageVC ()<UITextViewDelegate,UITextFieldDelegate>
 
 //articleDetailModel
 @property (nonatomic , strong) ArticleDetailModel *articleDetailModel;
@@ -20,19 +21,22 @@
 @property (nonatomic , strong) UIWebView *wkWebView;
 //bottomView
 @property (nonatomic, strong)BottomView *bottomView;
+//commentView
+@property (nonatomic, strong)CommentView *commentView;
 
 
 @end
 
 @implementation ArticleDetailPageVC
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = [UIColor whiteColor];
-    [self setNavigationBarAndGoBackWithGesture];
+    self.title = @"好文";
     [self wkWebView];
     [self bottomView];
+    [self getDetailPageData];
+    [self commentView];
     //毛玻璃效果
 //    UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
 //    UIVisualEffectView *effectView = [[UIVisualEffectView alloc]initWithEffect:blur];
@@ -40,34 +44,35 @@
 //    effectView.alpha = 0.3;
 //    [self.view addSubview:effectView];
     
-    [self getDetailPageData];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
-- (void)popBack {
-    [self.navigationController popViewControllerAnimated:YES];
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
+
+
+#pragma mark tools Methods
 //调用系统的分享功能
 - (void)systemShare{
-    
     NSArray *images = @[[UIImage imageNamed:@"beauty"]];
     UIActivityViewController *activityController=[[UIActivityViewController alloc]initWithActivityItems:images applicationActivities:nil];
     [self.navigationController presentViewController:activityController animated:YES completion:nil];
 }
 
-#pragma mark tools Methods
 - (void)getDetailPageData {
     //拿到数据
     [MainNetwork getArticleDetailInfoByMongold:self.mongold articleId:self.articleId andType:self.aType callBack:^(NSDictionary * dic, NSError *error) {
-        
         self.articleDetailModel = [ArticleDetailModel mj_objectWithKeyValues:dic];
         self.dataModel = self.articleDetailModel.data;
         [self shoHtmlStringInWebView];
     }];
-    
 }
+
 - (void)shoHtmlStringInWebView {
 //    NSString *htmlStirng = [NSString stringWithFormat:@"<!DOCTYPE HTML><html><body>%@</body></html>",self.dataModel.htmlContent];
-    
     NSString *htmlStirng = [NSString stringWithFormat:@"<html> \n"
      "<head> \n"
      "<style type=\"text/css\"> \n"
@@ -90,16 +95,80 @@
     [self.wkWebView loadHTMLString:htmlStirng baseURL:nil];
 }
 
-- (void)setNavigationBarAndGoBackWithGesture {
-    self.title = @"好文";
-    UIBarButtonItem *shareItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"分享"] style:UIBarButtonItemStylePlain target:self action:@selector(systemShare)];
-    NSArray *itemArray = [NSArray arrayWithObjects:shareItem, nil];
-    [self.navigationItem setRightBarButtonItems:itemArray];
+
+- (void)likeFunction {
+    if ([self.bottomView.likeBtn.imageView.image isEqual: [UIImage imageNamed:@"喜欢"]]) {
+        [self.bottomView.likeBtn setImage:[UIImage imageNamed:@"喜欢1"] forState:UIControlStateNormal];
+    }else {
+        [self.bottomView.likeBtn setImage:[UIImage imageNamed:@"喜欢"] forState:UIControlStateNormal];
+    }
 }
 
-- (void)clickToGetUserName {
-    
+- (void)collectFunction {
+    if ([self.bottomView.collectBtn.imageView.image isEqual: [UIImage imageNamed:@"收藏"]]) {
+        [self.bottomView.collectBtn setImage:[UIImage imageNamed:@"收藏1"] forState:UIControlStateNormal];
+    }else {
+        [self.bottomView.collectBtn setImage:[UIImage imageNamed:@"收藏"] forState:UIControlStateNormal];
+    }
 }
+
+- (void)commentFunction {
+    [self.commentView.contentTextView becomeFirstResponder];
+}
+
+- (void)resignContentTextViewFirstResponser {
+    [self.commentView.contentTextView resignFirstResponder];
+}
+
+- (void)keyBoardWillShow:(NSNotification *)notification
+{
+    //     获取用户信息
+    NSDictionary *userInfo = [NSDictionary dictionaryWithDictionary:notification.userInfo];
+    // 获取键盘高度
+    CGRect keyBoardBounds  = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGFloat keyBoardHeight = keyBoardBounds.size.height;
+    // 获取键盘动画时间
+    CGFloat animationTime  = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
+    // 定义好动作
+    void (^animation)(void) = ^void(void) {
+        self.commentView.transform = CGAffineTransformMakeTranslation(0, -(keyBoardHeight + 150));
+    };
+    if (animationTime > 0) {
+        [UIView animateWithDuration:animationTime animations:animation];
+    } else {
+        animation();
+    }
+}
+
+- (void)keyBoardWillHide:(NSNotification *)notificaiton
+{
+    // 获取用户信息
+    NSDictionary *userInfo = [NSDictionary dictionaryWithDictionary:notificaiton.userInfo];
+    // 获取键盘动画时间
+    CGFloat animationTime  = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
+    // 定义好动作
+    void (^animation)(void) = ^void(void) {
+        self.commentView.transform = CGAffineTransformIdentity;
+    };
+    if (animationTime > 0) {
+        [UIView animateWithDuration:animationTime animations:animation];
+        self.commentView.contentTextView.text = @"";
+    } else {
+        animation();
+    }
+}
+
+//计算输入框内的文字高度
+- (CGFloat)textHeightForTextView:(UITextView *)textView withTextString:(NSString *)textString {
+    CGSize size = CGSizeMake(self.commentView.contentTextView.contentSize.width, CGFLOAT_MAX);
+    CGRect rect = [textString boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName :[UIFont systemFontOfSize:14]} context:nil];
+    if (rect.size.height < textView.frame.size.height) {
+        return textView.frame.size.height;
+    }else {
+        return rect.size.height;
+    }
+}
+
 
 #pragma mark lazy
 - (ArticleDetailModel *)articleDetailModel {
@@ -132,12 +201,74 @@
 
 - (BottomView *)bottomView {
     if (!_bottomView) {
-//        _bottomView = [[NSBundle mainBundle] loadNibNamed:@"BottomView" owner:self options:nil].firstObject;
-//        [_bottomView setFrame:CGRectMake(0, SCREEN_HEIGHT - 50 * SCREEN_PROPORTION - 64, SCREEN_WIDTH, 50 * SCREEN_PROPORTION)];
         _bottomView = [[BottomView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 50 * SCREEN_PROPORTION - 64, SCREEN_WIDTH, 50 * SCREEN_PROPORTION)];
         [self.view insertSubview:_bottomView aboveSubview:self.wkWebView];
         _bottomView.backgroundColor = BACK_COLOR;
+        [_bottomView.collectBtn addTarget:self action:@selector(collectFunction) forControlEvents:UIControlEventTouchUpInside];
+        [_bottomView.likeBtn addTarget:self action:@selector(likeFunction) forControlEvents:UIControlEventTouchUpInside];
+        [_bottomView.shareBtn addTarget:self action:@selector(systemShare) forControlEvents:UIControlEventTouchUpInside];
+        [_bottomView.commentBtn addTarget:self action:@selector(commentFunction) forControlEvents:UIControlEventTouchUpInside];
     }
     return _bottomView;
 }
+
+//评论框
+- (UIView *)commentView {
+    if (!_commentView) {
+        _commentView = [[CommentView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 64, SCREEN_WIDTH, 150)];
+        [self.view addSubview:_commentView];
+        _commentView.backgroundColor = BACK_COLOR;
+        _commentView.contentTextView.delegate = self;
+        [_commentView.submitButton addTarget:self action:@selector(resignContentTextViewFirstResponser) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _commentView;
+}
+
+
+
+
+
+
+#pragma mark UITextViewDelegate
+//- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+//    if (textView.frame.size.height > 200) {
+//        return NO;
+//    }else {
+//        CGRect frame = textView.frame;
+//        NSLog(@"-------------------------: %lf",frame.origin.y);
+//        float height = [self textHeightForTextView:textView withTextString:textView.text];
+//        //偏移量
+//        CGFloat offsetY = height - frame.size.height;
+//        frame.size.height += offsetY;
+//        frame.origin.y -= offsetY;
+//
+//        CGRect commentViewRect = self.commentView.frame;
+//        commentViewRect.origin.y -= offsetY;
+//        commentViewRect.size.height += offsetY;
+//        [UIView animateWithDuration:CGFLOAT_MIN animations:^{
+//            textView.frame = frame;
+//            self.commentView.frame = commentViewRect;
+//        }];
+//        return YES;
+//    }
+//}
+
+//-(void)textViewDidChange:(UITextView *)textView{
+//    static CGFloat maxHeight =200.0f;
+//    CGRect frame = textView.frame;
+//    CGSize constraintSize = CGSizeMake(frame.size.width, MAXFLOAT);
+//    CGSize size = [textView sizeThatFits:constraintSize];
+//    if(size.height<=frame.size.height) {
+//        size.height = 150 - 30 - 10- 30;
+//    }else{
+//        if(size.height >= maxHeight){
+//            size.height = maxHeight;
+//            textView.scrollEnabled = YES;// 允许滚动
+//        }
+//        else{
+//            textView.scrollEnabled = NO;// 不允许滚动
+//        }
+//    }
+//    textView.frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, size.height);
+//}
 @end

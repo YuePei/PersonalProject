@@ -81,13 +81,14 @@
     if (_contentLabel == nil) {
         _contentLabel = [[UILabel alloc]init];
         [self.contentView addSubview:_contentLabel];
-        _contentLabel.numberOfLines = 0;
         [_contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.userName.mas_left);
             make.top.equalTo(self.releaseTime.mas_bottom).offset(15);
             make.right.mas_equalTo(-20);
             make.bottom.mas_equalTo(-15);
         }];
+        _contentLabel.numberOfLines = 3;
+        _contentLabel.lineBreakMode = NSLineBreakByTruncatingTail;
         _contentLabel.font = [UIFont systemFontOfSize:16];
         _contentLabel.textColor = [UIColor darkGrayColor];
     }
