@@ -21,8 +21,7 @@
 
 @end
 
-
-static int const showTime = 5;
+static int const showTime = 3;
 
 @implementation AdversementView
 

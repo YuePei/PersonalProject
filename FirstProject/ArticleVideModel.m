@@ -25,7 +25,6 @@
     [MainNetwork getArticleListFromInternetByPage:page Size:size andType:type callBackBlock:^(NSDictionary *dataDic, NSError *error) {
         if (!error) {
             //成功
-            [self.dataArray removeAllObjects];
             self.resultModel = [AResultModel mj_objectWithKeyValues:dataDic];
             [self.dataArray addObjectsFromArray:self.resultModel.data];
             callBack(dataDic,nil);

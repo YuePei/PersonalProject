@@ -10,6 +10,8 @@
 #import <WebKit/WebKit.h>
 #import "BottomView.h"
 #import "CommentView.h"
+#import "ShareListView.h"
+
 
 @interface ArticleDetailPageVC ()<UITextViewDelegate,UITextFieldDelegate>
 
@@ -57,9 +59,20 @@
 #pragma mark tools Methods
 //调用系统的分享功能
 - (void)systemShare{
-    NSArray *images = @[[UIImage imageNamed:@"beauty"]];
-    UIActivityViewController *activityController=[[UIActivityViewController alloc]initWithActivityItems:images applicationActivities:nil];
-    [self.navigationController presentViewController:activityController animated:YES completion:nil];
+//    NSArray *images = @[[UIImage imageNamed:@"beauty"]];
+//    UIActivityViewController *activityController=[[UIActivityViewController alloc]initWithActivityItems:images applicationActivities:nil];
+//    [self.navigationController presentViewController:activityController animated:YES completion:nil];
+    
+    ShareListView *shareView = [[ShareListView alloc]initWithFrame:CGRectZero
+                                                        shareIcons:@[[UIImage imageNamed:@"weChat"],
+                                                                     [UIImage imageNamed:@"朋友圈"],
+                                                                     [UIImage imageNamed:@"QQ"],
+                                                                     [UIImage imageNamed:@"空间"],
+                                                                     [UIImage imageNamed:@"支付宝"],
+                                                                     [UIImage imageNamed:@"微博"],
+                                                                     [UIImage imageNamed:@"链接"]]
+                                                    andShareTitles:@[@"微信",@"朋友圈",@"QQ好友",@"QQ空间",@"支付宝",@"微博",@"复制链接"]];
+    
 }
 
 - (void)getDetailPageData {
@@ -122,7 +135,7 @@
 
 - (void)keyBoardWillShow:(NSNotification *)notification
 {
-    //     获取用户信息
+    //获取用户信息
     NSDictionary *userInfo = [NSDictionary dictionaryWithDictionary:notification.userInfo];
     // 获取键盘高度
     CGRect keyBoardBounds  = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
@@ -191,7 +204,7 @@
             make.left.mas_equalTo(5);
             make.right.mas_equalTo(-5);
             make.top.mas_equalTo(0);
-            make.bottom.mas_equalTo(0);
+            make.bottom.mas_equalTo(-49);
         }];
         _wkWebView.scrollView.showsHorizontalScrollIndicator = NO;
         _wkWebView.backgroundColor = [UIColor whiteColor];

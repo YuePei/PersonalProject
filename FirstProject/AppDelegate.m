@@ -35,11 +35,11 @@
     //动画
     SurroundMPVC *sMPVC = [[SurroundMPVC alloc]init];
     CustomNavigationController *nav3 = [[CustomNavigationController alloc]initWithRootViewController:sMPVC];
-    SWRevealViewController *revealVC = [[SWRevealViewController alloc]initWithRearViewController:[LeftVC new] frontViewController:nav3];
-    revealVC.rearViewRevealWidth = 200;
-    [revealVC setFrontViewPosition:FrontViewPositionLeft animated:YES];
-    [revealVC setTabBarItem:[[UITabBarItem alloc]initWithTitle:@"周边" image:[UIImage imageNamed:@"游泳圈(g)"] selectedImage:[UIImage imageNamed:@"游泳圈"]]];
-    [tb addChildViewController:revealVC];
+//    SWRevealViewController *revealVC = [[SWRevealViewController alloc]initWithRearViewController:[LeftVC new] frontViewController:nav3];
+//    revealVC.rearViewRevealWidth = 200;
+//    [revealVC setFrontViewPosition:FrontViewPositionLeft animated:YES];
+    [nav3 setTabBarItem:[[UITabBarItem alloc]initWithTitle:@"周边" image:[UIImage imageNamed:@"游泳圈(g)"] selectedImage:[UIImage imageNamed:@"游泳圈"]]];
+    [tb addChildViewController:nav3];
     
     //个人中心
     PersonCenterVC *pcVC = [[PersonCenterVC alloc]init];
@@ -58,36 +58,58 @@
     //启动广告页
     [self setUpAdvertisementView];
     
+    //3DTouch
+    if (self.window.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+        //创建3D模型
+        UIMutableApplicationShortcutItem *item1 = [[UIMutableApplicationShortcutItem alloc]initWithType:@"type1" localizedTitle:@"Lucy" localizedSubtitle:@"She's Lucy" icon:[UIApplicationShortcutIcon iconWithTemplateImageName:@"喜欢"] userInfo:nil];
+        UIMutableApplicationShortcutItem *item2 = [[UIMutableApplicationShortcutItem alloc]initWithType:@"type2" localizedTitle:@"Lucy" localizedSubtitle:@"She's Lucy" icon:[UIApplicationShortcutIcon iconWithTemplateImageName:@"消息"] userInfo:nil];
+        UIMutableApplicationShortcutItem *item3 = [[UIMutableApplicationShortcutItem alloc]initWithType:@"type3" localizedTitle:@"Lucy" localizedSubtitle:@"She's Lucy" icon:[UIApplicationShortcutIcon iconWithTemplateImageName:@"收藏"] userInfo:nil];
+        [[UIApplication sharedApplication] setShortcutItems:@[item1,item2,item3]];
+    }
     
     return YES;
+}
+
+- (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {
+    NSString *type = shortcutItem.type;
+    //根据type来判断点击了哪一个快捷按钮
+    if ([type isEqualToString:@"type1"]) {
+        NSLog(@"Clicked the first item");
+    }else if ([type isEqualToString:@"type2"]) {
+        NSLog(@"Clicked the second item");
+    }else {
+        NSLog(@"Clicked the third item");
+    }
 }
 
 - (void)setUpAdvertisementView {
     AdversementView *adView = [[AdversementView alloc]initWithFrame:self.window.frame];
     [adView showAdvertisement];
 }
+
+//将要挂起
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
 }
 
-
+//已经进入后台
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
-
+//将要进入后台
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
 }
 
-
+//进入活跃状态
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
-
+//将要终止
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }

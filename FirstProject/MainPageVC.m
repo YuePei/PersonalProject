@@ -46,7 +46,6 @@ static int networkSituation = 1;
     [self setUpUI];
     [self configFMDB];
     [self refreshData];
-    
 }
 
 
@@ -74,6 +73,7 @@ static int networkSituation = 1;
     if (networkSituation) {
         if([[self.articleVM getBigImageWithIndex:indexPath.section] isEqualToString:@""]){
             //无图
+            NSLog(@"...................无图...................");
             NoPictureTVCell *cell = [tableView dequeueReusableCellWithIdentifier:@"noPicCell"];
             if (!cell) {
                 cell = [[NoPictureTVCell alloc]init];
@@ -86,6 +86,7 @@ static int networkSituation = 1;
             [UILabel changeLineSpacingForLabel:cell.contentLabel WithSpace:11];
             return cell;
         }else {
+            NSLog(@"...................有图...................");
             //如果有图
             FirstKindTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell1"];
             if (cell == nil) {
@@ -98,6 +99,8 @@ static int networkSituation = 1;
             //设置行间距和字间距
             [UILabel changeLineSpacingForLabel:cell.contentLabel WithSpace:11];
             [cell.contentIV sd_setImageWithURL:[NSURL URLWithString:[self.articleVM getBigImageWithIndex:indexPath.section]]];
+//            [cell.contentIV setImage:[UIImage imageNamed:@"4"]];
+            
             return cell;
         }
     }else {
@@ -107,7 +110,7 @@ static int networkSituation = 1;
             cell = [[NoPictureTVCell alloc]init];
         }
         //为cell赋值
-        NSLog(@"--------------;;;;;%ld",[self getTitlesFromFMDB].count);
+        NSLog(@"...................网络不好...................");
         if ([self getTitlesFromFMDB].count > 0 && [self getAbstractFromFMDB].count > 0) {
             cell.userName.text = [self getTitlesFromFMDB][indexPath.section];
             cell.contentLabel.text = [self getAbstractFromFMDB][indexPath.section];
@@ -126,7 +129,6 @@ static int networkSituation = 1;
         if([[self.articleVM getBigImageWithIndex:indexPath.section] isEqualToString:@""]){
             return [tableView fd_heightForCellWithIdentifier:@"noPicCell" cacheByIndexPath:indexPath configuration:^(NoPictureTVCell *cell) {
                 //无图
-                NSLog(@"无图");
                 cell.userName.text = [self.articleVM getArticleTitleWithIndex:indexPath.section];
                 cell.contentLabel.text = [self.articleVM getContentLabelWithIndex:indexPath.section];
                 [UILabel changeLineSpacingForLabel:cell.contentLabel WithSpace:11];
@@ -135,7 +137,6 @@ static int networkSituation = 1;
         }else {
             return [tableView fd_heightForCellWithIdentifier:@"cell1" cacheByIndexPath:indexPath configuration:^(FirstKindTableViewCell * cell) {
                 //如果有图
-                NSLog(@"有图");
                 cell.userName.text = [self.articleVM getArticleTitleWithIndex:indexPath.section];
                 cell.contentLabel.text = [self.articleVM getContentLabelWithIndex:indexPath.section];
                 //设置label的行间距
@@ -147,7 +148,6 @@ static int networkSituation = 1;
     }else {
         return [tableView fd_heightForCellWithIdentifier:@"noPicCell" cacheByIndexPath:indexPath configuration:^(NoPictureTVCell *cell) {
             //无图
-            NSLog(@"无图");
             if ([self getTitlesFromFMDB].count > 0 && [self getAbstractFromFMDB].count > 0) {
                 cell.userName.text = [self getTitlesFromFMDB][indexPath.section];
                 cell.contentLabel.text = [self getAbstractFromFMDB][indexPath.section];
@@ -208,12 +208,12 @@ static int networkSituation = 1;
 #pragma mark FMDB
 //配置FMDB
 - (void)configFMDB {
+    
     NSString *sqlFilePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject stringByAppendingPathComponent:@"TodayNextYear.sqlite"];
     if(!_db) {
         _db = [FMDatabase databaseWithPath:sqlFilePath];
     }
     if ([self.db open]) {
-        NSLog(@"--%@",NSHomeDirectory());
         NSLog(@"Open database succeed!...................");
 //        BOOL success = [self.db executeUpdate:@"create table if not exists articles (id integer PRIMARY KEY AUTOINCREMENT,authorName text not null,abstractWords text,mongoId text,articleId float,aType float)"];
         BOOL success = [self.db executeUpdate:@"create table if not exists articles (id integer PRIMARY KEY AUTOINCREMENT,authorName text not null,abstractWords text,mongoId text,articleId double,aType double)"];
@@ -328,8 +328,9 @@ static int networkSituation = 1;
     [self.articleVM getArticlesInfoByPage:self.page Size:10 andType:-1 callBack:^(NSDictionary * dic,NSError *err) {
         if (!err) {
             [self.tableView.mj_header endRefreshing];
+            NSLog(@"---网络请求完毕-----------------------刷新");
             [self.tableView reloadData];
-            
+            //缓存数据
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 //1.删除过去的数据,清表
                 [self.db executeUpdate:@"DELETE FROM articles"];
@@ -337,12 +338,13 @@ static int networkSituation = 1;
                 for (int i = 0; i < 10; i++) {
                     BOOL success1 = [self.db executeUpdate:@"insert into articles(authorName, abstractWords, mongoId, articleId, aType) values(?, ?, ?, ?, ?);",[self.articleVM getArticleTitleWithIndex:i], [self.articleVM getContentLabelWithIndex:i], [self.articleVM getMongoldWithIndex:i], @([self.articleVM getArticleIdWithIndex:i]), @([self.articleVM getArticleTypeWithIndex:i])];
                     if (success1) {
-                        NSLog(@"insert data succeed!...................");
+                        NSLog(@"Insert data succeed!");
                     }
                 }
             });
+            
         }else {
-            NSLog(@"refresh failed...................");
+            NSLog(@"refresh failed");
             //请求失败做些什么？
             [self.tableView.mj_header endRefreshing];
             //列表显示从FMDB中拿到的数据,可以通过通知的方式,告知代理方法,展示本地数据

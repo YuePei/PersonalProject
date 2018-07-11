@@ -19,6 +19,9 @@
 		9F07345820902C28005173A3 /* SlideTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F07345720902C28005173A3 /* SlideTableViewCell.m */; };
 		9F07345B2090599F005173A3 /* DetailCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F07345A2090599F005173A3 /* DetailCollectionViewCell.m */; };
 		9F13EA51209AA14D002158BA /* CommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F13EA50209AA14D002158BA /* CommentView.m */; };
+		9F17B5E720F4605C00790237 /* ShareListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F17B5E620F4605C00790237 /* ShareListView.m */; };
+		9F17B5EB20F48F0800790237 /* ShareCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F17B5E920F48F0800790237 /* ShareCollectionViewCell.m */; };
+		9F17B5EC20F48F0800790237 /* ShareCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F17B5EA20F48F0800790237 /* ShareCollectionViewCell.xib */; };
 		9F3EE7B7205F8B3C002B5527 /* CustomNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3EE7B6205F8B3C002B5527 /* CustomNavigationController.m */; };
 		9F793BAD209AFE7D009EE379 /* MainPageHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F793BAC209AFE7D009EE379 /* MainPageHeaderView.m */; };
 		9F7AA8222092FFE7003D0C5A /* BottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7AA8202092FFE7003D0C5A /* BottomView.m */; };
@@ -77,7 +80,6 @@
 		D0906D4D1FBD5DC000A04904 /* LeftVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D0906D4C1FBD5DC000A04904 /* LeftVC.m */; };
 		D0906D501FBD730F00A04904 /* BasicAnimationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D0906D4F1FBD730F00A04904 /* BasicAnimationVC.m */; };
 		D09617A11FA311CF00F0DC7B /* FQLHttpTools.m in Sources */ = {isa = PBXBuildFile; fileRef = D09617A01FA311CF00F0DC7B /* FQLHttpTools.m */; };
-		D0A0338E201980FD00D698D9 /* BasicTools.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A0338D201980FD00D698D9 /* BasicTools.m */; };
 		D0A3C4851F9F07FC00747C67 /* CommunityVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A3C4841F9F07FC00747C67 /* CommunityVC.m */; };
 		D0A3C4891F9F46FC00747C67 /* FirstKindTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A3C4881F9F46FC00747C67 /* FirstKindTableViewCell.m */; };
 		D0A8F92620416686005FBD48 /* NoPictureTVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A8F92520416686005FBD48 /* NoPictureTVCell.m */; };
@@ -128,6 +130,11 @@
 		9F07345A2090599F005173A3 /* DetailCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailCollectionViewCell.m; sourceTree = "<group>"; };
 		9F13EA4F209AA14D002158BA /* CommentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommentView.h; sourceTree = "<group>"; };
 		9F13EA50209AA14D002158BA /* CommentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommentView.m; sourceTree = "<group>"; };
+		9F17B5E520F4605C00790237 /* ShareListView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareListView.h; sourceTree = "<group>"; };
+		9F17B5E620F4605C00790237 /* ShareListView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareListView.m; sourceTree = "<group>"; };
+		9F17B5E820F48F0800790237 /* ShareCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareCollectionViewCell.h; sourceTree = "<group>"; };
+		9F17B5E920F48F0800790237 /* ShareCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareCollectionViewCell.m; sourceTree = "<group>"; };
+		9F17B5EA20F48F0800790237 /* ShareCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShareCollectionViewCell.xib; sourceTree = "<group>"; };
 		9F3EE7B5205F8B3C002B5527 /* CustomNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNavigationController.h; sourceTree = "<group>"; };
 		9F3EE7B6205F8B3C002B5527 /* CustomNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNavigationController.m; sourceTree = "<group>"; };
 		9F793BAB209AFE7D009EE379 /* MainPageHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainPageHeaderView.h; sourceTree = "<group>"; };
@@ -232,8 +239,6 @@
 		D0906D4F1FBD730F00A04904 /* BasicAnimationVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicAnimationVC.m; sourceTree = "<group>"; };
 		D096179F1FA311CF00F0DC7B /* FQLHttpTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FQLHttpTools.h; sourceTree = "<group>"; };
 		D09617A01FA311CF00F0DC7B /* FQLHttpTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FQLHttpTools.m; sourceTree = "<group>"; };
-		D0A0338C201980FC00D698D9 /* BasicTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BasicTools.h; sourceTree = "<group>"; };
-		D0A0338D201980FD00D698D9 /* BasicTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BasicTools.m; sourceTree = "<group>"; };
 		D0A0338F2019819E00D698D9 /* Basic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Basic.h; sourceTree = "<group>"; };
 		D0A3C4831F9F07FC00747C67 /* CommunityVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommunityVC.h; sourceTree = "<group>"; };
 		D0A3C4841F9F07FC00747C67 /* CommunityVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommunityVC.m; sourceTree = "<group>"; };
@@ -338,12 +343,25 @@
 		9F4F16A52092D01F00AF98C6 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				9FA3CBE020F5DC6C00EEE999 /* ShareTool */,
 				9F7AA8212092FFE7003D0C5A /* BottomView.h */,
 				9F7AA8202092FFE7003D0C5A /* BottomView.m */,
 				9F13EA4F209AA14D002158BA /* CommentView.h */,
 				9F13EA50209AA14D002158BA /* CommentView.m */,
 			);
 			name = Tools;
+			sourceTree = "<group>";
+		};
+		9FA3CBE020F5DC6C00EEE999 /* ShareTool */ = {
+			isa = PBXGroup;
+			children = (
+				9F17B5E520F4605C00790237 /* ShareListView.h */,
+				9F17B5E620F4605C00790237 /* ShareListView.m */,
+				9F17B5E820F48F0800790237 /* ShareCollectionViewCell.h */,
+				9F17B5E920F48F0800790237 /* ShareCollectionViewCell.m */,
+				9F17B5EA20F48F0800790237 /* ShareCollectionViewCell.xib */,
+			);
+			name = ShareTool;
 			sourceTree = "<group>";
 		};
 		9FFB1F1F2091B9AC00641F49 /* Views */ = {
@@ -667,8 +685,6 @@
 				D0906D421FBD59BC00A04904 /* SWRevealViewController */,
 				D096179F1FA311CF00F0DC7B /* FQLHttpTools.h */,
 				D09617A01FA311CF00F0DC7B /* FQLHttpTools.m */,
-				D0A0338C201980FC00D698D9 /* BasicTools.h */,
-				D0A0338D201980FD00D698D9 /* BasicTools.m */,
 				D0A0338F2019819E00D698D9 /* Basic.h */,
 				D0209D3B202839900027CEB8 /* SSAlertView.h */,
 				D0209D3C202839900027CEB8 /* SSAlertView.m */,
@@ -839,6 +855,7 @@
 				D08326171F95A0E4008AF378 /* LaunchScreen.storyboard in Resources */,
 				D07984B7200753C9004193C6 /* Assets.xcassets in Resources */,
 				9FFB1F1E2091B91800641F49 /* PCTableViewCell.xib in Resources */,
+				9F17B5EC20F48F0800790237 /* ShareCollectionViewCell.xib in Resources */,
 				D08326121F95A0E4008AF378 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1062,13 +1079,14 @@
 				9F07345B2090599F005173A3 /* DetailCollectionViewCell.m in Sources */,
 				D03415DB203C6F00003186B4 /* PhotoCollectionViewCell.m in Sources */,
 				D03A33461FE217D500D1D384 /* MainNetwork.m in Sources */,
+				9F17B5E720F4605C00790237 /* ShareListView.m in Sources */,
 				D0525A7A20317F26008421C1 /* CommunityCell.m in Sources */,
 				D0A3C4891F9F46FC00747C67 /* FirstKindTableViewCell.m in Sources */,
-				D0A0338E201980FD00D698D9 /* BasicTools.m in Sources */,
 				D06439B31FAAC060005BDCB2 /* ArticleDetailPageVC.m in Sources */,
 				D04B56492047AB5900C95B0C /* SurroundMPVC.m in Sources */,
 				D04B564520478FC800C95B0C /* UILabel+GoodLooking.m in Sources */,
 				D0209D3D202839900027CEB8 /* SSAlertView.m in Sources */,
+				9F17B5EB20F48F0800790237 /* ShareCollectionViewCell.m in Sources */,
 				D03415D8203C6406003186B4 /* PhotosListVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

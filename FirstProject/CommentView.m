@@ -67,7 +67,6 @@
             make.width.mas_equalTo(_atButton.mas_height).multipliedBy(1);
         }];
         [_atButton setImage:[UIImage imageNamed:@"at"] forState:UIControlStateNormal];
-        
     }
     return _atButton;
 }

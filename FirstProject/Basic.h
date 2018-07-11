@@ -23,9 +23,9 @@
 
 
 //状态栏高度
-#define kStatusBarHeight [[UIApplication sharedApplication] statusBarFrame].size.height
+#define StatusBarHeight CGRectGetHeight([UIApplication sharedApplication].statusBarFrame)
 //导航栏高度
-#define kNavBarHeight 44.0
+#define NavBarHeight CGRectGetHeight(self.navigationController.navigationBar.frame)
 //tabbar高度
 #define kTabBarHeight ([[UIApplication sharedApplication] statusBarFrame].size.height>20?83:49)
 #define kTopHeight (kStatusBarHeight + kNavBarHeight)
@@ -74,10 +74,33 @@
 #define RGBAColor(r, g, b, a) [UIColor colorWithRed:(r)/255.0 green:(r)/255.0 blue:(r)/255.0 alpha:a]
 
 #define SetViewRadius(View, Radius)\
-\
 [View.layer setCornerRadius:(Radius)];\
-[View.layer setMasksToBounds:YES];\
+[View.layer setMasksToBounds:YES];
 
+
+//单利
+//头文件中定义单利
+#define HSingletonMD(ClassName,singletonMethodName) +(instancetype)singletonMethodName;
+//.m文件中实现单利
+#define MSingletonMD(ClassName,singletonMethodName)\
+static ClassName *instanceName = nil;\
++ (instancetype)singletonMethodName {\
+static dispatch_once_t onceToken;\
+dispatch_once(&onceToken, ^{\
+instanceName = [[self alloc]init];\
+});\
+return instanceName;\
+}\
++ (instancetype)allocWithZone:(struct _NSZone *)zone {\
+static dispatch_once_t onceToken;\
+dispatch_once(&onceToken, ^{\
+instanceName = [super allocWithZone:zone];\
+});\
+return instanceName;\
+}\
+-(id)copyWithZone:(NSZone *)zone{\
+return instanceName;\
+}
 
 
 //如果支持横屏

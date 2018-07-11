@@ -24,9 +24,9 @@
     self.navigationItem.title = @"足迹";
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    self.tabBarController.tabBar.hidden = NO;
-}
+//- (void)viewWillAppear:(BOOL)animated {
+//    self.tabBarController.tabBar.hidden = NO;
+//}
 #pragma mark UIScrollViewDelegate
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;

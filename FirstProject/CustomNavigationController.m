@@ -58,10 +58,14 @@
 
 #pragma mark -  拦截所有push方法
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    
+    
     //注意这个方法每次push进入某个页面都会调用, 所以此处的self.viewControllers.count可以用来大致识别是否为rootViewController
     if (self.viewControllers.count > 0) {
-        // 如果navigationController的字控制器个数大于两个就隐藏
-        viewController.hidesBottomBarWhenPushed = YES;
+        if (self.viewControllers.count == 1) {
+            // 如果navigationController的字控制器个数大于两个就隐藏
+            viewController.hidesBottomBarWhenPushed = YES;
+        }
         //设置返回按钮
         UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
         viewController.navigationItem.leftBarButtonItem = leftItem;

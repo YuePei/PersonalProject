@@ -22,28 +22,24 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"周边";
+//    [self showLeftSideMenu];
+    [self collectionView];
+    [self setUpUI];
+    [self.viewModel getGoodsListWithType:1 CallBack:^(NSError *error) {
+        if (!error) {
+            //成功
+            [self.collectionView reloadData];
+        }
+    }];
+}
+
+- (void)showLeftSideMenu {
     //声明SWRevealViewController
     SWRevealViewController *revealVC = self.revealViewController;
     //让手势左右滑动即可调出SWRevealViewController
     [revealVC panGestureRecognizer];
     [revealVC tapGestureRecognizer];
-    
-    [self collectionView];
-    [self setUpUI];
-//    MBProgressHUD *hud = [[MBProgressHUD alloc]init];
-//    [self.view addSubview:hud];
-//    hud.mode = MBProgressHUDModeAnnularDeterminate;
-//    hud.opacity = 1;
-//    [hud show:YES];
-    [self.viewModel getGoodsListWithType:1 CallBack:^(NSError *error) {
-        if (!error) {
-            //成功
-            [self.collectionView reloadData];
-//            [hud hide:YES];
-        }
-    }];
 }
-
 - (void)setUpUI {
     MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshData)];
     self.collectionView.mj_header = header;
@@ -77,13 +73,16 @@
         }
     }];
 }
+
 #pragma mark delegate
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
 }
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return [self.viewModel getCellNumber];
 }
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     GoodsCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"goodsCell" forIndexPath:indexPath];
     if (!cell) {
@@ -97,13 +96,12 @@
     
     return cell;
 }
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     SDetailVc *sdVC = [[SDetailVc alloc]init];
-    sdVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:sdVC animated:YES];
-    sdVC.hidesBottomBarWhenPushed = NO;
 }
+
 #pragma mark lazy
 - (SurroundVM *)viewModel {
     if(!_viewModel) {

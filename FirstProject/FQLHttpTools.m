@@ -69,4 +69,21 @@
     
 }
 
+
++ (void)customGet:(NSString *)urlString succeed:(successBlock)success failed:(void (^)(NSError *error))failure
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (!error) {
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+            success(dic);
+        }else {
+            failure(error);
+        }
+    }];
+    [task resume];
+}
 @end

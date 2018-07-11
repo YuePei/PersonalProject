@@ -65,7 +65,6 @@
 }
 - (void)goToSettingPage {
     SettingVC *settingVC = [SettingVC new];
-    settingVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:settingVC animated:YES];
 }
 //设置NavigationBar中间的视图
@@ -199,6 +198,7 @@
     //设置背景图的缩放
     if (offsetY < 0) {
         self.bkIV.transform = CGAffineTransformMakeScale(-offsetY / 500 + 1, -offsetY / 500 + 1);
+        
     }
     
 }

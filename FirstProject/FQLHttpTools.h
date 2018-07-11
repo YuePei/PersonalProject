@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-typedef void (^successBlock)(id obj);
+typedef void (^successBlock)(NSDictionary *obj);
 
 @interface FQLHttpTools : NSObject
 
@@ -15,4 +15,5 @@ typedef void (^successBlock)(id obj);
 
 + (void)post:(NSString *)url parameters:(NSDictionary *)parameters success:(successBlock)successInfo failure:(void (^)(NSError *error))failure;
 
++ (void)customGet:(NSString *)urlString succeed:(successBlock)success failed:(void (^)(NSError *error))failure;
 @end
