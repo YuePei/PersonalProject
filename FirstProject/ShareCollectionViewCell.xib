@@ -21,13 +21,13 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eMX-3B-bS1">
-                        <rect key="frame" x="0.0" y="10" width="215" height="215"/>
+                        <rect key="frame" x="0.0" y="0.0" width="215" height="215"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="eMX-3B-bS1" secondAttribute="height" multiplier="1:1" id="WuN-JB-vPq"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TaG-8T-FsE">
-                        <rect key="frame" x="91.5" y="235" width="33" height="48"/>
+                        <rect key="frame" x="91.5" y="225" width="33" height="68"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -35,8 +35,8 @@
                 </subviews>
             </view>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="TaG-8T-FsE" secondAttribute="bottom" constant="10" id="2oE-QI-bjR"/>
-                <constraint firstItem="eMX-3B-bS1" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="ISA-uP-2Rt"/>
+                <constraint firstAttribute="bottom" secondItem="TaG-8T-FsE" secondAttribute="bottom" id="2oE-QI-bjR"/>
+                <constraint firstItem="eMX-3B-bS1" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="ISA-uP-2Rt"/>
                 <constraint firstItem="TaG-8T-FsE" firstAttribute="top" secondItem="eMX-3B-bS1" secondAttribute="bottom" constant="10" id="Lma-2s-5LA"/>
                 <constraint firstItem="TaG-8T-FsE" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="el6-PD-Ecq"/>
                 <constraint firstItem="eMX-3B-bS1" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="ewn-DN-6IC"/>

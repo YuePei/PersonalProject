@@ -18,3 +18,4 @@
 - (instancetype)initWithFrame:(CGRect)frame shareIcons:(NSArray *)icons andShareTitles:(NSArray *)titles;
 
 @end
+

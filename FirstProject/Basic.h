@@ -39,7 +39,7 @@
 
 //背景颜色，浅灰色
 #define BACK_COLOR [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:1]
-
+#define GREEN_COLOR [UIColor colorWithRed:16 / 255.0 green:130 / 255.0 blue:74 / 255.0 alpha:1]
 
 /* !weak self*/
 #define WEAKSELF typeof(self) __weak weakSelf = self

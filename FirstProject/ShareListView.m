@@ -19,6 +19,14 @@
 @property (nonatomic, strong)NSArray *array;
 //icons
 @property (nonatomic, strong)NSArray *icons;
+//分割线
+@property (nonatomic , strong) UIView *separaterLine;
+//分割线上面的view
+@property (nonatomic , strong) UIView *topView;
+//顶部左边的按钮，截图编辑
+@property (nonatomic , strong) UIButton *screenShotButton;
+//顶部右边的按钮，添加
+@property (nonatomic , strong) UIButton *addExpressionButton;
 
 @end
 
@@ -31,16 +39,26 @@ static const float bottomMargin = 10.0;
 static const float rowInterval = 30.0;
 static const float columnInterval = 20.0;
 static const float itemWidth = 50.0;
-static const float itemHeight = itemWidth + 40;
+static const float itemHeight = itemWidth + 25;
+static const float buttonWidth_Height = 100;
+
 
 #pragma mark initMethods
 - (instancetype)initWithFrame:(CGRect)frame shareIcons:(NSArray *)icons andShareTitles:(NSArray *)titles {
     if (self = [super initWithFrame:frame]) {
         self.array = titles;
         self.icons = icons;
-        self.backgroundColor = [UIColor colorWithRed:1 / 255.0 green:1 / 255.0 blue:1 / 255.0 alpha:0.5];
+        NSLog(@"......%f",titles.count);
+        self.backgroundColor = [UIColor colorWithRed:1 / 255.0 green:1 / 255.0 blue:1 / 255.0 alpha:0];
         [self collectionView];
         [self middleView];
+        [self separaterLine];
+        [self topView];
+        [self screenShotButton];
+        [self addExpressionButton];
+        [self addGesture];
+        [self showBackgroundColor];
+        [self showMiddleView];
     }
     return self;
 }
@@ -54,8 +72,68 @@ static const float itemHeight = itemWidth + 40;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ShareCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"shareCell" forIndexPath:indexPath];
     [cell setCellWithLogoImage:self.icons[indexPath.row] name:self.array[indexPath.row]];
-    NSLog(@"0000000000-----:%f",CGRectGetHeight(cell.frame));
+    
     return cell;
+}
+#pragma mark toolMethods
+- (void)addGesture {
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideMiddleView)];
+    [self addGestureRecognizer:tapGesture];
+}
+//隐藏分享模块
+- (void)hideMiddleView {
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.middleView setFrame:CGRectMake(self.middleView.frame.origin.x, CGRectGetHeight(self.frame), CGRectGetWidth(self.middleView.frame), CGRectGetHeight(self.middleView.frame))];
+        [self removeFromSuperview];
+    }];
+    
+}
+
+//显示分享模块
+- (void)showMiddleView {
+    [self layoutIfNeeded];
+    NSLog(@"----:%@",self.middleView);
+    [UIView animateWithDuration:10 animations:^{
+        //        [self.middleView setFrame:CGRectMake(10, CGRectGetHeight(self.frame) - 10 - CGRectGetHeight(self.middleView.frame), CGRectGetWidth(self.middleView.frame), CGRectGetHeight(self.middleView.frame))];
+        [self.middleView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(10);
+            make.right.mas_equalTo(-10);
+            make.bottom.mas_equalTo(-10);
+            make.height.mas_equalTo(225);
+        }];
+    }];
+    NSLog(@"----:%@",self.middleView);
+    
+}
+
+//显示背景色
+- (void)showBackgroundColor {
+    [UIView animateWithDuration:0.3 animations:^{
+        [self setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:0.7]];
+    }];
+}
+
+//调整按钮的图文位置
+- (void)adjustButtonImageViewUPTitleDownWithButton:(UIButton *)button {
+    [button.superview layoutIfNeeded];
+    //使图片和文字居左上角
+    button.contentVerticalAlignment = UIControlContentVerticalAlignmentTop;
+    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    //调整图片
+    float iVOffsetY = CGRectGetHeight(button.frame) / 2.0 - (CGRectGetHeight(button.imageView.frame) + CGRectGetHeight(button.titleLabel.frame)) / 2.0;
+    float iVOffsetX = CGRectGetWidth(button.frame) / 2.0 - CGRectGetWidth(button.imageView.frame) / 2.0;
+    [button setImageEdgeInsets:UIEdgeInsetsMake(iVOffsetY, iVOffsetX, 0, 0)];
+    //调整文字
+    float titleOffsetY = iVOffsetY + CGRectGetHeight(button.imageView.frame) + 10;
+    float titleOffsetX = 0;
+    if (CGRectGetWidth(button.imageView.frame) >= CGRectGetWidth(button.frame) / 2.0) {
+        //如果图片的宽度超过或等于button宽度的一半
+        titleOffsetX = -(CGRectGetWidth(button.imageView.frame) + CGRectGetWidth(button.titleLabel.frame) - CGRectGetWidth(button.frame) / 2.0 - CGRectGetWidth(button.titleLabel.frame) / 2.0);
+    }else {
+        titleOffsetX = CGRectGetWidth(button.frame) / 2.0 - CGRectGetWidth(button.imageView.frame) - CGRectGetWidth(button.titleLabel.frame) / 2.0;
+    }
+    
+    [button setTitleEdgeInsets:UIEdgeInsetsMake(titleOffsetY , titleOffsetX, 0, 0)];
 }
 
 #pragma mark lazy
@@ -64,15 +142,88 @@ static const float itemHeight = itemWidth + 40;
         _middleView = [UIView new];
         [self addSubview:_middleView];
         [_middleView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(0);
-            make.right.mas_equalTo(0);
-            make.bottom.mas_equalTo(0);
-            make.height.mas_equalTo(300);
+            make.left.mas_equalTo(10);
+            make.right.mas_equalTo(-10);
+            make.bottom.mas_equalTo(225);
+            make.height.mas_equalTo(225);
         }];
         _middleView.backgroundColor = [UIColor whiteColor];
+        _middleView.layer.cornerRadius = 10;
+        _middleView.layer.masksToBounds = YES;
     }
     return _middleView;
 }
+
+- (UIView *)topView {
+    if (!_topView) {
+        _topView = [UIView new];
+        [self.middleView addSubview:_topView];
+        [_topView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(0);
+            make.left.mas_equalTo(0);
+            make.right.mas_equalTo(0);
+            make.bottom.mas_equalTo(self.separaterLine.mas_top);
+        }];
+        _topView.backgroundColor = [UIColor clearColor];
+    }
+    return _topView;
+}
+
+- (UIButton *)screenShotButton {
+    if (!_screenShotButton) {
+        _screenShotButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        //        [_screenShotButton setFrame:CGRectMake(20, 20, 60, 60)];
+        [self.topView addSubview:_screenShotButton];
+        [_screenShotButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.mas_equalTo(self.topView.centerY);
+            make.centerX.mas_equalTo(self.topView.centerX).offset(- (CGRectGetWidth(self.frame) - 20) / 4.0);
+            make.width.height.mas_equalTo(buttonWidth_Height);
+            //            make.height.mas_equalTo(80);
+        }];
+        [_screenShotButton setTitle:@"截图编辑" forState:UIControlStateNormal];
+        [_screenShotButton setImage:[UIImage imageNamed:@"图片剪切"] forState:UIControlStateNormal];
+        _screenShotButton.titleLabel.font = [UIFont systemFontOfSize:14];
+        [_screenShotButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self adjustButtonImageViewUPTitleDownWithButton:_screenShotButton];
+    }
+    return _screenShotButton;
+}
+
+- (UIButton *)addExpressionButton {
+    if (!_addExpressionButton) {
+        
+        _addExpressionButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.topView addSubview:_addExpressionButton];
+        [_addExpressionButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.mas_equalTo(self.topView.centerY);
+            make.centerX.mas_equalTo(self.topView.centerX).mas_offset((CGRectGetWidth(self.frame) - 20) / 4.0);
+            make.width.height.mas_equalTo(100);
+            //            make.height.mas_equalTo(80);
+        }];
+        [_addExpressionButton setTitle:@"添加表情" forState:UIControlStateNormal];
+        [_addExpressionButton setImage:[UIImage imageNamed:@"表情"] forState:UIControlStateNormal];
+        _addExpressionButton.titleLabel.font = [UIFont systemFontOfSize:14];
+        [_addExpressionButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self adjustButtonImageViewUPTitleDownWithButton:_addExpressionButton];
+    }
+    return _addExpressionButton;
+}
+
+- (UIView *)separaterLine {
+    if (!_separaterLine) {
+        _separaterLine = [[UIView alloc]init];
+        [self.middleView addSubview:_separaterLine];
+        [_separaterLine mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(30);
+            make.right.mas_equalTo(-30);
+            make.bottom.mas_equalTo(self.collectionView.mas_top).mas_offset(-10);
+            make.height.mas_equalTo(1);
+        }];
+        _separaterLine.backgroundColor = BACK_COLOR;
+    }
+    return _separaterLine;
+}
+
 - (UICollectionView *)collectionView {
     if (!_collectionView) {
         //一共有多少个cell
@@ -83,9 +234,8 @@ static const float itemHeight = itemWidth + 40;
         layout.sectionInset = UIEdgeInsetsMake(topMargin, leftMargin, bottomMargin, rightMargin);
         layout.itemSize = CGSizeMake(itemWidth, itemHeight);
         layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-
+        
         _collectionView = [[UICollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:layout];
-        _collectionView.contentSize = CGSizeMake(leftMargin + columnCount * itemWidth + (columnCount -1) * columnInterval + rightMargin, CGRectGetHeight(_collectionView.frame));
         _collectionView.showsHorizontalScrollIndicator = NO;
         _collectionView.showsVerticalScrollIndicator = NO;
         _collectionView.backgroundColor = [UIColor clearColor];
@@ -94,8 +244,9 @@ static const float itemHeight = itemWidth + 40;
             make.left.mas_equalTo(0);
             make.right.mas_equalTo(0);
             make.bottom.mas_equalTo(0);
-            make.height.mas_equalTo(itemHeight);
+            make.height.mas_equalTo(itemHeight + topMargin + bottomMargin);
         }];
+        _collectionView.contentSize = CGSizeMake(leftMargin + columnCount * itemWidth + (columnCount -1) * columnInterval + rightMargin, CGRectGetHeight(_collectionView.frame));
         
         //注册cell
         [_collectionView registerNib:[UINib nibWithNibName:@"ShareCollectionViewCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"shareCell"];
@@ -119,3 +270,4 @@ static const float itemHeight = itemWidth + 40;
     return _icons;
 }
 @end
+

@@ -21,7 +21,7 @@
 		9F13EA51209AA14D002158BA /* CommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F13EA50209AA14D002158BA /* CommentView.m */; };
 		9F17B5E720F4605C00790237 /* ShareListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F17B5E620F4605C00790237 /* ShareListView.m */; };
 		9F17B5EB20F48F0800790237 /* ShareCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F17B5E920F48F0800790237 /* ShareCollectionViewCell.m */; };
-		9F17B5EC20F48F0800790237 /* ShareCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F17B5EA20F48F0800790237 /* ShareCollectionViewCell.xib */; };
+		9F32861220FDE00300ECC350 /* ShareCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F32861120FDE00300ECC350 /* ShareCollectionViewCell.xib */; };
 		9F3EE7B7205F8B3C002B5527 /* CustomNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3EE7B6205F8B3C002B5527 /* CustomNavigationController.m */; };
 		9F793BAD209AFE7D009EE379 /* MainPageHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F793BAC209AFE7D009EE379 /* MainPageHeaderView.m */; };
 		9F7AA8222092FFE7003D0C5A /* BottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7AA8202092FFE7003D0C5A /* BottomView.m */; };
@@ -134,7 +134,7 @@
 		9F17B5E620F4605C00790237 /* ShareListView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareListView.m; sourceTree = "<group>"; };
 		9F17B5E820F48F0800790237 /* ShareCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareCollectionViewCell.h; sourceTree = "<group>"; };
 		9F17B5E920F48F0800790237 /* ShareCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareCollectionViewCell.m; sourceTree = "<group>"; };
-		9F17B5EA20F48F0800790237 /* ShareCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShareCollectionViewCell.xib; sourceTree = "<group>"; };
+		9F32861120FDE00300ECC350 /* ShareCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShareCollectionViewCell.xib; sourceTree = "<group>"; };
 		9F3EE7B5205F8B3C002B5527 /* CustomNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNavigationController.h; sourceTree = "<group>"; };
 		9F3EE7B6205F8B3C002B5527 /* CustomNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNavigationController.m; sourceTree = "<group>"; };
 		9F793BAB209AFE7D009EE379 /* MainPageHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainPageHeaderView.h; sourceTree = "<group>"; };
@@ -359,7 +359,7 @@
 				9F17B5E620F4605C00790237 /* ShareListView.m */,
 				9F17B5E820F48F0800790237 /* ShareCollectionViewCell.h */,
 				9F17B5E920F48F0800790237 /* ShareCollectionViewCell.m */,
-				9F17B5EA20F48F0800790237 /* ShareCollectionViewCell.xib */,
+				9F32861120FDE00300ECC350 /* ShareCollectionViewCell.xib */,
 			);
 			name = ShareTool;
 			sourceTree = "<group>";
@@ -855,7 +855,7 @@
 				D08326171F95A0E4008AF378 /* LaunchScreen.storyboard in Resources */,
 				D07984B7200753C9004193C6 /* Assets.xcassets in Resources */,
 				9FFB1F1E2091B91800641F49 /* PCTableViewCell.xib in Resources */,
-				9F17B5EC20F48F0800790237 /* ShareCollectionViewCell.xib in Resources */,
+				9F32861220FDE00300ECC350 /* ShareCollectionViewCell.xib in Resources */,
 				D08326121F95A0E4008AF378 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

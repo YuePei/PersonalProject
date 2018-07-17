@@ -40,11 +40,11 @@
     [self getDetailPageData];
     [self commentView];
     //毛玻璃效果
-//    UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-//    UIVisualEffectView *effectView = [[UIVisualEffectView alloc]initWithEffect:blur];
-//    effectView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-//    effectView.alpha = 0.3;
-//    [self.view addSubview:effectView];
+    //    UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    //    UIVisualEffectView *effectView = [[UIVisualEffectView alloc]initWithEffect:blur];
+    //    effectView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    //    effectView.alpha = 0.3;
+    //    [self.view addSubview:effectView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -59,11 +59,11 @@
 #pragma mark tools Methods
 //调用系统的分享功能
 - (void)systemShare{
-//    NSArray *images = @[[UIImage imageNamed:@"beauty"]];
-//    UIActivityViewController *activityController=[[UIActivityViewController alloc]initWithActivityItems:images applicationActivities:nil];
-//    [self.navigationController presentViewController:activityController animated:YES completion:nil];
+    //    NSArray *images = @[[UIImage imageNamed:@"beauty"]];
+    //    UIActivityViewController *activityController=[[UIActivityViewController alloc]initWithActivityItems:images applicationActivities:nil];
+    //    [self.navigationController presentViewController:activityController animated:YES completion:nil];
     
-    ShareListView *shareView = [[ShareListView alloc]initWithFrame:CGRectZero
+    ShareListView *shareView = [[ShareListView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - StatusBarHeight - NavBarHeight)
                                                         shareIcons:@[[UIImage imageNamed:@"weChat"],
                                                                      [UIImage imageNamed:@"朋友圈"],
                                                                      [UIImage imageNamed:@"QQ"],
@@ -72,6 +72,7 @@
                                                                      [UIImage imageNamed:@"微博"],
                                                                      [UIImage imageNamed:@"链接"]]
                                                     andShareTitles:@[@"微信",@"朋友圈",@"QQ好友",@"QQ空间",@"支付宝",@"微博",@"复制链接"]];
+    [self.view addSubview:shareView];
     
 }
 
@@ -85,26 +86,26 @@
 }
 
 - (void)shoHtmlStringInWebView {
-//    NSString *htmlStirng = [NSString stringWithFormat:@"<!DOCTYPE HTML><html><body>%@</body></html>",self.dataModel.htmlContent];
+    //    NSString *htmlStirng = [NSString stringWithFormat:@"<!DOCTYPE HTML><html><body>%@</body></html>",self.dataModel.htmlContent];
     NSString *htmlStirng = [NSString stringWithFormat:@"<html> \n"
-     "<head> \n"
-     "<style type=\"text/css\"> \n"
-     "body {font-size:17px;}\n"
-     "p{letter-spacing: 2px;line-height:30px;color:gray;}"
-     "</style> \n"
-     "</head> \n"
-     "<body>"
-     "<script type='text/javascript'>"
-     "window.onload = function(){\n"
-     "var $img = document.getElementsByTagName('img');\n"
-     "for(var p in  $img){\n"
-     " $img[p].style.width = '100%%';\n"
-     "$img[p].style.height ='auto'\n"
-     "}\n"
-     "}"
-     "</script>%@"
-     "</body>"
-     "</html>",self.dataModel.htmlContent];
+                            "<head> \n"
+                            "<style type=\"text/css\"> \n"
+                            "body {font-size:17px;}\n"
+                            "p{letter-spacing: 2px;line-height:30px;color:gray;}"
+                            "</style> \n"
+                            "</head> \n"
+                            "<body>"
+                            "<script type='text/javascript'>"
+                            "window.onload = function(){\n"
+                            "var $img = document.getElementsByTagName('img');\n"
+                            "for(var p in  $img){\n"
+                            " $img[p].style.width = '100%%';\n"
+                            "$img[p].style.height ='auto'\n"
+                            "}\n"
+                            "}"
+                            "</script>%@"
+                            "</body>"
+                            "</html>",self.dataModel.htmlContent];
     [self.wkWebView loadHTMLString:htmlStirng baseURL:nil];
 }
 
@@ -285,3 +286,4 @@
 //    textView.frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, size.height);
 //}
 @end
+
