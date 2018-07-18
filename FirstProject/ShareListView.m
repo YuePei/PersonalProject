@@ -82,28 +82,29 @@ static const float buttonWidth_Height = 100;
 }
 //隐藏分享模块
 - (void)hideMiddleView {
+
     [UIView animateWithDuration:0.5 animations:^{
+        [self setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:0]];
         [self.middleView setFrame:CGRectMake(self.middleView.frame.origin.x, CGRectGetHeight(self.frame), CGRectGetWidth(self.middleView.frame), CGRectGetHeight(self.middleView.frame))];
+    } completion:^(BOOL finished) {
         [self removeFromSuperview];
     }];
-    
 }
 
 //显示分享模块
 - (void)showMiddleView {
-    [self layoutIfNeeded];
-    NSLog(@"----:%@",self.middleView);
-    [UIView animateWithDuration:10 animations:^{
-        //        [self.middleView setFrame:CGRectMake(10, CGRectGetHeight(self.frame) - 10 - CGRectGetHeight(self.middleView.frame), CGRectGetWidth(self.middleView.frame), CGRectGetHeight(self.middleView.frame))];
-        [self.middleView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(10);
-            make.right.mas_equalTo(-10);
-            make.bottom.mas_equalTo(-10);
-            make.height.mas_equalTo(225);
-        }];
-    }];
-    NSLog(@"----:%@",self.middleView);
     
+    NSLog(@"----:%@",self.middleView);
+    [self.middleView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.bottom.mas_equalTo(-10);
+    }];
+    [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:0.6 initialSpringVelocity:15 options:UIViewAnimationOptionCurveEaseIn animations:^{
+
+        [self.middleView.superview layoutIfNeeded];
+        
+    } completion:^(BOOL finished) {
+        NSLog(@"Show animation finished.");
+    }];
 }
 
 //显示背景色
@@ -115,7 +116,9 @@ static const float buttonWidth_Height = 100;
 
 //调整按钮的图文位置
 - (void)adjustButtonImageViewUPTitleDownWithButton:(UIButton *)button {
-    [button.superview layoutIfNeeded];
+    [self.topView layoutIfNeeded];
+    [button setBackgroundColor:[UIColor grayColor]];
+    button.imageView.backgroundColor = [UIColor redColor];
     //使图片和文字居左上角
     button.contentVerticalAlignment = UIControlContentVerticalAlignmentTop;
     button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -123,16 +126,20 @@ static const float buttonWidth_Height = 100;
     float iVOffsetY = CGRectGetHeight(button.frame) / 2.0 - (CGRectGetHeight(button.imageView.frame) + CGRectGetHeight(button.titleLabel.frame)) / 2.0;
     float iVOffsetX = CGRectGetWidth(button.frame) / 2.0 - CGRectGetWidth(button.imageView.frame) / 2.0;
     [button setImageEdgeInsets:UIEdgeInsetsMake(iVOffsetY, iVOffsetX, 0, 0)];
+    
     //调整文字
     float titleOffsetY = iVOffsetY + CGRectGetHeight(button.imageView.frame) + 10;
     float titleOffsetX = 0;
-    if (CGRectGetWidth(button.imageView.frame) >= CGRectGetWidth(button.frame) / 2.0) {
+    if (CGRectGetWidth(button.imageView.frame) >= (CGRectGetWidth(button.frame) / 2.0)) {
         //如果图片的宽度超过或等于button宽度的一半
-        titleOffsetX = -(CGRectGetWidth(button.imageView.frame) + CGRectGetWidth(button.titleLabel.frame) - CGRectGetWidth(button.frame) / 2.0 - CGRectGetWidth(button.titleLabel.frame) / 2.0);
+        titleOffsetX = -(CGRectGetWidth(button.imageView.frame)
+                         + CGRectGetWidth(button.titleLabel.frame)
+                         - CGRectGetWidth(button.frame) / 2.0
+                         - CGRectGetWidth(button.titleLabel.frame) / 2.0);
+        NSLog(@"-(图片宽度(%f) + 文字宽度(%f) - 按钮宽度的一半(%f/2) - 文字宽度的一半(%f/2) = 文字的偏移量(%f))",CGRectGetWidth(button.imageView.frame), CGRectGetWidth(button.titleLabel.frame), CGRectGetWidth(button.frame), CGRectGetWidth(button.titleLabel.frame), titleOffsetX);
     }else {
         titleOffsetX = CGRectGetWidth(button.frame) / 2.0 - CGRectGetWidth(button.imageView.frame) - CGRectGetWidth(button.titleLabel.frame) / 2.0;
     }
-    
     [button setTitleEdgeInsets:UIEdgeInsetsMake(titleOffsetY , titleOffsetX, 0, 0)];
 }
 
@@ -144,12 +151,14 @@ static const float buttonWidth_Height = 100;
         [_middleView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(10);
             make.right.mas_equalTo(-10);
-            make.bottom.mas_equalTo(225);
             make.height.mas_equalTo(225);
+            make.bottom.mas_equalTo(225);
         }];
+//        [_middleView setFrame:CGRectMake(10, 667, 355, 225)];
         _middleView.backgroundColor = [UIColor whiteColor];
         _middleView.layer.cornerRadius = 10;
         _middleView.layer.masksToBounds = YES;
+        NSLog(@"middleView:%@",_middleView);
     }
     return _middleView;
 }
@@ -184,6 +193,8 @@ static const float buttonWidth_Height = 100;
         [_screenShotButton setImage:[UIImage imageNamed:@"图片剪切"] forState:UIControlStateNormal];
         _screenShotButton.titleLabel.font = [UIFont systemFontOfSize:14];
         [_screenShotButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self setNeedsLayout];
+        [self layoutIfNeeded];
         [self adjustButtonImageViewUPTitleDownWithButton:_screenShotButton];
     }
     return _screenShotButton;

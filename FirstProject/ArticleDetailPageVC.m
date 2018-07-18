@@ -63,7 +63,7 @@
     //    UIActivityViewController *activityController=[[UIActivityViewController alloc]initWithActivityItems:images applicationActivities:nil];
     //    [self.navigationController presentViewController:activityController animated:YES completion:nil];
     
-    ShareListView *shareView = [[ShareListView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - StatusBarHeight - NavBarHeight)
+    ShareListView *shareView = [[ShareListView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
                                                         shareIcons:@[[UIImage imageNamed:@"weChat"],
                                                                      [UIImage imageNamed:@"朋友圈"],
                                                                      [UIImage imageNamed:@"QQ"],
@@ -72,7 +72,7 @@
                                                                      [UIImage imageNamed:@"微博"],
                                                                      [UIImage imageNamed:@"链接"]]
                                                     andShareTitles:@[@"微信",@"朋友圈",@"QQ好友",@"QQ空间",@"支付宝",@"微博",@"复制链接"]];
-    [self.view addSubview:shareView];
+    [[[UIApplication sharedApplication].windows lastObject] addSubview:shareView];
     
 }
 
