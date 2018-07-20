@@ -23,35 +23,55 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    ShareListView *view = [[ShareListView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - StatusBarHeight - NavBarHeight) shareIcons:self.iconsArray andShareTitles:self.dataArray];
-    [self.view addSubview:view];
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.view addSubview:btn];
+    [btn setBackgroundColor:[UIColor grayColor]];
+    [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(0);
+        make.width.height.mas_equalTo(200);
+        make.bottom.mas_equalTo(-20);
+    }];
+    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [btn setImage:[UIImage imageNamed:@"朋友圈"] forState:UIControlStateNormal];
+    [btn setTitle:@"Hi girl!" forState:UIControlStateNormal];
+    btn.titleLabel.backgroundColor = [UIColor redColor];
+    btn.imageView.backgroundColor = [UIColor brownColor];
+    [self adjustButtonImageViewUPTitleDownWithButton:btn];
 }
 
-#pragma mark lazy
-- (NSArray *)dataArray {
-    if (!_dataArray) {
-        _dataArray = [NSArray arrayWithObjects:@"微信",
-                      @"朋友圈",
-                      @"QQ好友",
-                      @"QQ空间",
-                      @"支付宝",
-                      @"微博",
-                      @"复制链接", nil];
+//调整按钮的图文位置
+- (void)adjustButtonImageViewUPTitleDownWithButton:(UIButton *)button {
+    [button.superview layoutIfNeeded];
+    //使图片和文字居左上角
+    button.contentVerticalAlignment = UIControlContentVerticalAlignmentTop;
+    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    
+    CGFloat buttonHeight = CGRectGetHeight(button.frame);
+    CGFloat buttonWidth = CGRectGetWidth(button.frame);
+    
+    CGFloat ivHeight = CGRectGetHeight(button.imageView.frame);
+    CGFloat ivWidth = CGRectGetWidth(button.imageView.frame);
+    
+    CGFloat titleHeight = CGRectGetHeight(button.titleLabel.frame);
+    CGFloat titleWidth = CGRectGetWidth(button.titleLabel.frame);
+    //调整图片
+    float iVOffsetY = buttonHeight / 2.0 - (ivHeight + titleHeight) / 2.0;
+    float iVOffsetX = buttonWidth / 2.0 - ivWidth / 2.0;
+    [button setImageEdgeInsets:UIEdgeInsetsMake(iVOffsetY, iVOffsetX, 0, 0)];
+    
+    //调整文字
+    float titleOffsetY = iVOffsetY + CGRectGetHeight(button.imageView.frame) + 10;
+    float titleOffsetX = 0;
+    if (CGRectGetWidth(button.imageView.frame) >= (CGRectGetWidth(button.frame) / 2.0)) {
+        //如果图片的宽度超过或等于button宽度的一半
+        titleOffsetX = -(ivWidth + titleWidth - buttonWidth / 2.0 - titleWidth / 2.0);
+    }else {
+        titleOffsetX = buttonWidth / 2.0 - ivWidth - titleWidth / 2.0;
     }
-    return _dataArray;
+    [button setTitleEdgeInsets:UIEdgeInsetsMake(titleOffsetY , titleOffsetX, 0, 0)];
+    
+    NSLog(@"   :-(图片宽度(%f) + 文字宽度(%f) - 按钮宽度的一半(%f/2) - 文字宽度的一半(%f/2) = 文字的偏移量(%f))",ivWidth, titleWidth, buttonWidth, titleWidth, titleOffsetX);
 }
 
-- (NSArray *)iconsArray {
-    if (!_iconsArray) {
-        _iconsArray = [NSArray arrayWithObjects:
-                       [UIImage imageNamed:@"weChat"],
-                       [UIImage imageNamed:@"朋友圈"],
-                       [UIImage imageNamed:@"QQ"],
-                       [UIImage imageNamed:@"空间"],
-                       [UIImage imageNamed:@"支付宝"],
-                       [UIImage imageNamed:@"微博"],
-                       [UIImage imageNamed:@"链接"], nil];
-    }
-    return _iconsArray;
-}
 @end

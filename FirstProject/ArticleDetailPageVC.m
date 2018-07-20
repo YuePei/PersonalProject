@@ -217,7 +217,7 @@
     if (!_bottomView) {
         _bottomView = [[BottomView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 50 * SCREEN_PROPORTION - 64, SCREEN_WIDTH, 50 * SCREEN_PROPORTION)];
         [self.view insertSubview:_bottomView aboveSubview:self.wkWebView];
-        _bottomView.backgroundColor = BACK_COLOR;
+        _bottomView.backgroundColor = BackgroundColor;
         [_bottomView.collectBtn addTarget:self action:@selector(collectFunction) forControlEvents:UIControlEventTouchUpInside];
         [_bottomView.likeBtn addTarget:self action:@selector(likeFunction) forControlEvents:UIControlEventTouchUpInside];
         [_bottomView.shareBtn addTarget:self action:@selector(systemShare) forControlEvents:UIControlEventTouchUpInside];
@@ -231,7 +231,7 @@
     if (!_commentView) {
         _commentView = [[CommentView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 64, SCREEN_WIDTH, 150)];
         [self.view addSubview:_commentView];
-        _commentView.backgroundColor = BACK_COLOR;
+        _commentView.backgroundColor = BackgroundColor;
         _commentView.contentTextView.delegate = self;
         [_commentView.submitButton addTarget:self action:@selector(resignContentTextViewFirstResponser) forControlEvents:UIControlEventTouchUpInside];
     }

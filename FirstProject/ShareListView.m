@@ -117,14 +117,21 @@ static const float buttonWidth_Height = 100;
 //调整按钮的图文位置
 - (void)adjustButtonImageViewUPTitleDownWithButton:(UIButton *)button {
     [self.topView layoutIfNeeded];
-    [button setBackgroundColor:[UIColor grayColor]];
-    button.imageView.backgroundColor = [UIColor redColor];
     //使图片和文字居左上角
     button.contentVerticalAlignment = UIControlContentVerticalAlignmentTop;
     button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    
+    CGFloat buttonHeight = CGRectGetHeight(button.frame);
+    CGFloat buttonWidth = CGRectGetWidth(button.frame);
+    
+    CGFloat ivHeight = CGRectGetHeight(button.imageView.frame);
+    CGFloat ivWidth = CGRectGetWidth(button.imageView.frame);
+    
+    CGFloat titleHeight = CGRectGetHeight(button.titleLabel.frame);
+    CGFloat titleWidth = CGRectGetWidth(button.titleLabel.frame);
     //调整图片
-    float iVOffsetY = CGRectGetHeight(button.frame) / 2.0 - (CGRectGetHeight(button.imageView.frame) + CGRectGetHeight(button.titleLabel.frame)) / 2.0;
-    float iVOffsetX = CGRectGetWidth(button.frame) / 2.0 - CGRectGetWidth(button.imageView.frame) / 2.0;
+    float iVOffsetY = buttonHeight / 2.0 - (ivHeight + titleHeight) / 2.0;
+    float iVOffsetX = buttonWidth / 2.0 - ivWidth / 2.0;
     [button setImageEdgeInsets:UIEdgeInsetsMake(iVOffsetY, iVOffsetX, 0, 0)];
     
     //调整文字
@@ -132,15 +139,13 @@ static const float buttonWidth_Height = 100;
     float titleOffsetX = 0;
     if (CGRectGetWidth(button.imageView.frame) >= (CGRectGetWidth(button.frame) / 2.0)) {
         //如果图片的宽度超过或等于button宽度的一半
-        titleOffsetX = -(CGRectGetWidth(button.imageView.frame)
-                         + CGRectGetWidth(button.titleLabel.frame)
-                         - CGRectGetWidth(button.frame) / 2.0
-                         - CGRectGetWidth(button.titleLabel.frame) / 2.0);
-        NSLog(@"-(图片宽度(%f) + 文字宽度(%f) - 按钮宽度的一半(%f/2) - 文字宽度的一半(%f/2) = 文字的偏移量(%f))",CGRectGetWidth(button.imageView.frame), CGRectGetWidth(button.titleLabel.frame), CGRectGetWidth(button.frame), CGRectGetWidth(button.titleLabel.frame), titleOffsetX);
+        titleOffsetX = -(ivWidth + titleWidth - buttonWidth / 2.0 - titleWidth / 2.0);
     }else {
-        titleOffsetX = CGRectGetWidth(button.frame) / 2.0 - CGRectGetWidth(button.imageView.frame) - CGRectGetWidth(button.titleLabel.frame) / 2.0;
+        titleOffsetX = buttonWidth / 2.0 - ivWidth - titleWidth / 2.0;
     }
     [button setTitleEdgeInsets:UIEdgeInsetsMake(titleOffsetY , titleOffsetX, 0, 0)];
+
+    NSLog(@"   :-(图片宽度(%f) + 文字宽度(%f) - 按钮宽度的一半(%f/2) - 文字宽度的一半(%f/2) = 文字的偏移量(%f))",ivWidth, titleWidth, buttonWidth, titleWidth, titleOffsetX);
 }
 
 #pragma mark lazy
@@ -154,11 +159,9 @@ static const float buttonWidth_Height = 100;
             make.height.mas_equalTo(225);
             make.bottom.mas_equalTo(225);
         }];
-//        [_middleView setFrame:CGRectMake(10, 667, 355, 225)];
         _middleView.backgroundColor = [UIColor whiteColor];
         _middleView.layer.cornerRadius = 10;
         _middleView.layer.masksToBounds = YES;
-        NSLog(@"middleView:%@",_middleView);
     }
     return _middleView;
 }
@@ -230,7 +233,7 @@ static const float buttonWidth_Height = 100;
             make.bottom.mas_equalTo(self.collectionView.mas_top).mas_offset(-10);
             make.height.mas_equalTo(1);
         }];
-        _separaterLine.backgroundColor = BACK_COLOR;
+        _separaterLine.backgroundColor = BackgroundColor;
     }
     return _separaterLine;
 }

@@ -64,11 +64,12 @@ static int networkSituation = 1;
     }else {
         return [self getTitlesFromFMDB].count;
     }
-    
 }
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 1;
 }
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (networkSituation) {
         if([[self.articleVM getBigImageWithIndex:indexPath.section] isEqualToString:@""]){
@@ -289,22 +290,23 @@ static int networkSituation = 1;
     //gif刷新方式
     MJRefreshGifHeader *gifHeader = [MJRefreshGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshData)];
     gifHeader.lastUpdatedTimeLabel.hidden = YES;
-    gifHeader.stateLabel.hidden = YES;
+//    gifHeader.stateLabel.hidden = YES;
+    [gifHeader setTitle:@"正在刷新..." forState:MJRefreshStateRefreshing];
     //设置刷新动画gif
-    [gifHeader setImages:self.imagesArray duration:10 forState:MJRefreshStateIdle];
-    [gifHeader setImages:self.pullingArray duration:1 forState:MJRefreshStatePulling];
-    [gifHeader setImages:self.imagesArray duration:0.7 forState:MJRefreshStateRefreshing];
+//    [gifHeader setImages:self.imagesArray duration:10 forState:MJRefreshStateIdle];
+//    [gifHeader setImages:self.pullingArray duration:1 forState:MJRefreshStatePulling];
+//    [gifHeader setImages:self.imagesArray duration:0.7 forState:MJRefreshStateRefreshing];
     self.tableView.mj_header = gifHeader;
     
     //上拉加载更多
     MJRefreshAutoGifFooter *gifFooter = [MJRefreshAutoGifFooter footerWithRefreshingBlock:^{
         [self loadNextPageData];
     }];
-    [gifFooter setImages:self.imagesArray duration:0.3 forState:MJRefreshStateIdle];
-    [gifFooter setImages:self.imagesArray duration:0.3 forState:MJRefreshStatePulling];
-    [gifFooter setImages:self.imagesArray duration:0.3 forState:MJRefreshStateRefreshing];
-    gifFooter.refreshingTitleHidden = YES;
-    gifFooter.stateLabel.hidden = YES;
+//    [gifFooter setImages:self.imagesArray duration:0.3 forState:MJRefreshStateIdle];
+//    [gifFooter setImages:self.imagesArray duration:0.3 forState:MJRefreshStatePulling];
+//    [gifFooter setImages:self.imagesArray duration:0.3 forState:MJRefreshStateRefreshing];
+//    gifFooter.refreshingTitleHidden = YES;
+//    gifFooter.stateLabel.hidden = YES;
     self.tableView.mj_footer = gifFooter;
 }
 
@@ -319,6 +321,7 @@ static int networkSituation = 1;
         }else {
             //失败
             [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            self.page --;
         }
     }];
 }

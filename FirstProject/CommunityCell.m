@@ -143,7 +143,7 @@
             make.bottom.mas_equalTo(0);
             make.right.mas_equalTo(self.bottomIV.mas_right);
         }];
-        _separatorLine.backgroundColor = BACK_COLOR;
+        _separatorLine.backgroundColor = BackgroundColor;
     }
     return _separatorLine;
 }

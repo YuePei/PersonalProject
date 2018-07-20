@@ -29,7 +29,7 @@
             make.top.mas_equalTo(15  * SCREEN_PROPORTION);
 //            make.height.mas_equalTo(50);
         }];
-        _contentTextView.layer.borderColor = BACK_COLOR.CGColor;
+        _contentTextView.layer.borderColor = BackgroundColor.CGColor;
         _contentTextView.layer.borderWidth = 1;
         _contentTextView.layer.cornerRadius = 6;
         _contentTextView.layer.masksToBounds = YES;

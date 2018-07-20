@@ -12,16 +12,10 @@
 @interface PersonCenterVC ()<UITableViewDelegate,UITableViewDataSource,BringBackUserNameDelegate>
 //tableVIew
 @property(nonatomic,strong)UITableView *tableView;
-//middleIV
-@property(nonatomic,strong)UIImageView *middleIV;
-//bkIV
-@property(nonatomic,strong)UIImageView *bkIV;
-//userNameLabel
-@property(nonatomic,strong)UILabel *userNameLabel;
-//introductionLabel
-@property(nonatomic,strong)UILabel *introductionLabel;
 //headView
 @property(nonatomic,strong)UIView *tableViewHeaderView;
+//背景大图
+@property (nonatomic, strong)UIImageView *topBigIV;
 
 @property (nonatomic, assign) BOOL statusBarStyleControl;
 
@@ -31,57 +25,41 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = BACK_COLOR;
+    self.view.backgroundColor = BackgroundColor;
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self setUpUI];
-    [self createMiddleView];
     [self tableView];
-    [self bkIV];
-    //30 基于iPhone6
-    //plus 30 * plus的宽度/6的宽度
+
+    [self.navigationController.navigationBar setTranslucent:YES];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+    [self topBigIV];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    if ([userDefaults boolForKey:@"status"]) {
-        NSLog(@"He logined!");
-        self.userNameLabel.text = [userDefaults objectForKey:@"userName"];
-        self.userNameLabel.textColor = [UIColor blackColor];
-    }else {
-        NSLog(@"Did not login now!");
-        self.userNameLabel.text = @"未登录";
-        self.userNameLabel.textColor = [UIColor darkGrayColor];
-    }
+//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//    if ([userDefaults boolForKey:@"status"]) {
+//        NSLog(@"He logined!");
+//        self.userNameLabel.text = [userDefaults objectForKey:@"userName"];
+//        self.userNameLabel.textColor = [UIColor blackColor];
+//    }else {
+//        NSLog(@"Did not login now!");
+//        self.userNameLabel.text = @"未登录";
+//        self.userNameLabel.textColor = [UIColor darkGrayColor];
+//    }
 }
 #pragma mark Tool Methods
 - (void)setUpUI {
-    
-    //设置barButtonItem的字体大小和颜色
-//    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor], NSFontAttributeName : [UIFont systemFontOfSize:21]};
-    
     //设置右边的设置控件
     UIBarButtonItem *settingItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"设置"] style:UIBarButtonItemStylePlain target:self action:@selector(goToSettingPage)];
     [self.navigationItem setRightBarButtonItem:settingItem];
 }
+
 - (void)goToSettingPage {
     SettingVC *settingVC = [SettingVC new];
     [self.navigationController pushViewController:settingVC animated:YES];
 }
-//设置NavigationBar中间的视图
-- (void)createMiddleView {
-    UIView *middleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 58.6666, 44)];
-    middleView.backgroundColor = [UIColor clearColor];
-    _middleIV = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 58.666,58.666)];
-    _middleIV.backgroundColor = [UIColor redColor];
-    _middleIV.image = [UIImage imageNamed:@"fitness"];
-    //
-    self.middleIV.layer.anchorPoint = CGPointMake(0.5, 0.37931);
-    //设置圆角
-    _middleIV.layer.masksToBounds = YES;
-    _middleIV.layer.cornerRadius = _middleIV.bounds.size.width / 2;
-    [middleView addSubview:_middleIV];
-    [self.navigationItem setTitleView:middleView];
-}
+
 - (UIColor *)randomColor {
     float rColor = arc4random() % 255;
     float gColor = arc4random() % 255;
@@ -102,16 +80,18 @@
     }else {
         //已登录，进入个人信息页面
     }
-    
 }
+
 #pragma mark UITableViewDelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
     
 }
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 6;
 }
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PCTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"pcCell"];
     if (!cell) {
@@ -122,24 +102,26 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if(indexPath.section == 0 && indexPath.row == 0) {
         
-        cell.iconIV.image = [UIImage imageNamed:@"修改"];
-        cell.titleLabel.text = @"修改个人资料";
+        cell.iconIV.image = [UIImage imageNamed:@"消息"];
+        cell.titleLabel.text = @"消息";
     }else if(indexPath.section == 0 && indexPath.row == 1) {
-        cell.titleLabel.text = @"关于我们";
+        
+        cell.titleLabel.text = @"购物车";
         cell.iconIV.image = [UIImage imageNamed:@"关于我们"];
     }else if(indexPath.section == 0 && indexPath.row == 2) {
+        
         cell.rightLabel.hidden = NO;
-        cell.rightLabel.text = [NSString stringWithFormat:@"%.2lf",(long)[[SDImageCache sharedImageCache] getSize]];
-        cell.titleLabel.text = @"清除缓存";
+        cell.rightLabel.text = [NSString stringWithFormat:@"%.2ld",(long)[[SDImageCache sharedImageCache] getSize]];
+        cell.titleLabel.text = @"收藏";
         cell.iconIV.image = [UIImage imageNamed:@"清除"];
     }else if(indexPath.section == 0 && indexPath.row == 3) {
 
-        cell.titleLabel.text = @"帮助与反馈";
-        cell.iconIV.image = [UIImage imageNamed:@"帮助"];
+        cell.titleLabel.text = @"收获喜欢";
+        cell.iconIV.image = [UIImage imageNamed:@"消息"];
     }else if(indexPath.section == 0 && indexPath.row == 4) {
 
-        cell.titleLabel.text = @"消息通知";
-        cell.iconIV.image = [UIImage imageNamed:@"消息"];
+        cell.titleLabel.text = @"清除缓存";
+        cell.iconIV.image = [UIImage imageNamed:@"帮助"];
     }else if(indexPath.section == 0 && indexPath.row == 5) {
 
         cell.titleLabel.text = @"其他";
@@ -148,6 +130,7 @@
     
     return cell;
 }
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if(indexPath.section == 0 && indexPath.row == 0){
@@ -162,131 +145,83 @@
         NSLog(@"something else?");
     }
 }
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 55;
 }
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-//    return 20;
-//}
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-//    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 20)];
-//    view.backgroundColor = BACK_COLOR;
-//    return view;
-//}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     float offsetY = scrollView.contentOffset.y;
-    //设置圆图的缩放
-//    if (offsetY > 0 && offsetY <= 150) {
-//        self.middleIV.transform = CGAffineTransformMakeScale(1- offsetY / 300, 1- offsetY / 300);
-//    }else if(offsetY > 150) {
-//        self.middleIV.transform = CGAffineTransformMakeScale(0.45, .45);
-//    }else if (offsetY < 0 && offsetY >= -150) {
-//        self.middleIV.transform = CGAffineTransformMakeScale(1 + offsetY / -300, 1 + offsetY / -300);
-//    }else if (offsetY < -150) {
-//        self.middleIV.transform = CGAffineTransformMakeScale(1.5, 1.5);
-//    }
-    //在这里offsetY基础偏移是-136，而不是0
-    if (offsetY > -136 && offsetY <= 14) {
-        self.middleIV.transform = CGAffineTransformMakeScale(1- (offsetY + 136) / 300, 1- (offsetY + 136) / 300);
-    }else if(offsetY > 14) {
-        self.middleIV.transform = CGAffineTransformMakeScale(0.45, .45);
-    }else if (offsetY < -136 && offsetY >= -286) {
-        self.middleIV.transform = CGAffineTransformMakeScale(1 + (offsetY + 136) / -300, 1 + (offsetY + 136) / -300);
-    }else if (offsetY < -286) {
-        self.middleIV.transform = CGAffineTransformMakeScale(1.5, 1.5);
-    }
-    //设置背景图的缩放
-    if (offsetY < 0) {
-        self.bkIV.transform = CGAffineTransformMakeScale(-offsetY / 500 + 1, -offsetY / 500 + 1);
-        
+    NSLog(@"------:%f",offsetY);
+    if (offsetY < -300) {
+        CGRect rect = self.topBigIV.frame;
+        rect.origin.y = offsetY;
+        rect.size.height = -offsetY;
+        self.topBigIV.frame = rect;
     }
     
 }
 
-- (void)bringUserName:(NSString *)userName {
-    self.userNameLabel.text = userName;
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return 0;
+    }else {
+        return 0;
+    }
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 0;
+}
+
 #pragma mark lazy
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStyleGrouped];
+        _tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+        [self.view addSubview:_tableView];
+        [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(0);
+            make.right.mas_equalTo(0);
+            make.top.mas_equalTo(0);
+            make.bottom.mas_equalTo(0);
+        }];
+        [_tableView registerClass:[PCTableViewCell class] forCellReuseIdentifier:@"cell"];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        _tableView.backgroundColor = [UIColor clearColor];
+        //去掉cell之间的横线
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        _tableView.separatorColor = [UIColor lightGrayColor];
+        //设置顶部的偏移量
+            _tableView.contentInset = UIEdgeInsetsMake(300, 0, 0, 0);
+        _tableView.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, CGFLOAT_MIN)];
+        
     }
-    [self.view addSubview:_tableView];
-
-    [_tableView registerClass:[PCTableViewCell class] forCellReuseIdentifier:@"cell"];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.backgroundColor = [UIColor clearColor];
-    //去掉cell之间的横线
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    _tableView.separatorColor = [UIColor lightGrayColor];
-    //设置顶部的偏移量
-    _tableView.contentInset = UIEdgeInsetsMake(100, 0, 0, 0);
-    _tableView.scrollIndicatorInsets = UIEdgeInsetsMake(136, 0, 0, 0);
-    _tableView.tableHeaderView = [self tableViewHeaderView];
     return _tableView;
 }
 
-- (UIImageView *)bkIV {
-    if (!_bkIV) {
-        _bkIV = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.9)];
+//- (UIView *)tableViewHeaderView {
+//    if (!_tableViewHeaderView) {
+//        _tableViewHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 300 * SCREEN_PROPORTION)];
+//        [self topBigIV];
+//    }
+//    return _tableViewHeaderView;
+//}
+
+- (UIImageView *)topBigIV {
+    if (!_topBigIV) {
+        _topBigIV = [[UIImageView alloc]init];
+        [self.tableView addSubview:_topBigIV];
+        [_topBigIV setFrame:CGRectMake(0, -300, SCREEN_WIDTH, 300)];
+//        [_topBigIV mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.right.top.bottom.mas_equalTo(0);
+//        }];
+        NSURL *url = [NSURL URLWithString:@"http://pic.58pic.com/58pic/11/96/08/18y58PICXdm.jpg"];
+        NSData *imgData = [NSData dataWithContentsOfURL:url];
+        _topBigIV.image = [UIImage imageWithData:imgData];
     }
-    [self.view insertSubview:_bkIV belowSubview:self.tableView];
-    _bkIV.image = [UIImage imageNamed:@"fitness1"];
-    return _bkIV;
-}
-- (UIView *)tableViewHeaderView {
-    if (!_tableViewHeaderView) {
-        _tableViewHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 110)];
-        //毛玻璃效果
-        UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-        UIVisualEffectView *visualView = [[UIVisualEffectView alloc]initWithFrame:_tableViewHeaderView.frame];
-        visualView.effect = effect;
-        visualView.alpha = 0.6;
-        [_tableViewHeaderView addSubview:visualView];
-        [self userNameLabel];
-        [self introductionLabel];
-    }
-    
-    return _tableViewHeaderView;
+    return _topBigIV;
 }
 
-- (UILabel *)userNameLabel {
-    if (!_userNameLabel) {
-        _userNameLabel = [[UILabel alloc]init];
-        //用户名
-        _userNameLabel = [[UILabel alloc]init];
-        [_userNameLabel setFont:[UIFont fontWithName:@"AppleGothic" size:25]];
-        [self.tableViewHeaderView addSubview:_userNameLabel];
-        [_userNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(30);
-            make.top.mas_equalTo(20);
-        }];
-        //添加手势，未登录时，弹出登录页面
-        _userNameLabel.userInteractionEnabled = YES;
-        UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(loginMethod)];
-        [_userNameLabel addGestureRecognizer:tapGes];
-    }
-    return _userNameLabel;
-}
-- (UILabel *)introductionLabel {
-    if (!_introductionLabel) {
-        _introductionLabel = [[UILabel alloc]init];
-        //简介
-        [self.tableViewHeaderView addSubview:_introductionLabel];
-        [_introductionLabel setFont:[UIFont fontWithName:@"AppleGothic" size:16]];
-        _introductionLabel.textColor = [self randomColor];
-        [_introductionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self.userNameLabel.mas_left);
-            make.top.mas_equalTo(self.userNameLabel.mas_bottom).mas_offset(10);
-            make.right.mas_equalTo(-20);
-        }];
-        _introductionLabel.numberOfLines = 2;
-        _introductionLabel.lineBreakMode = NSLineBreakByTruncatingTail;
-        _introductionLabel.text = @"She's a good woman!BalabalaBal abalaBalab alaBalabal aBalabalaBalabala BalabalaBal abalaBal abalaBal abalaBalabalaBal abalaB alabala Balaba laBalabala";
-    }
-    
-    
-    return _introductionLabel;
-}
+
 @end

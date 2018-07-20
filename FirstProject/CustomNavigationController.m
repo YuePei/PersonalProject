@@ -50,9 +50,11 @@
 //    [navBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
 //    [navBar setShadowImage:[UIImage new]];
     
-    UIImage *image = [UIImage imageNamed:@"white"];
-    [navBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
-    [navBar setShadowImage:[UIImage new]];
+    //设置导航栏为白色背景
+//    UIImage *image = [UIImage imageNamed:@"white"];
+//    [navBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
+    //隐藏导航栏底部的横线
+//    [navBar setShadowImage:[UIImage new]];
 }
 
 

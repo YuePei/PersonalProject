@@ -21,6 +21,9 @@
 		9F13EA51209AA14D002158BA /* CommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F13EA50209AA14D002158BA /* CommentView.m */; };
 		9F17B5E720F4605C00790237 /* ShareListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F17B5E620F4605C00790237 /* ShareListView.m */; };
 		9F17B5EB20F48F0800790237 /* ShareCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F17B5E920F48F0800790237 /* ShareCollectionViewCell.m */; };
+		9F21BA8D210191470044467D /* UIView+KeyBoardAdjust.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F21BA8C210191470044467D /* UIView+KeyBoardAdjust.m */; };
+		9F21BA912101BD7E0044467D /* UserInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F21BA8F2101BD7E0044467D /* UserInfoTableViewCell.m */; };
+		9F21BA922101BD7E0044467D /* UserInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F21BA902101BD7E0044467D /* UserInfoTableViewCell.xib */; };
 		9F32861220FDE00300ECC350 /* ShareCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F32861120FDE00300ECC350 /* ShareCollectionViewCell.xib */; };
 		9F3EE7B7205F8B3C002B5527 /* CustomNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3EE7B6205F8B3C002B5527 /* CustomNavigationController.m */; };
 		9F793BAD209AFE7D009EE379 /* MainPageHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F793BAC209AFE7D009EE379 /* MainPageHeaderView.m */; };
@@ -134,6 +137,11 @@
 		9F17B5E620F4605C00790237 /* ShareListView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareListView.m; sourceTree = "<group>"; };
 		9F17B5E820F48F0800790237 /* ShareCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareCollectionViewCell.h; sourceTree = "<group>"; };
 		9F17B5E920F48F0800790237 /* ShareCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareCollectionViewCell.m; sourceTree = "<group>"; };
+		9F21BA8B210191470044467D /* UIView+KeyBoardAdjust.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+KeyBoardAdjust.h"; sourceTree = "<group>"; };
+		9F21BA8C210191470044467D /* UIView+KeyBoardAdjust.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+KeyBoardAdjust.m"; sourceTree = "<group>"; };
+		9F21BA8E2101BD7E0044467D /* UserInfoTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserInfoTableViewCell.h; sourceTree = "<group>"; };
+		9F21BA8F2101BD7E0044467D /* UserInfoTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserInfoTableViewCell.m; sourceTree = "<group>"; };
+		9F21BA902101BD7E0044467D /* UserInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserInfoTableViewCell.xib; sourceTree = "<group>"; };
 		9F32861120FDE00300ECC350 /* ShareCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShareCollectionViewCell.xib; sourceTree = "<group>"; };
 		9F3EE7B5205F8B3C002B5527 /* CustomNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNavigationController.h; sourceTree = "<group>"; };
 		9F3EE7B6205F8B3C002B5527 /* CustomNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNavigationController.m; sourceTree = "<group>"; };
@@ -370,6 +378,9 @@
 				9FFB1F1A2091B91800641F49 /* PCTableViewCell.h */,
 				9FFB1F1B2091B91800641F49 /* PCTableViewCell.m */,
 				9FFB1F1C2091B91800641F49 /* PCTableViewCell.xib */,
+				9F21BA8E2101BD7E0044467D /* UserInfoTableViewCell.h */,
+				9F21BA8F2101BD7E0044467D /* UserInfoTableViewCell.m */,
+				9F21BA902101BD7E0044467D /* UserInfoTableViewCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -682,6 +693,8 @@
 		D096179E1FA311B400F0DC7B /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				9F21BA8B210191470044467D /* UIView+KeyBoardAdjust.h */,
+				9F21BA8C210191470044467D /* UIView+KeyBoardAdjust.m */,
 				D0906D421FBD59BC00A04904 /* SWRevealViewController */,
 				D096179F1FA311CF00F0DC7B /* FQLHttpTools.h */,
 				D09617A01FA311CF00F0DC7B /* FQLHttpTools.m */,
@@ -856,6 +869,7 @@
 				D07984B7200753C9004193C6 /* Assets.xcassets in Resources */,
 				9FFB1F1E2091B91800641F49 /* PCTableViewCell.xib in Resources */,
 				9F32861220FDE00300ECC350 /* ShareCollectionViewCell.xib in Resources */,
+				9F21BA922101BD7E0044467D /* UserInfoTableViewCell.xib in Resources */,
 				D08326121F95A0E4008AF378 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1043,12 +1057,14 @@
 				9F3EE7B7205F8B3C002B5527 /* CustomNavigationController.m in Sources */,
 				D083260F1F95A0E4008AF378 /* ViewController.m in Sources */,
 				D0906D451FBD59BC00A04904 /* SWRevealViewController.m in Sources */,
+				9F21BA8D210191470044467D /* UIView+KeyBoardAdjust.m in Sources */,
 				D083F1C4202C4386009BA395 /* UINavigationBar+NavigationBarBGColor.m in Sources */,
 				D083260C1F95A0E4008AF378 /* AppDelegate.m in Sources */,
 				D0A3C4851F9F07FC00747C67 /* CommunityVC.m in Sources */,
 				D083263C1F95A11C008AF378 /* MainPageVC.m in Sources */,
 				D08326091F95A0E4008AF378 /* main.m in Sources */,
 				D044D2EC2047E03000209493 /* GoodsCell.m in Sources */,
+				9F21BA912101BD7E0044467D /* UserInfoTableViewCell.m in Sources */,
 				D03415DE203C7257003186B4 /* WaterFallFlowLayout.m in Sources */,
 				D00FFE1C1FBF1D4600886330 /* GroupAnimationVC.m in Sources */,
 				9F07345820902C28005173A3 /* SlideTableViewCell.m in Sources */,

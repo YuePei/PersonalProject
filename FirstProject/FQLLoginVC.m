@@ -7,8 +7,7 @@
 //
 
 #import "FQLLoginVC.h"
-#import "CustomMBProgressHUD.h"
-
+#import "UIView+KeyBoardAdjust.h"
 
 @interface FQLLoginVC ()
 
@@ -25,7 +24,14 @@
 @property(nonatomic,strong)UIButton *registerButton;
 
 @property(nonatomic,strong)UIButton *forgetPwd;
-
+//weChatLogin
+@property (nonatomic, strong)UIButton *weChatLoginButton;
+//weiboLogin
+@property (nonatomic, strong)UIButton *weiBoLoginButton;
+//qqLoginButton
+@property (nonatomic, strong)UIButton *qqLoginButton;
+//用户协议
+@property (nonatomic, strong)UIButton *userProtocol;
 
 @end
 
@@ -33,11 +39,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setUpUI];
-    //初始化一个自定义view的MBProgressHUD
-//    UIImageView *imaV = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 30, 30 )];
-//    imaV.image = [UIImage imageNamed:@"加载进度"];
-//    [CustomMBProgressHUD setHudWithImageName:imaV title:@"Hi girl, welcome!" description:nil andHideAfterDelay:2];
-    
+    [self.view adjustAllTextFieldsWithKeyBoard];
+    [self weChatLoginButton];
+    [self qqLoginButton];
+    [self weiBoLoginButton];
+    [self userProtocol];
 }
 
 
@@ -126,11 +132,22 @@
         [self.view addSubview:_logoIV];
         [_logoIV mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self.view.centerX);
-            make.width.height.mas_equalTo(SCREEN_WIDTH / 4);
+            make.width.height.mas_equalTo(150 * SCREEN_PROPORTION);
             make.top.mas_equalTo(SCREEN_HEIGHT / 7);
         }];
-        _logoIV.backgroundColor = [UIColor colorWithRed:0 green:154 / 255.0 blue:216 / 255.0 alpha:1];
-        _logoIV.layer.cornerRadius = SCREEN_WIDTH / 8;
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://mingxing.facang.com/uploads/allimg/151229/1H54C520-4.jpg"]];
+        UIImage *img = [UIImage imageWithData:data];
+        _logoIV.image = img;
+        
+        //设置圆角
+        [_logoIV.superview layoutIfNeeded];
+        UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:_logoIV.bounds cornerRadius:_logoIV.frame.size.width / 2.0];
+        CAShapeLayer *circleLayer = [CAShapeLayer layer];
+        circleLayer.path = path.CGPath;
+        
+        [circleLayer setFrame:_logoIV.bounds];
+        _logoIV.layer.mask = circleLayer;
+//        _logoIV.layer.cornerRadius = SCREEN_WIDTH / 8;
     }
     return _logoIV;
 }
@@ -180,7 +197,7 @@
             make.height.mas_equalTo(SCREEN_HEIGHT / 20);
         }];
         [_loginBtn setTitle:@"登录" forState:UIControlStateNormal];
-        [_loginBtn setBackgroundColor:[UIColor colorWithRed:0 green:154 / 255.0 blue:216 / 255.0 alpha:1]];
+        [_loginBtn setBackgroundColor:MAIN_COLOR];
         
         _loginBtn.layer.masksToBounds = YES;
         _loginBtn.layer.cornerRadius = 6;
@@ -200,7 +217,7 @@
             make.left.equalTo(self.loginBtn.left);
         }];
         [_registerButton setTitle:@"立即注册" forState:UIControlStateNormal];
-        [_registerButton setTitleColor:[UIColor colorWithRed:0 green:154 / 255.0 blue:216 / 255.0 alpha:1] forState:UIControlStateNormal];
+        [_registerButton setTitleColor:MAIN_COLOR forState:UIControlStateNormal];
         _registerButton.titleLabel.font = [UIFont systemFontOfSize:15];
         _registerButton.titleLabel.font = [UIFont fontWithName:@"Verdana-Italic" size:15];
     }
@@ -215,7 +232,7 @@
             make.right.equalTo(self.loginBtn.right);
         }];
         [_forgetPwd setTitle:@"忘记密码" forState:UIControlStateNormal];
-        [_forgetPwd setTitleColor:[UIColor colorWithRed:0 green:154 / 255.0 blue:216 / 255.0 alpha:1] forState:UIControlStateNormal];
+        [_forgetPwd setTitleColor:MAIN_COLOR forState:UIControlStateNormal];
         _forgetPwd.titleLabel.font = [UIFont systemFontOfSize:15];
         _forgetPwd.titleLabel.font = [UIFont fontWithName:@"Verdana-Italic" size:15];
      
@@ -223,5 +240,68 @@
         
     }
     return _forgetPwd;
+}
+
+- (UIButton *)weChatLoginButton {
+    if (!_weChatLoginButton) {
+        _weChatLoginButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.view addSubview:_weChatLoginButton];
+        [_weChatLoginButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.width.height.mas_equalTo(40 * SCREEN_PROPORTION);
+            make.left.mas_equalTo(self.userNameTF.mas_left);
+            make.top.mas_equalTo(self.registerButton.mas_bottom).mas_offset(30 * SCREEN_PROPORTION);
+        }];
+        [_weChatLoginButton setBackgroundImage:[UIImage imageNamed:@"weChat_login"] forState:UIControlStateNormal];
+//        [_weChatLoginButton setBackgroundColor:[UIColor redColor]];
+    }
+    return _weChatLoginButton;
+}
+
+- (UIButton *)qqLoginButton {
+    if (!_qqLoginButton) {
+        _qqLoginButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.view addSubview:_qqLoginButton];
+        [_qqLoginButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.width.height.mas_equalTo(30 * SCREEN_PROPORTION);
+            make.right.mas_equalTo(self.userNameTF.mas_right);
+            make.centerY.mas_equalTo(self.weChatLoginButton.mas_centerY);
+        }];
+        [_qqLoginButton setBackgroundImage:[UIImage imageNamed:@"qq_login"] forState:UIControlStateNormal];
+        //        [_weChatLoginButton setBackgroundColor:[UIColor redColor]];
+    }
+    return _qqLoginButton;
+}
+
+- (UIButton *)weiBoLoginButton {
+    if (!_weiBoLoginButton) {
+        _weiBoLoginButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.view addSubview:_weiBoLoginButton];
+        [_weiBoLoginButton mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.width.height.mas_equalTo(40 * SCREEN_PROPORTION);
+            make.centerX.mas_equalTo(self.view.mas_centerX);
+            make.top.mas_equalTo(self.weChatLoginButton.mas_top);
+        }];
+        [_weiBoLoginButton setBackgroundImage:[UIImage imageNamed:@"微博_login"] forState:UIControlStateNormal];
+        //        [_weChatLoginButton setBackgroundColor:[UIColor redColor]];
+    }
+    return _weiBoLoginButton;
+}
+
+- (UIButton *)userProtocol {
+    if (!_userProtocol) {
+        _userProtocol = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.view addSubview:_userProtocol];
+        [_userProtocol mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.mas_equalTo(self.view.mas_centerX);
+            make.top.mas_equalTo(self.weChatLoginButton.mas_bottom).mas_offset(30);
+        }];
+        [_userProtocol setTitleColor:BackgroundColor forState:UIControlStateNormal];
+        [_userProtocol.titleLabel setFont:[UIFont systemFontOfSize:12]];
+        NSMutableAttributedString * originString = [[NSMutableAttributedString alloc]initWithString:@"创建账号代表您同意用户服务协议"];
+        NSRange range = [[originString string] rangeOfString:@"用户服务协议"];
+        [originString addAttribute:NSForegroundColorAttributeName value:GREEN_COLOR range:range];
+        [_userProtocol setAttributedTitle:originString forState:UIControlStateNormal];
+    }
+    return _userProtocol;
 }
 @end
