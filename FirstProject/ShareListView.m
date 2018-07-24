@@ -8,6 +8,8 @@
 
 #import "ShareListView.h"
 #import "ShareCollectionViewCell.h"
+#import "UIView+Operations.h"
+
 
 @interface ShareListView () <UICollectionViewDelegate, UICollectionViewDataSource>
 
@@ -27,6 +29,12 @@
 @property (nonatomic , strong) UIButton *screenShotButton;
 //顶部右边的按钮，添加
 @property (nonatomic , strong) UIButton *addExpressionButton;
+//blur
+@property (nonatomic, strong)UIBlurEffect *effect;
+//毛玻璃
+@property (nonatomic, strong)UIVisualEffectView *effectView;
+//screenShotImageView
+@property (nonatomic, strong)UIImageView *screenShotImageView;
 
 @end
 
@@ -57,8 +65,9 @@ static const float buttonWidth_Height = 100;
         [self screenShotButton];
         [self addExpressionButton];
         [self addGesture];
-        [self showBackgroundColor];
+//        [self showBackgroundColor];
         [self showMiddleView];
+        [self screenShotWithFrame:self.frame];
     }
     return self;
 }
@@ -75,26 +84,83 @@ static const float buttonWidth_Height = 100;
     
     return cell;
 }
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
 #pragma mark toolMethods
+//截图
+- (UIImage *)screenShotWithFrame:(CGRect )imageRect {
+    
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT), NO, 0.0);
+    UIViewController *vc = [self.middleView getViewController];
+    NSLog(@"vc: %@",vc);
+    [vc.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *screenShotImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    UIImageWriteToSavedPhotosAlbum(screenShotImage, nil, nil, nil);
+    return screenShotImage;
+}
+
+//毛玻璃效果
+- (void)addBlurView {
+    UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    UIVisualEffectView *effectView = [[UIVisualEffectView alloc]initWithEffect:blur];
+    effectView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    effectView.alpha = 1;
+    [self insertSubview:effectView belowSubview:self.middleView];
+}
+
 - (void)addGesture {
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideMiddleView)];
     [self addGestureRecognizer:tapGesture];
 }
 //隐藏分享模块
 - (void)hideMiddleView {
-
-    [UIView animateWithDuration:0.5 animations:^{
+    
+    [self.screenShotImageView updateConstraints:^(MASConstraintMaker *make) {
+        make.left.top.right.bottom.mas_equalTo(0);
+    }];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        //0. 显示状态栏
+        [UIApplication sharedApplication].statusBarHidden = NO;
+        //1. 截图撑满屏幕
+        [self.screenShotImageView layoutIfNeeded];
+        //2. 动态模糊隐藏
+        self.effectView.alpha = 0;
+        //3. 半透明蒙板隐藏
         [self setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:0]];
+        //4. 分享模块隐藏
         [self.middleView setFrame:CGRectMake(self.middleView.frame.origin.x, CGRectGetHeight(self.frame), CGRectGetWidth(self.middleView.frame), CGRectGetHeight(self.middleView.frame))];
+        
     } completion:^(BOOL finished) {
+        //移除分享控件
         [self removeFromSuperview];
     }];
 }
 
 //显示分享模块
 - (void)showMiddleView {
+    //0. 隐藏状态栏
+    [UIApplication sharedApplication].statusBarHidden = YES;
+    //1. 截图
+    UIImage *img = [self screenShotWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    //2. 背景虚化
+    [self effectView];
+    //3. 将截图显示在页面上
+    [self screenShotImageView];
+    [self.screenShotImageView updateConstraints:^(MASConstraintMaker *make) {
+        make.left.top.mas_equalTo(30);
+        make.right.mas_equalTo(-30);
+        make.bottom.mas_equalTo(-30);
+    }];
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.screenShotImageView layoutIfNeeded];
+    }];
+    //4. 黑色半透明蒙板
     
-    NSLog(@"----:%@",self.middleView);
+    //5. 显示分享控件
     [self.middleView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(-10);
     }];
@@ -282,6 +348,39 @@ static const float buttonWidth_Height = 100;
         _icons = [NSArray array];
     }
     return _icons;
+}
+
+- (UIBlurEffect *)effect {
+    if (!_effect) {
+        _effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    }
+    return _effect;
+}
+
+- (UIVisualEffectView *)effectView {
+    if (!_effectView) {
+        _effectView = [[UIVisualEffectView alloc]initWithEffect:self.effect];
+        [_effectView setFrame:self.frame];
+        _effectView.alpha = 0.9;
+        [self insertSubview:_effectView belowSubview:self.middleView];
+    }
+    return _effectView;
+}
+
+- (UIImageView *)screenShotImageView {
+    if (!_screenShotImageView) {
+        _screenShotImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+//        _screenShotImageView = [[UIImageView alloc]init];
+        [self insertSubview:_screenShotImageView aboveSubview:self.effectView];
+//        [_screenShotImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.mas_equalTo(0);
+//            make.top.mas_equalTo(0);
+//            make.right.mas_equalTo(0);
+//            make.bottom.mas_equalTo(0);
+//        }];
+        _screenShotImageView.image = [UIImage imageNamed:@"头像"];
+    }
+    return _screenShotImageView;
 }
 @end
 

@@ -48,5 +48,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>是否允许访问您的相册</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>是否允许向您的相册添加图片</string>
 </dict>
 </plist>

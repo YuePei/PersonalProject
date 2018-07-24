@@ -23,17 +23,16 @@
 
 
 //状态栏高度
-#define StatusBarHeight CGRectGetHeight([UIApplication sharedApplication].statusBarFrame)
+#define ysStatusBarHeight CGRectGetHeight([UIApplication sharedApplication].statusBarFrame)
 //导航栏高度
-#define NavBarHeight CGRectGetHeight(self.navigationController.navigationBar.frame)
+#define ysNavBarHeight CGRectGetHeight(self.navigationController.navigationBar.frame)
 //tabbar高度
-#define kTabBarHeight ([[UIApplication sharedApplication] statusBarFrame].size.height>20?83:49)
-#define kTopHeight (kStatusBarHeight + kNavBarHeight)
+#define ysTabBarHeight ([[UIApplication sharedApplication] statusBarFrame].size.height>20?83:49)
+#define ysTopHeight (ysStatusBarHeight + ysNavBarHeight)
 
 //屏幕宽高
 #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
-
 //适配
 #define SCREEN_PROPORTION [UIScreen mainScreen].bounds.size.width / 375.0
 

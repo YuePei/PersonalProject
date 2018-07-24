@@ -48,7 +48,7 @@
     [hud show:YES];
     hud.detailsLabelText = @"Requesting data...";
     hud.labelText = @"Dear User";
-    
+    hud.removeFromSuperViewOnHide = YES;
     
     [FQLHttpTools get:[NSString stringWithFormat:@"%@%@?mongoId=%@&articleId=%ld&type=%ld",BASIC_URL,ARTICLE_DETAIL_URL,mongold,articleId,type] parameters:nil success:^(id obj) {
         [hud hide:YES];

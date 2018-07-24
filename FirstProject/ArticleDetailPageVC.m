@@ -11,6 +11,7 @@
 #import "BottomView.h"
 #import "CommentView.h"
 #import "ShareListView.h"
+#import "UIView+Operations.h"
 
 
 @interface ArticleDetailPageVC ()<UITextViewDelegate,UITextFieldDelegate>
@@ -39,22 +40,33 @@
     [self bottomView];
     [self getDetailPageData];
     [self commentView];
-    //毛玻璃效果
-    //    UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-    //    UIVisualEffectView *effectView = [[UIVisualEffectView alloc]initWithEffect:blur];
-    //    effectView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-    //    effectView.alpha = 0.3;
-    //    [self.view addSubview:effectView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+//    UIViewController *vc = [self.bottomView getViewController];
+//    NSLog(@"self..%@",self);
+//    NSLog(@"vc..%@",vc);
 }
 
+- (void)test111 {
+    UIImage *img = [self screenShotWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+}
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+//    NSTimer *timer1 = [NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(test111) userInfo:nil repeats:NO];
+//    [timer1 fire];
 }
 
-
+- (UIImage *)screenShotWithFrame:(CGRect )imageRect {
+    
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT), NO, 0.0);
+    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *screenShotImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    UIImageWriteToSavedPhotosAlbum(screenShotImage, nil, nil, nil);
+    return screenShotImage;
+}
 
 #pragma mark tools Methods
 //调用系统的分享功能
@@ -70,8 +82,9 @@
                                                                      [UIImage imageNamed:@"空间"],
                                                                      [UIImage imageNamed:@"支付宝"],
                                                                      [UIImage imageNamed:@"微博"],
-                                                                     [UIImage imageNamed:@"链接"]]
-                                                    andShareTitles:@[@"微信",@"朋友圈",@"QQ好友",@"QQ空间",@"支付宝",@"微博",@"复制链接"]];
+                                                                     [UIImage imageNamed:@"链接"],
+                                                                     [UIImage imageNamed:@"更多"]]
+                                                    andShareTitles:@[@"微信",@"朋友圈",@"QQ好友",@"QQ空间",@"支付宝",@"微博",@"复制链接", @"更多"]];
     [[[UIApplication sharedApplication].windows lastObject] addSubview:shareView];
     
 }
@@ -201,11 +214,12 @@
     if (!_wkWebView) {
         _wkWebView = [[UIWebView alloc]init];
         [self.view addSubview:_wkWebView];
+        [self.bottomView.superview layoutIfNeeded];
         [_wkWebView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(5);
             make.right.mas_equalTo(-5);
-            make.top.mas_equalTo(0);
-            make.bottom.mas_equalTo(-49);
+            make.top.mas_equalTo(ysTopHeight);
+            make.bottom.mas_equalTo(- CGRectGetHeight(self.bottomView.frame));
         }];
         _wkWebView.scrollView.showsHorizontalScrollIndicator = NO;
         _wkWebView.backgroundColor = [UIColor whiteColor];
@@ -215,8 +229,13 @@
 
 - (BottomView *)bottomView {
     if (!_bottomView) {
-        _bottomView = [[BottomView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 50 * SCREEN_PROPORTION - 64, SCREEN_WIDTH, 50 * SCREEN_PROPORTION)];
+        _bottomView = [[BottomView alloc]init];
         [self.view insertSubview:_bottomView aboveSubview:self.wkWebView];
+        [_bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.mas_equalTo(0);
+            make.bottom.mas_equalTo(0);
+            make.height.mas_equalTo(50 * SCREEN_PROPORTION);
+        }];
         _bottomView.backgroundColor = BackgroundColor;
         [_bottomView.collectBtn addTarget:self action:@selector(collectFunction) forControlEvents:UIControlEventTouchUpInside];
         [_bottomView.likeBtn addTarget:self action:@selector(likeFunction) forControlEvents:UIControlEventTouchUpInside];
@@ -229,8 +248,13 @@
 //评论框
 - (UIView *)commentView {
     if (!_commentView) {
-        _commentView = [[CommentView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 64, SCREEN_WIDTH, 150)];
+        _commentView = [[CommentView alloc]init];
         [self.view addSubview:_commentView];
+        [_commentView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.mas_equalTo(0);
+            make.top.mas_equalTo(SCREEN_HEIGHT);
+            make.height.mas_equalTo(150);
+        }];
         _commentView.backgroundColor = BackgroundColor;
         _commentView.contentTextView.delegate = self;
         [_commentView.submitButton addTarget:self action:@selector(resignContentTextViewFirstResponser) forControlEvents:UIControlEventTouchUpInside];
