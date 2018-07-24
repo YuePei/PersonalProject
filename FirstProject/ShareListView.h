@@ -17,5 +17,9 @@
  */
 - (instancetype)initWithFrame:(CGRect)frame shareIcons:(NSArray *)icons andShareTitles:(NSArray *)titles;
 
+/**
+ * 设置截图
+ */
+- (void)setScreenShotImage:(UIImage *)image;
 @end
 

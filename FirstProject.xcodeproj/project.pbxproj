@@ -27,6 +27,8 @@
 		9F32861220FDE00300ECC350 /* ShareCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F32861120FDE00300ECC350 /* ShareCollectionViewCell.xib */; };
 		9F3EE7B7205F8B3C002B5527 /* CustomNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3EE7B6205F8B3C002B5527 /* CustomNavigationController.m */; };
 		9F6E628D2106BAB5007289B0 /* UIView+Operations.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6E628C2106BAB5007289B0 /* UIView+Operations.m */; };
+		9F6E62902106F7CC007289B0 /* NSObject+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6E628F2106F7CC007289B0 /* NSObject+Tools.m */; };
+		9F6E62932106FA69007289B0 /* UIWebView+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6E62922106FA69007289B0 /* UIWebView+Tools.m */; };
 		9F793BAD209AFE7D009EE379 /* MainPageHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F793BAC209AFE7D009EE379 /* MainPageHeaderView.m */; };
 		9F7AA8222092FFE7003D0C5A /* BottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7AA8202092FFE7003D0C5A /* BottomView.m */; };
 		9F87242C2105682B00BBFF0A /* NSString+CurrentDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F87242B2105682B00BBFF0A /* NSString+CurrentDate.m */; };
@@ -150,6 +152,10 @@
 		9F3EE7B6205F8B3C002B5527 /* CustomNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNavigationController.m; sourceTree = "<group>"; };
 		9F6E628B2106BAB5007289B0 /* UIView+Operations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+Operations.h"; sourceTree = "<group>"; };
 		9F6E628C2106BAB5007289B0 /* UIView+Operations.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+Operations.m"; sourceTree = "<group>"; };
+		9F6E628E2106F7CC007289B0 /* NSObject+Tools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+Tools.h"; sourceTree = "<group>"; };
+		9F6E628F2106F7CC007289B0 /* NSObject+Tools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Tools.m"; sourceTree = "<group>"; };
+		9F6E62912106FA69007289B0 /* UIWebView+Tools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIWebView+Tools.h"; sourceTree = "<group>"; };
+		9F6E62922106FA69007289B0 /* UIWebView+Tools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+Tools.m"; sourceTree = "<group>"; };
 		9F793BAB209AFE7D009EE379 /* MainPageHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainPageHeaderView.h; sourceTree = "<group>"; };
 		9F793BAC209AFE7D009EE379 /* MainPageHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainPageHeaderView.m; sourceTree = "<group>"; };
 		9F7AA8202092FFE7003D0C5A /* BottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomView.m; sourceTree = "<group>"; };
@@ -720,6 +726,10 @@
 				9F87242B2105682B00BBFF0A /* NSString+CurrentDate.m */,
 				9F6E628B2106BAB5007289B0 /* UIView+Operations.h */,
 				9F6E628C2106BAB5007289B0 /* UIView+Operations.m */,
+				9F6E628E2106F7CC007289B0 /* NSObject+Tools.h */,
+				9F6E628F2106F7CC007289B0 /* NSObject+Tools.m */,
+				9F6E62912106FA69007289B0 /* UIWebView+Tools.h */,
+				9F6E62922106FA69007289B0 /* UIWebView+Tools.m */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -1063,6 +1073,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D03490F4203FE1B90009BF2E /* ResultModel.m in Sources */,
+				9F6E62932106FA69007289B0 /* UIWebView+Tools.m in Sources */,
 				9FFB1F1D2091B91800641F49 /* PCTableViewCell.m in Sources */,
 				9F04BB6F2060F574002B5046 /* CustomMBProgressHUD.m in Sources */,
 				D048C67B1FAC5056007FFB1C /* PersonCenterVC.m in Sources */,
@@ -1109,6 +1120,7 @@
 				D06439B61FAAC130005BDCB2 /* ArticleModel.m in Sources */,
 				D08326441F95D3C9008AF378 /* FQLLoginVC.m in Sources */,
 				D00FFE191FBF1D2700886330 /* KeyFrameAnimationVC.m in Sources */,
+				9F6E62902106F7CC007289B0 /* NSObject+Tools.m in Sources */,
 				D03490E9203FA6D50009BF2E /* CommunityNetwork.m in Sources */,
 				9F07345B2090599F005173A3 /* DetailCollectionViewCell.m in Sources */,
 				D03415DB203C6F00003186B4 /* PhotoCollectionViewCell.m in Sources */,

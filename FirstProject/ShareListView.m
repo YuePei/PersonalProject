@@ -25,16 +25,20 @@
 @property (nonatomic , strong) UIView *separaterLine;
 //分割线上面的view
 @property (nonatomic , strong) UIView *topView;
-//顶部左边的按钮，截图编辑
+//分享视图左边的按钮，截图编辑
 @property (nonatomic , strong) UIButton *screenShotButton;
-//顶部右边的按钮，添加
+//分享视图右边的按钮，添加
 @property (nonatomic , strong) UIButton *addExpressionButton;
+
 //blur
 @property (nonatomic, strong)UIBlurEffect *effect;
 //毛玻璃
 @property (nonatomic, strong)UIVisualEffectView *effectView;
 //screenShotImageView
 @property (nonatomic, strong)UIImageView *screenShotImageView;
+//半透明遮罩
+@property (nonatomic, strong)UIView *translucentView;
+
 
 @end
 
@@ -56,7 +60,6 @@ static const float buttonWidth_Height = 100;
     if (self = [super initWithFrame:frame]) {
         self.array = titles;
         self.icons = icons;
-        NSLog(@"......%f",titles.count);
         self.backgroundColor = [UIColor colorWithRed:1 / 255.0 green:1 / 255.0 blue:1 / 255.0 alpha:0];
         [self collectionView];
         [self middleView];
@@ -65,13 +68,15 @@ static const float buttonWidth_Height = 100;
         [self screenShotButton];
         [self addExpressionButton];
         [self addGesture];
-//        [self showBackgroundColor];
+        
         [self showMiddleView];
-        [self screenShotWithFrame:self.frame];
     }
     return self;
 }
 
+- (void)setScreenShotImage:(UIImage *)image {
+    self.screenShotImageView.image = image;
+}
 
 #pragma mark UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -88,20 +93,8 @@ static const float buttonWidth_Height = 100;
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
 }
-#pragma mark toolMethods
-//截图
-- (UIImage *)screenShotWithFrame:(CGRect )imageRect {
-    
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT), NO, 0.0);
-    UIViewController *vc = [self.middleView getViewController];
-    NSLog(@"vc: %@",vc);
-    [vc.view.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *screenShotImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    UIImageWriteToSavedPhotosAlbum(screenShotImage, nil, nil, nil);
-    return screenShotImage;
-}
 
+#pragma mark toolMethods
 //毛玻璃效果
 - (void)addBlurView {
     UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
@@ -130,7 +123,7 @@ static const float buttonWidth_Height = 100;
         //2. 动态模糊隐藏
         self.effectView.alpha = 0;
         //3. 半透明蒙板隐藏
-        [self setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:0]];
+        [self.translucentView setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:0]];
         //4. 分享模块隐藏
         [self.middleView setFrame:CGRectMake(self.middleView.frame.origin.x, CGRectGetHeight(self.frame), CGRectGetWidth(self.middleView.frame), CGRectGetHeight(self.middleView.frame))];
         
@@ -145,20 +138,23 @@ static const float buttonWidth_Height = 100;
     //0. 隐藏状态栏
     [UIApplication sharedApplication].statusBarHidden = YES;
     //1. 截图
-    UIImage *img = [self screenShotWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    
     //2. 背景虚化
     [self effectView];
     //3. 将截图显示在页面上
     [self screenShotImageView];
     [self.screenShotImageView updateConstraints:^(MASConstraintMaker *make) {
-        make.left.top.mas_equalTo(30);
-        make.right.mas_equalTo(-30);
-        make.bottom.mas_equalTo(-30);
+        make.left.mas_equalTo(50 * SCREEN_WIDTH / SCREEN_HEIGHT);
+        make.top.mas_equalTo(50);
+        make.right.mas_equalTo(-50 * SCREEN_WIDTH / SCREEN_HEIGHT);
+        make.bottom.mas_equalTo(-50);
     }];
     [UIView animateWithDuration:0.3 animations:^{
         [self.screenShotImageView layoutIfNeeded];
-    }];
     //4. 黑色半透明蒙板
+        [self.translucentView setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:0.3]];
+    }];
+    
     
     //5. 显示分享控件
     [self.middleView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -173,12 +169,6 @@ static const float buttonWidth_Height = 100;
     }];
 }
 
-//显示背景色
-- (void)showBackgroundColor {
-    [UIView animateWithDuration:0.3 animations:^{
-        [self setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:0.7]];
-    }];
-}
 
 //调整按钮的图文位置
 - (void)adjustButtonImageViewUPTitleDownWithButton:(UIButton *)button {
@@ -209,8 +199,8 @@ static const float buttonWidth_Height = 100;
     }else {
         titleOffsetX = buttonWidth / 2.0 - ivWidth - titleWidth / 2.0;
     }
-    [button setTitleEdgeInsets:UIEdgeInsetsMake(titleOffsetY , titleOffsetX, 0, 0)];
-
+//    [button setTitleEdgeInsets:UIEdgeInsetsMake(titleOffsetY , titleOffsetX, 0, 0)];
+    [button setTitleEdgeInsets:UIEdgeInsetsMake(titleOffsetY , -28.5, 0, 0)];
     NSLog(@"   :-(图片宽度(%f) + 文字宽度(%f) - 按钮宽度的一半(%f/2) - 文字宽度的一半(%f/2) = 文字的偏移量(%f))",ivWidth, titleWidth, buttonWidth, titleWidth, titleOffsetX);
 }
 
@@ -378,9 +368,18 @@ static const float buttonWidth_Height = 100;
 //            make.right.mas_equalTo(0);
 //            make.bottom.mas_equalTo(0);
 //        }];
-        _screenShotImageView.image = [UIImage imageNamed:@"头像"];
+//        _screenShotImageView.image = [UIImage imageNamed:@"头像"];
     }
     return _screenShotImageView;
+}
+
+- (UIView *)translucentView {
+    if (!_translucentView) {
+        _translucentView = [[UIView alloc]initWithFrame:self.frame];
+        [self insertSubview:_translucentView aboveSubview:self.screenShotImageView];
+//        [self.translucentView setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:0.7]];
+    }
+    return _translucentView;
 }
 @end
 

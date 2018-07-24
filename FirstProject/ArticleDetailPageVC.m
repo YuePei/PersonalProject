@@ -12,6 +12,7 @@
 #import "CommentView.h"
 #import "ShareListView.h"
 #import "UIView+Operations.h"
+#import "UIWebView+Tools.h"
 
 
 @interface ArticleDetailPageVC ()<UITextViewDelegate,UITextFieldDelegate>
@@ -43,19 +44,12 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-//    UIViewController *vc = [self.bottomView getViewController];
-//    NSLog(@"self..%@",self);
-//    NSLog(@"vc..%@",vc);
+
 }
 
-- (void)test111 {
-    UIImage *img = [self screenShotWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-}
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-//    NSTimer *timer1 = [NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(test111) userInfo:nil repeats:NO];
-//    [timer1 fire];
 }
 
 - (UIImage *)screenShotWithFrame:(CGRect )imageRect {
@@ -64,7 +58,6 @@
     [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *screenShotImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    UIImageWriteToSavedPhotosAlbum(screenShotImage, nil, nil, nil);
     return screenShotImage;
 }
 
@@ -74,6 +67,8 @@
     //    NSArray *images = @[[UIImage imageNamed:@"beauty"]];
     //    UIActivityViewController *activityController=[[UIActivityViewController alloc]initWithActivityItems:images applicationActivities:nil];
     //    [self.navigationController presentViewController:activityController animated:YES completion:nil];
+    
+    
     
     ShareListView *shareView = [[ShareListView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
                                                         shareIcons:@[[UIImage imageNamed:@"weChat"],
@@ -85,7 +80,10 @@
                                                                      [UIImage imageNamed:@"链接"],
                                                                      [UIImage imageNamed:@"更多"]]
                                                     andShareTitles:@[@"微信",@"朋友圈",@"QQ好友",@"QQ空间",@"支付宝",@"微博",@"复制链接", @"更多"]];
+    UIImage *img = [self screenShotWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    [shareView setScreenShotImage:img];
     [[[UIApplication sharedApplication].windows lastObject] addSubview:shareView];
+    
     
 }
 
