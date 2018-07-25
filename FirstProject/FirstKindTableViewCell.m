@@ -105,12 +105,13 @@
         [self.contentView addSubview:_contentIV];
         [_contentIV mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.contentLabel.mas_bottom).offset(15);
-            make.centerX.equalTo(self.contentView);
+            make.left.mas_equalTo(self.contentLabel.mas_left);
+            make.right.mas_equalTo(self.contentLabel.mas_right);
             make.bottom.mas_equalTo(-15);
-//            make.width.mas_equalTo(SCREEN_WIDTH - 20 * 2);
-//            make.height.mas_equalTo(_contentIV.frame.size.width * 1.2);
+            make.height.mas_equalTo(100);
         }];
-//        _contentIV.contentMode = UIViewContentModeScaleAspectFill;
+        _contentIV.contentMode = UIViewContentModeTop;
+        _contentIV.clipsToBounds = YES;
     }
     return _contentIV;
 }

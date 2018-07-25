@@ -28,6 +28,8 @@
 @property (nonatomic , copy) NSArray *author;
 //authorDescription
 @property (nonatomic , copy) NSString *authorDescription;
+//firstImg
+@property (nonatomic, strong)NSString *firstImg;
 //authorId
 @property (nonatomic , copy) NSString *authorId;
 //authorTopic

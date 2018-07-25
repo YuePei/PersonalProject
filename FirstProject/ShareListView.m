@@ -38,6 +38,10 @@
 @property (nonatomic, strong)UIImageView *screenShotImageView;
 //半透明遮罩
 @property (nonatomic, strong)UIView *translucentView;
+//vc
+@property (nonatomic, strong)UIViewController *viewController;
+//articleLink
+@property (nonatomic, strong)NSDictionary *cardInfoDictionary;
 
 
 @end
@@ -56,10 +60,12 @@ static const float buttonWidth_Height = 100;
 
 
 #pragma mark initMethods
-- (instancetype)initWithFrame:(CGRect)frame shareIcons:(NSArray *)icons andShareTitles:(NSArray *)titles {
+- (instancetype)initWithFrame:(CGRect)frame shareIcons:(NSArray *)icons ShareTitles:(NSArray *)titles andCardInfo:(NSDictionary *)cardInfo {
     if (self = [super initWithFrame:frame]) {
         self.array = titles;
         self.icons = icons;
+        self.cardInfoDictionary = cardInfo;
+        
         self.backgroundColor = [UIColor colorWithRed:1 / 255.0 green:1 / 255.0 blue:1 / 255.0 alpha:0];
         [self collectionView];
         [self middleView];
@@ -68,7 +74,6 @@ static const float buttonWidth_Height = 100;
         [self screenShotButton];
         [self addExpressionButton];
         [self addGesture];
-        
         [self showMiddleView];
     }
     return self;
@@ -76,6 +81,10 @@ static const float buttonWidth_Height = 100;
 
 - (void)setScreenShotImage:(UIImage *)image {
     self.screenShotImageView.image = image;
+}
+
+- (void)getVc:(UIViewController *)vc {
+    self.viewController = vc;
 }
 
 #pragma mark UICollectionViewDataSource
@@ -91,10 +100,73 @@ static const float buttonWidth_Height = 100;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    //1. 隐藏分享控件
+    [self hideMiddleView];
+    //2. 获取卡片信息
+    NSString *title = [self.cardInfoDictionary objectForKey:@"title"];
+    NSURL *url = [NSURL URLWithString:[self.cardInfoDictionary objectForKey:@"link"]];
+    NSString *imageString = [self.cardInfoDictionary objectForKey:@"imageString"];
+    
+    switch (indexPath.row) {
+        case 0:
+            
+            break;
+        case 1:
+            
+            break;
+        case 2:
+            
+            break;
+        case 3:
+            
+            break;
+        case 4:
+            
+            break;
+        case 5:
+            
+            break;
+        case 6: {
+            UIPasteboard *pastedBoard = [UIPasteboard generalPasteboard];
+            [pastedBoard setURL:url];
+        }
+            
+            break;
+        case 7:{
+            //更多
+            NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageString]];
+            UIImage *img = [UIImage imageWithData:imageData];
+            
+            NSArray *images = @[title, img, url];
+            UIActivityViewController *activityController=[[UIActivityViewController alloc]initWithActivityItems:images applicationActivities:nil];
+            
+            [self.viewController presentViewController:activityController animated:YES completion:nil];
+            [activityController setCompletionWithItemsHandler:^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
+                if (completed) {
+                    NSLog(@"Share succeed");
+                }else {
+                    NSLog(@"Share cancled");
+                }
+            }];
+        }
+            break;
+        default:
+            break;
+    }
     
 }
 
 #pragma mark toolMethods
+
+- (UIImage *)screenShotWithFrame:(CGRect )imageRect {
+    
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT), NO, 0.0);
+    [self.viewController.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *screenShotImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return screenShotImage;
+}
+
 //毛玻璃效果
 - (void)addBlurView {
     UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
@@ -106,7 +178,7 @@ static const float buttonWidth_Height = 100;
 
 - (void)addGesture {
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideMiddleView)];
-    [self addGestureRecognizer:tapGesture];
+    [self.translucentView addGestureRecognizer:tapGesture];
 }
 //隐藏分享模块
 - (void)hideMiddleView {
@@ -114,7 +186,9 @@ static const float buttonWidth_Height = 100;
     [self.screenShotImageView updateConstraints:^(MASConstraintMaker *make) {
         make.left.top.right.bottom.mas_equalTo(0);
     }];
-    
+    [self.middleView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.bottom.mas_equalTo(225);
+    }];
     [UIView animateWithDuration:0.3 animations:^{
         //0. 显示状态栏
         [UIApplication sharedApplication].statusBarHidden = NO;
@@ -125,7 +199,7 @@ static const float buttonWidth_Height = 100;
         //3. 半透明蒙板隐藏
         [self.translucentView setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:0]];
         //4. 分享模块隐藏
-        [self.middleView setFrame:CGRectMake(self.middleView.frame.origin.x, CGRectGetHeight(self.frame), CGRectGetWidth(self.middleView.frame), CGRectGetHeight(self.middleView.frame))];
+        [self.middleView.superview layoutIfNeeded];
         
     } completion:^(BOOL finished) {
         //移除分享控件
@@ -138,9 +212,10 @@ static const float buttonWidth_Height = 100;
     //0. 隐藏状态栏
     [UIApplication sharedApplication].statusBarHidden = YES;
     //1. 截图
-    
+//    self.screenShotImageView.image = [self screenShotWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     //2. 背景虚化
     [self effectView];
+    
     //3. 将截图显示在页面上
     [self screenShotImageView];
     [self.screenShotImageView updateConstraints:^(MASConstraintMaker *make) {
@@ -151,10 +226,12 @@ static const float buttonWidth_Height = 100;
     }];
     [UIView animateWithDuration:0.3 animations:^{
         [self.screenShotImageView layoutIfNeeded];
-    //4. 黑色半透明蒙板
-        [self.translucentView setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:0.3]];
     }];
     
+    //4. 黑色半透明蒙板
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.translucentView setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:0.2]];
+    }];
     
     //5. 显示分享控件
     [self.middleView mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -380,6 +457,13 @@ static const float buttonWidth_Height = 100;
 //        [self.translucentView setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:0.7]];
     }
     return _translucentView;
+}
+
+- (NSDictionary *)cardInfoDictionary {
+    if (!_cardInfoDictionary) {
+        _cardInfoDictionary = [NSDictionary dictionary];
+    }
+    return _cardInfoDictionary;
 }
 @end
 

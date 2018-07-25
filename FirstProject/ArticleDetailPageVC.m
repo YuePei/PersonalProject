@@ -27,6 +27,8 @@
 @property (nonatomic, strong)BottomView *bottomView;
 //commentView
 @property (nonatomic, strong)CommentView *commentView;
+//分享控件
+@property (nonatomic, strong)ShareListView *shareView;
 
 
 @end
@@ -64,11 +66,8 @@
 #pragma mark tools Methods
 //调用系统的分享功能
 - (void)systemShare{
-    //    NSArray *images = @[[UIImage imageNamed:@"beauty"]];
-    //    UIActivityViewController *activityController=[[UIActivityViewController alloc]initWithActivityItems:images applicationActivities:nil];
-    //    [self.navigationController presentViewController:activityController animated:YES completion:nil];
     
-    
+    NSDictionary *dic = @{@"title": self.articleTitle, @"link":self.dataModel.originalLink, @"imageString":self.dataModel.firstImg};
     
     ShareListView *shareView = [[ShareListView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
                                                         shareIcons:@[[UIImage imageNamed:@"weChat"],
@@ -79,10 +78,12 @@
                                                                      [UIImage imageNamed:@"微博"],
                                                                      [UIImage imageNamed:@"链接"],
                                                                      [UIImage imageNamed:@"更多"]]
-                                                    andShareTitles:@[@"微信",@"朋友圈",@"QQ好友",@"QQ空间",@"支付宝",@"微博",@"复制链接", @"更多"]];
+                                                    ShareTitles:@[@"微信",@"朋友圈",@"QQ好友",@"QQ空间",@"支付宝",@"微博",@"复制链接", @"更多"]
+                                                    andCardInfo:dic];
     UIImage *img = [self screenShotWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     [shareView setScreenShotImage:img];
-    [[[UIApplication sharedApplication].windows lastObject] addSubview:shareView];
+    [shareView getVc:self];
+    [[UIApplication sharedApplication].keyWindow addSubview:shareView];
     
     
 }
@@ -90,6 +91,7 @@
 - (void)getDetailPageData {
     //拿到数据
     [MainNetwork getArticleDetailInfoByMongold:self.mongold articleId:self.articleId andType:self.aType callBack:^(NSDictionary * dic, NSError *error) {
+        NSLog(@"----:%@",dic);
         self.articleDetailModel = [ArticleDetailModel mj_objectWithKeyValues:dic];
         self.dataModel = self.articleDetailModel.data;
         [self shoHtmlStringInWebView];

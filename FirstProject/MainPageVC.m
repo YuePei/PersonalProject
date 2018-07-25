@@ -163,10 +163,12 @@ static int networkSituation = 1;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     ArticleDetailPageVC *dpVC = [[ArticleDetailPageVC alloc]init];
     if (networkSituation) {
+        dpVC.articleTitle = [self.articleVM getContentLabelWithIndex:indexPath.section];
         dpVC.mongold = [self.articleVM getMongoldWithIndex:indexPath.section];
         dpVC.articleId = [self.articleVM getArticleIdWithIndex:indexPath.section];
         dpVC.aType = [self.articleVM getArticleTypeWithIndex:indexPath.section];
     }else {
+        //TODO 添加articleTitle到FMDB
         dpVC.mongold = [self getMongoIdFromFMDB][indexPath.section];
         dpVC.articleId = [[self getArticleIdFromFMDB][indexPath.section] floatValue];
         dpVC.aType = [[self getATypeFromFMDB][indexPath.section] floatValue];

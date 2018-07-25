@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface ArticleDetailPageVC : UIViewController
+//articleTitle
+@property (nonatomic, strong)NSString *articleTitle;
 //mongold
 @property (nonatomic , copy) NSString *mongold;
 //articleId
