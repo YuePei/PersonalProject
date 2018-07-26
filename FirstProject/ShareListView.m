@@ -212,7 +212,7 @@ static const float buttonWidth_Height = 100;
     //0. 隐藏状态栏
     [UIApplication sharedApplication].statusBarHidden = YES;
     //1. 截图
-//    self.screenShotImageView.image = [self screenShotWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    self.screenShotImageView.image = [self screenShotWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     //2. 背景虚化
     [self effectView];
     
@@ -437,15 +437,7 @@ static const float buttonWidth_Height = 100;
 - (UIImageView *)screenShotImageView {
     if (!_screenShotImageView) {
         _screenShotImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-//        _screenShotImageView = [[UIImageView alloc]init];
         [self insertSubview:_screenShotImageView aboveSubview:self.effectView];
-//        [_screenShotImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.left.mas_equalTo(0);
-//            make.top.mas_equalTo(0);
-//            make.right.mas_equalTo(0);
-//            make.bottom.mas_equalTo(0);
-//        }];
-//        _screenShotImageView.image = [UIImage imageNamed:@"头像"];
     }
     return _screenShotImageView;
 }
@@ -454,7 +446,6 @@ static const float buttonWidth_Height = 100;
     if (!_translucentView) {
         _translucentView = [[UIView alloc]initWithFrame:self.frame];
         [self insertSubview:_translucentView aboveSubview:self.screenShotImageView];
-//        [self.translucentView setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:0.7]];
     }
     return _translucentView;
 }

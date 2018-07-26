@@ -18,6 +18,9 @@
  */
 - (instancetype)initWithFrame:(CGRect)frame shareIcons:(NSArray *)icons ShareTitles:(NSArray *)titles andCardInfo:(NSDictionary *)cardInfo;
 
+/**
+ * 获取控制器  用于present UIActivityViewController
+ */
 - (void)getVc:(UIViewController *)vc;
 
 /**
@@ -25,8 +28,6 @@
  */
 - (void)setScreenShotImage:(UIImage *)image;
 
-- (void)hideShareViewWithFinishBlock:(void (^)())finishBlock;
 
-- (void)showMiddleView;
 @end
 

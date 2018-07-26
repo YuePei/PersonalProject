@@ -36,14 +36,6 @@
 //适配
 #define SCREEN_PROPORTION [UIScreen mainScreen].bounds.size.width / 375.0
 
-//主色
-#define GREEN_COLOR [UIColor colorWithRed:16 / 255.0 green:130 / 255.0 blue:74 / 255.0 alpha:1]
-#define MAIN_COLOR1 [UIColor colorWithRed:33 / 255.0 green:151 / 255.0 blue:217 / 255.0 alpha:1]
-#define MAIN_COLOR [UIColor colorWithRed:55 / 255.0 green:54 / 255.0 blue:60 / 255.0 alpha:1]
-
-//背景颜色，浅灰色
-#define BackgroundColor [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:1]
-
 //RGB颜色
 #define RGBColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
 #define RGBAColor(r, g, b, a) [UIColor colorWithRed:(r)/255.0 green:(r)/255.0 blue:(r)/255.0 alpha:a]
@@ -114,4 +106,21 @@ return instanceName;\
 //#define SCREENH_HEIGHT [UIScreen mainScreen].bounds.size.height
 //#define SCREEN_SIZE [UIScreen mainScreen].bounds.size
 //#endif
+
+//主色
+#define GREEN_COLOR [UIColor colorWithRed:16 / 255.0 green:130 / 255.0 blue:74 / 255.0 alpha:1]
+#define MAIN_COLOR1 [UIColor colorWithRed:33 / 255.0 green:151 / 255.0 blue:217 / 255.0 alpha:1]
+#define MAIN_COLOR [UIColor colorWithRed:55 / 255.0 green:54 / 255.0 blue:60 / 255.0 alpha:1]
+
+//背景颜色，浅灰色
+#define BackgroundColor [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:1]
+
+#define DEFAULT_USER_NAME @"村里小芳";
+
+
+
+
+
+
+
 

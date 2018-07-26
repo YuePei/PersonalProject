@@ -40,16 +40,18 @@ static int const showTime = 3;
 //1.展示广告
 - (void)showAdvertisement {
     [self startCount];
-    NSLog(@"------------------------");
+    
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     [window addSubview:self];
 }
+
 //2.开始计时
 - (void)startCount {
     self.count = showTime;
     [[NSRunLoop mainRunLoop] addTimer:self.countTimer forMode:NSRunLoopCommonModes];
     
 }
+
 //跳过广告
 - (void)skipAdvertisement {
     //停掉定时器
@@ -70,6 +72,7 @@ static int const showTime = 3;
         [self skipAdvertisement];
     }
 }
+
 #pragma mark lazy
 - (NSTimer *)countTimer {
     if (!_countTimer) {
@@ -92,6 +95,7 @@ static int const showTime = 3;
     _adView.image = [UIImage imageNamed:@"fitness"];
     return _adView;
 }
+
 - (UIButton *)countButton {
     if (!_countButton) {
         _countButton = [UIButton buttonWithType:UIButtonTypeCustom];

@@ -63,29 +63,33 @@
     return screenShotImage;
 }
 
+#pragma mark ShareViewDelegate
+- (UIImage *)getCurrentScreenShot {
+    return [self screenShotWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+}
+
 #pragma mark tools Methods
 //调用系统的分享功能
 - (void)systemShare{
-    
-    NSDictionary *dic = @{@"title": self.articleTitle, @"link":self.dataModel.originalLink, @"imageString":self.dataModel.firstImg};
-    
-    ShareListView *shareView = [[ShareListView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
-                                                        shareIcons:@[[UIImage imageNamed:@"weChat"],
-                                                                     [UIImage imageNamed:@"朋友圈"],
-                                                                     [UIImage imageNamed:@"QQ"],
-                                                                     [UIImage imageNamed:@"空间"],
-                                                                     [UIImage imageNamed:@"支付宝"],
-                                                                     [UIImage imageNamed:@"微博"],
-                                                                     [UIImage imageNamed:@"链接"],
-                                                                     [UIImage imageNamed:@"更多"]]
-                                                    ShareTitles:@[@"微信",@"朋友圈",@"QQ好友",@"QQ空间",@"支付宝",@"微博",@"复制链接", @"更多"]
-                                                    andCardInfo:dic];
-    UIImage *img = [self screenShotWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-    [shareView setScreenShotImage:img];
-    [shareView getVc:self];
-    [[UIApplication sharedApplication].keyWindow addSubview:shareView];
-    
-    
+    //拿到数据才能分享, 没有数据不分享
+    if (self.dataModel.originalLink && self.articleTitle && self.dataModel.firstImg) {
+        NSDictionary *dic = @{@"title": self.articleTitle, @"link":self.dataModel.originalLink, @"imageString":self.dataModel.firstImg};
+        ShareListView *shareView = [[ShareListView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
+                                                            shareIcons:@[[UIImage imageNamed:@"weChat"],
+                                                                         [UIImage imageNamed:@"朋友圈"],
+                                                                         [UIImage imageNamed:@"QQ"],
+                                                                         [UIImage imageNamed:@"空间"],
+                                                                         [UIImage imageNamed:@"支付宝"],
+                                                                         [UIImage imageNamed:@"微博"],
+                                                                         [UIImage imageNamed:@"链接"],
+                                                                         [UIImage imageNamed:@"更多"]]
+                                                           ShareTitles:@[@"微信",@"朋友圈",@"QQ好友",@"QQ空间",@"支付宝",@"微博",@"复制链接", @"更多"]
+                                                           andCardInfo:dic];
+        UIImage *img = [self screenShotWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        [shareView setScreenShotImage:img];
+        [shareView getVc:self];
+        [[UIApplication sharedApplication].keyWindow addSubview:shareView];
+    }
 }
 
 - (void)getDetailPageData {
