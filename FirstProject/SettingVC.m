@@ -12,6 +12,10 @@
 @interface SettingVC ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic , strong) UITableView *tableView;
+//navgationBar上面蒙一层view
+@property (nonatomic, strong)UIView *navView;
+//头部视图
+//@property (<#nonatomic#>, <#strong#>)<#type#> *<#object#>;
 
 @end
 
@@ -19,11 +23,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.automaticallyAdjustsScrollViewInsets = NO;
+    if (@available(iOS 11, *)) {
+        self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }else {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
     self.view.backgroundColor = BackgroundColor;
+    [self navView];
     [self tableView];
     
+    
 }
+
+
 
 #pragma mark UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -89,7 +102,7 @@
 #pragma mark lazy
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStyleGrouped];
+        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, ysTopHeight, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStyleGrouped];
     }
     [self.view addSubview:_tableView];
     [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
@@ -97,14 +110,22 @@
     _tableView.dataSource = self;
     _tableView.backgroundColor = [UIColor clearColor];
     //去掉cell之间的横线
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//    _tableView.separatorColor = [UIColor lightGrayColor];
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    _tableView.separatorColor = BackgroundColor;
     
 //    CGRect frame = CGRectMake(0, 0, 0,CGFLOAT_MIN);
-//    CGRect frame = CGRectMake(0, 0, 0,10);
+//    CGRect frame = CGRectMake(0, 0, 0, 100);
 //    _tableView.tableHeaderView = [[UIView alloc]initWithFrame:frame];
     
     return _tableView;
 }
 
+- (UIView *)navView {
+    if (!_navView) {
+        _navView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, ysTopHeight)];
+        [self.view addSubview:_navView];
+        _navView.backgroundColor = [UIColor brownColor];
+    }
+    return _navView;
+}
 @end

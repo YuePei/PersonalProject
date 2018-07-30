@@ -17,5 +17,7 @@
 @property (nonatomic , assign) NSInteger articleId;
 //type
 @property (nonatomic , assign) NSInteger aType;
+//文章列表页的列表图
+@property (nonatomic, strong)NSString *mainPicString;
 
 @end

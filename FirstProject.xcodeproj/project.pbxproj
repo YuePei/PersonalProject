@@ -31,6 +31,8 @@
 		9F6E62932106FA69007289B0 /* UIWebView+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6E62922106FA69007289B0 /* UIWebView+Tools.m */; };
 		9F793BAD209AFE7D009EE379 /* MainPageHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F793BAC209AFE7D009EE379 /* MainPageHeaderView.m */; };
 		9F7AA8222092FFE7003D0C5A /* BottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7AA8202092FFE7003D0C5A /* BottomView.m */; };
+		9F83CAF0210EE25E009EE989 /* FourButtonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F83CAED210EE25D009EE989 /* FourButtonTableViewCell.m */; };
+		9F83CAF1210EE25E009EE989 /* FourButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F83CAEE210EE25D009EE989 /* FourButtonTableViewCell.xib */; };
 		9F87242C2105682B00BBFF0A /* NSString+CurrentDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F87242B2105682B00BBFF0A /* NSString+CurrentDate.m */; };
 		9F87242F21056E6400BBFF0A /* AppSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F87242E21056E6400BBFF0A /* AppSetting.m */; };
 		9FFB1F1D2091B91800641F49 /* PCTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFB1F1B2091B91800641F49 /* PCTableViewCell.m */; };
@@ -160,6 +162,9 @@
 		9F793BAC209AFE7D009EE379 /* MainPageHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainPageHeaderView.m; sourceTree = "<group>"; };
 		9F7AA8202092FFE7003D0C5A /* BottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomView.m; sourceTree = "<group>"; };
 		9F7AA8212092FFE7003D0C5A /* BottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomView.h; sourceTree = "<group>"; };
+		9F83CAED210EE25D009EE989 /* FourButtonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FourButtonTableViewCell.m; sourceTree = "<group>"; };
+		9F83CAEE210EE25D009EE989 /* FourButtonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FourButtonTableViewCell.xib; sourceTree = "<group>"; };
+		9F83CAEF210EE25E009EE989 /* FourButtonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FourButtonTableViewCell.h; sourceTree = "<group>"; };
 		9F87242A2105682B00BBFF0A /* NSString+CurrentDate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+CurrentDate.h"; sourceTree = "<group>"; };
 		9F87242B2105682B00BBFF0A /* NSString+CurrentDate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+CurrentDate.m"; sourceTree = "<group>"; };
 		9F87242D21056E6400BBFF0A /* AppSetting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppSetting.h; sourceTree = "<group>"; };
@@ -396,6 +401,9 @@
 				9F21BA8E2101BD7E0044467D /* UserInfoTableViewCell.h */,
 				9F21BA8F2101BD7E0044467D /* UserInfoTableViewCell.m */,
 				9F21BA902101BD7E0044467D /* UserInfoTableViewCell.xib */,
+				9F83CAEF210EE25E009EE989 /* FourButtonTableViewCell.h */,
+				9F83CAED210EE25D009EE989 /* FourButtonTableViewCell.m */,
+				9F83CAEE210EE25D009EE989 /* FourButtonTableViewCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -891,6 +899,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D08326171F95A0E4008AF378 /* LaunchScreen.storyboard in Resources */,
+				9F83CAF1210EE25E009EE989 /* FourButtonTableViewCell.xib in Resources */,
 				D07984B7200753C9004193C6 /* Assets.xcassets in Resources */,
 				9FFB1F1E2091B91800641F49 /* PCTableViewCell.xib in Resources */,
 				9F32861220FDE00300ECC350 /* ShareCollectionViewCell.xib in Resources */,
@@ -1086,6 +1095,7 @@
 				9F87242C2105682B00BBFF0A /* NSString+CurrentDate.m in Sources */,
 				D0906D451FBD59BC00A04904 /* SWRevealViewController.m in Sources */,
 				9F21BA8D210191470044467D /* UIView+KeyBoardAdjust.m in Sources */,
+				9F83CAF0210EE25E009EE989 /* FourButtonTableViewCell.m in Sources */,
 				D083F1C4202C4386009BA395 /* UINavigationBar+NavigationBarBGColor.m in Sources */,
 				D083260C1F95A0E4008AF378 /* AppDelegate.m in Sources */,
 				D0A3C4851F9F07FC00747C67 /* CommunityVC.m in Sources */,

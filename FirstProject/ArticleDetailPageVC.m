@@ -36,7 +36,12 @@
 @implementation ArticleDetailPageVC
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.automaticallyAdjustsScrollViewInsets = NO;
+    if (@available(iOS 11, *)) {
+        self.wkWebView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }else {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"好文";
     [self wkWebView];
@@ -72,8 +77,8 @@
 //调用系统的分享功能
 - (void)systemShare{
     //拿到数据才能分享, 没有数据不分享
-    if (self.dataModel.originalLink && self.articleTitle && self.dataModel.firstImg) {
-        NSDictionary *dic = @{@"title": self.articleTitle, @"link":self.dataModel.originalLink, @"imageString":self.dataModel.firstImg};
+    if (self.dataModel.originalLink && self.articleTitle && self.mainPicString) {
+        NSDictionary *dic = @{@"title": self.articleTitle, @"link":self.dataModel.originalLink, @"imageString":self.mainPicString};
         ShareListView *shareView = [[ShareListView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
                                                             shareIcons:@[[UIImage imageNamed:@"weChat"],
                                                                          [UIImage imageNamed:@"朋友圈"],
@@ -222,7 +227,7 @@
         [_wkWebView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(5);
             make.right.mas_equalTo(-5);
-            make.top.mas_equalTo(ysTopHeight);
+            make.top.mas_equalTo(0);
             make.bottom.mas_equalTo(- CGRectGetHeight(self.bottomView.frame));
         }];
         _wkWebView.scrollView.showsHorizontalScrollIndicator = NO;

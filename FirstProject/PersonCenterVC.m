@@ -8,6 +8,8 @@
 
 #import "PersonCenterVC.h"
 #import "PCTableViewCell.h"
+#import "FourButtonTableViewCell.h"
+
 
 @interface PersonCenterVC ()<UITableViewDelegate,UITableViewDataSource,BringBackUserNameDelegate>
 //tableVIew
@@ -25,6 +27,7 @@
 //用户简介
 @property (nonatomic, strong)UILabel *userIntroductionLabel;
 
+
 @end
 
 @implementation PersonCenterVC
@@ -32,7 +35,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = BackgroundColor;
-    self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    if (@available(iOS 11.0, *)) {
+        self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    } else {
+        
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
     
     [self.navigationController.navigationBar setTranslucent:YES];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
@@ -43,9 +52,26 @@
     [self headPortraitIV];
     [self userNameLabel];
     [self userIntroductionLabel];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeNavBarTranslucent) name:@"navBarTranslucent" object:nil];
 }
+
+- (void)changeNavBarTranslucent {
+    [self.navigationController.navigationBar setTranslucent:YES];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+}
+
+
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+
+//    [self addTempNavigationBar];
+//    [self.navigationController.navigationBar setTranslucent:YES];
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+//    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+    
 //    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 //    if ([userDefaults boolForKey:@"status"]) {
 //        NSLog(@"He logined!");
@@ -57,6 +83,7 @@
 //        self.userNameLabel.textColor = [UIColor darkGrayColor];
 //    }
 }
+
 #pragma mark Tool Methods
 - (void)setUpUI {
     //设置右边的设置控件
@@ -91,80 +118,123 @@
     }
 }
 
+- (void)goToCollectionedPage {
+    NSLog(@"collectioned");
+}
+
+- (void)goToCommentsPage {
+    NSLog(@"CommentsPage");
+}
+
+- (void)goToLikedPage {
+    NSLog(@"LikedPage");
+}
+
+- (void)goToSharedPage {
+    NSLog(@"SharedPage");
+}
+
 #pragma mark UITableViewDelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
     
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 6;
+    if (section == 0) {
+        return 1;
+    }else {
+        return 6;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    PCTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"pcCell"];
-    if (!cell) {
-        cell = [[NSBundle mainBundle] loadNibNamed:@"PCTableViewCell" owner:self options:nil].firstObject;
-    }
-    cell.titleLabel.font = [UIFont fontWithName:@"AppleGothic" size:15];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    if(indexPath.section == 0 && indexPath.row == 0) {
+    if (indexPath.section == 0) {
+        FourButtonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"fourButtonCell"];
+        if (!cell) {
+            cell = [[NSBundle mainBundle] loadNibNamed:@"FourButtonTableViewCell" owner:self options:nil].firstObject;
+        }
         
-        cell.iconIV.image = [UIImage imageNamed:@"消息"];
-        cell.titleLabel.text = @"消息";
-    }else if(indexPath.section == 0 && indexPath.row == 1) {
+        [cell.collectedNum addTarget:self action:@selector(goToCollectionedPage) forControlEvents:UIControlEventTouchUpInside];
+        [cell.comments addTarget:self action:@selector(goToCommentsPage) forControlEvents:UIControlEventTouchUpInside];
+        [cell.likedNum addTarget:self action:@selector(goToLikedPage) forControlEvents:UIControlEventTouchUpInside];
+        [cell.sharedNum addTarget:self action:@selector(goToSharedPage) forControlEvents:UIControlEventTouchUpInside];
+        return cell;
+    }else if(indexPath.section == 1){
+        PCTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"pcCell"];
+        if (!cell) {
+            cell = [[NSBundle mainBundle] loadNibNamed:@"PCTableViewCell" owner:self options:nil].firstObject;
+        }
+        cell.titleLabel.font = [UIFont fontWithName:@"AppleGothic" size:15];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if(indexPath.row == 0) {
+            
+            cell.iconIV.image = [UIImage imageNamed:@"消息"];
+            cell.titleLabel.text = @"消息";
+        }else if(indexPath.row == 1) {
+            
+            cell.titleLabel.text = @"购物车";
+            cell.iconIV.image = [UIImage imageNamed:@"关于我们"];
+        }else if( indexPath.row == 2) {
+            
+            
+            cell.titleLabel.text = @"收藏";
+            cell.iconIV.image = [UIImage imageNamed:@"帮助"];
+        }else if(indexPath.row == 3) {
+            
+            cell.titleLabel.text = @"收获喜欢";
+            cell.iconIV.image = [UIImage imageNamed:@"消息"];
+        }else if(indexPath.row == 4) {
+            cell.rightLabel.hidden = NO;
+            cell.rightLabel.text = [NSString stringWithFormat:@"1.3M"];
+            cell.titleLabel.text = @"清除缓存";
+            cell.iconIV.image = [UIImage imageNamed:@"清除"];
+        }else if(indexPath.row == 5) {
+            cell.rightLabel.hidden = YES;
+            cell.titleLabel.text = @"其他";
+            cell.iconIV.image = [UIImage imageNamed:@"其它"];
+        }
         
-        cell.titleLabel.text = @"购物车";
-        cell.iconIV.image = [UIImage imageNamed:@"关于我们"];
-    }else if(indexPath.section == 0 && indexPath.row == 2) {
-        
-        cell.rightLabel.hidden = NO;
-        cell.rightLabel.text = [NSString stringWithFormat:@"%.2ld",(long)[[SDImageCache sharedImageCache] getSize]];
-        cell.titleLabel.text = @"收藏";
-        cell.iconIV.image = [UIImage imageNamed:@"清除"];
-    }else if(indexPath.section == 0 && indexPath.row == 3) {
-
-        cell.titleLabel.text = @"收获喜欢";
-        cell.iconIV.image = [UIImage imageNamed:@"消息"];
-    }else if(indexPath.section == 0 && indexPath.row == 4) {
-
-        cell.titleLabel.text = @"清除缓存";
-        cell.iconIV.image = [UIImage imageNamed:@"帮助"];
-    }else if(indexPath.section == 0 && indexPath.row == 5) {
-
-        cell.titleLabel.text = @"其他";
-        cell.iconIV.image = [UIImage imageNamed:@"其它"];
+        return cell;
+    } else {
+        return nil;
     }
     
-    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if(indexPath.section == 0 && indexPath.row == 0){
+    if(indexPath.section == 1 && indexPath.row == 0){
         NSLog(@"something else?");
-    }else if(indexPath.section == 0 && indexPath.row == 1){
+    }else if(indexPath.section == 1 && indexPath.row == 1){
         NSLog(@"something else?");
-    }else if(indexPath.section == 0 && indexPath.row == 2){
+    }else if(indexPath.section == 1 && indexPath.row == 2){
         NSLog(@"something else?");
-    }else if(indexPath.section == 0 && indexPath.row == 3){
+    }else if(indexPath.section == 1 && indexPath.row == 3){
         NSLog(@"something else?");
-    }else if(indexPath.section == 0 && indexPath.row == 4){
+    }else if(indexPath.section == 1 && indexPath.row == 4){
         NSLog(@"something else?");
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 55;
+    if (indexPath.section == 0) {
+        return 115;
+    }else {
+        return 55;
+    }
+    
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     float offsetY = scrollView.contentOffset.y;
+    NSLog(@"---%f---", offsetY);
     if (offsetY < -300) {
+        
         [self.topBigIV updateConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(offsetY);
-            make.height.mas_equalTo(-offsetY);
+            make.height.mas_equalTo(-offsetY );
         }];
         [self.topBigIV layoutIfNeeded];
 
@@ -173,21 +243,21 @@
 //        rect.origin.y = offsetY;
 //        rect.size.height = -offsetY;
 //        self.topBigIV.frame = rect;
-        
+    
     }
     
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        return 0;
+        return 1;
     }else {
-        return 0;
+        return 1;
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 0;
+    return 10;
 }
 
 #pragma mark lazy
@@ -199,11 +269,15 @@
             make.left.mas_equalTo(0);
             make.right.mas_equalTo(0);
             make.top.mas_equalTo(0);
-            make.bottom.mas_equalTo(0);
+            make.bottom.mas_equalTo(- ysTabBarHeight);
         }];
-        [_tableView registerClass:[PCTableViewCell class] forCellReuseIdentifier:@"cell"];
+        //注册cell
+        [_tableView registerNib:[UINib nibWithNibName:@"PCTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"pcCell"];
+        [_tableView registerNib:[UINib nibWithNibName:@"FourButtonTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"fourButtonCell"];
+        
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        
         _tableView.backgroundColor = [UIColor clearColor];
         //去掉cell之间的横线
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -211,6 +285,7 @@
         _tableView.contentInset = UIEdgeInsetsMake(300, 0, 0, 0);
         _tableView.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, CGFLOAT_MIN)];
         
+        [_tableView setContentOffset:CGPointMake(0, -300)];
     }
     return _tableView;
 }
@@ -297,4 +372,6 @@
     _userIntroductionLabel.text = @"欲买桂花同载酒  终不似  少年游";
     return _userIntroductionLabel;
 }
+
+
 @end

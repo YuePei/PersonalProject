@@ -167,6 +167,7 @@ static int networkSituation = 1;
         dpVC.mongold = [self.articleVM getMongoldWithIndex:indexPath.section];
         dpVC.articleId = [self.articleVM getArticleIdWithIndex:indexPath.section];
         dpVC.aType = [self.articleVM getArticleTypeWithIndex:indexPath.section];
+        dpVC.mainPicString = [self.articleVM getBigImageWithIndex:indexPath.section];
     }else {
         //TODO 添加articleTitle到FMDB
         dpVC.mongold = [self getMongoIdFromFMDB][indexPath.section];

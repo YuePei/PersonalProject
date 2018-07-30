@@ -22,6 +22,7 @@
 }
 
 + (void)initialize {
+    
     // 设置导航items数据主题
     [self setupNavigationItemsTheme];
     // 设置导航栏主题
@@ -33,8 +34,11 @@
 + (void)setupNavigationItemsTheme {
     UIBarButtonItem *barButtonItem = [UIBarButtonItem appearance];
     // 设置字体颜色
-    [barButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor], NSFontAttributeName : [UIFont systemFontOfSize:14]} forState:UIControlStateNormal];
+    //normal
+    [barButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor redColor], NSFontAttributeName : [UIFont systemFontOfSize:14]} forState:UIControlStateNormal];
+    //Highlighted
     [barButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor darkGrayColor]} forState:UIControlStateHighlighted];
+    //disabled
     [barButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor lightGrayColor]} forState:UIControlStateDisabled];
 }
 
@@ -51,10 +55,10 @@
 //    [navBar setShadowImage:[UIImage new]];
     
     //设置导航栏为白色背景
-//    UIImage *image = [UIImage imageNamed:@"white"];
-//    [navBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
+    UIImage *image = [UIImage imageNamed:@"white"];
+    [navBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
     //隐藏导航栏底部的横线
-//    [navBar setShadowImage:[UIImage new]];
+    [navBar setShadowImage:[UIImage new]];
 }
 
 
