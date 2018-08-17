@@ -9,13 +9,12 @@
 #import "SettingVC.h"
 #import "NewCommunityVC.h"
 
+
 @interface SettingVC ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic , strong) UITableView *tableView;
 //navgationBar上面蒙一层view
 @property (nonatomic, strong)UIView *navView;
-//头部视图
-//@property (<#nonatomic#>, <#strong#>)<#type#> *<#object#>;
 
 @end
 
@@ -28,7 +27,6 @@
     }else {
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
-    
     self.view.backgroundColor = BackgroundColor;
     [self navView];
     [self tableView];

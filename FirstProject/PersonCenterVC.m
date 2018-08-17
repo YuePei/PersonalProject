@@ -9,7 +9,7 @@
 #import "PersonCenterVC.h"
 #import "PCTableViewCell.h"
 #import "FourButtonTableViewCell.h"
-
+#import "UIViewController+AlertTool.h"
 
 @interface PersonCenterVC ()<UITableViewDelegate,UITableViewDataSource,BringBackUserNameDelegate>
 //tableVIew
@@ -136,7 +136,7 @@
 
 #pragma mark UITableViewDelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 3;
     
 }
 
@@ -144,23 +144,25 @@
     if (section == 0) {
         return 1;
     }else {
-        return 6;
+        return 3;
     }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
+        //第一个section
         FourButtonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"fourButtonCell"];
         if (!cell) {
             cell = [[NSBundle mainBundle] loadNibNamed:@"FourButtonTableViewCell" owner:self options:nil].firstObject;
         }
-        
         [cell.collectedNum addTarget:self action:@selector(goToCollectionedPage) forControlEvents:UIControlEventTouchUpInside];
         [cell.comments addTarget:self action:@selector(goToCommentsPage) forControlEvents:UIControlEventTouchUpInside];
         [cell.likedNum addTarget:self action:@selector(goToLikedPage) forControlEvents:UIControlEventTouchUpInside];
         [cell.sharedNum addTarget:self action:@selector(goToSharedPage) forControlEvents:UIControlEventTouchUpInside];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else if(indexPath.section == 1){
+        //第二个section
         PCTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"pcCell"];
         if (!cell) {
             cell = [[NSBundle mainBundle] loadNibNamed:@"PCTableViewCell" owner:self options:nil].firstObject;
@@ -175,29 +177,39 @@
         }else if(indexPath.row == 1) {
             
             cell.titleLabel.text = @"购物车";
-            cell.iconIV.image = [UIImage imageNamed:@"关于我们"];
+            cell.iconIV.image = [UIImage imageNamed:@"购物车"];
         }else if( indexPath.row == 2) {
             
             
-            cell.titleLabel.text = @"收藏";
+            cell.titleLabel.text = @"帮助";
             cell.iconIV.image = [UIImage imageNamed:@"帮助"];
-        }else if(indexPath.row == 3) {
-            
-            cell.titleLabel.text = @"收获喜欢";
-            cell.iconIV.image = [UIImage imageNamed:@"消息"];
-        }else if(indexPath.row == 4) {
+        }
+        
+        return cell;
+    } else if(indexPath.section == 2) {
+        //第三个section
+        PCTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"pcCell"];
+        if (!cell) {
+            cell = [[NSBundle mainBundle] loadNibNamed:@"PCTableViewCell" owner:self options:nil].firstObject;
+        }
+        cell.titleLabel.font = [UIFont fontWithName:@"AppleGothic" size:15];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if(indexPath.row == 0) {
+            cell.titleLabel.text = @"我的文章";
+            cell.iconIV.image = [UIImage imageNamed:@"关于我们"];
+        }else if(indexPath.row == 1) {
             cell.rightLabel.hidden = NO;
             cell.rightLabel.text = [NSString stringWithFormat:@"1.3M"];
             cell.titleLabel.text = @"清除缓存";
             cell.iconIV.image = [UIImage imageNamed:@"清除"];
-        }else if(indexPath.row == 5) {
+        }else if(indexPath.row == 2) {
             cell.rightLabel.hidden = YES;
             cell.titleLabel.text = @"其他";
             cell.iconIV.image = [UIImage imageNamed:@"其它"];
         }
-        
         return cell;
-    } else {
+    }else {
         return nil;
     }
     
@@ -208,12 +220,20 @@
     if(indexPath.section == 1 && indexPath.row == 0){
         NSLog(@"something else?");
     }else if(indexPath.section == 1 && indexPath.row == 1){
-        NSLog(@"something else?");
+        
     }else if(indexPath.section == 1 && indexPath.row == 2){
         NSLog(@"something else?");
-    }else if(indexPath.section == 1 && indexPath.row == 3){
+    }
+    
+    if(indexPath.section == 2 && indexPath.row == 0){
         NSLog(@"something else?");
-    }else if(indexPath.section == 1 && indexPath.row == 4){
+    }else if(indexPath.section == 2 && indexPath.row == 1){
+        [self presentAlertWithTitle:@"提示" message:@"确认清除缓存?" alertStyle:UIAlertControllerStyleAlert cancleActionTitle:@"取消" cancelBlock:nil sureActionTitle:@"确定" sureBlock:^{
+            //TODO...
+            PCTableViewCell *cell = (PCTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+            cell.rightLabel.text = @"0.0M";
+        } completion:nil];
+    }else if(indexPath.section == 2 && indexPath.row == 2){
         NSLog(@"something else?");
     }
 }
@@ -325,6 +345,10 @@
         _headPortraitIV.layer.mask = layer;
         //设定图片
         _headPortraitIV.image = [UIImage imageNamed:@"头像"];
+        _headPortraitIV.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(loginMethod)];
+        [_headPortraitIV addGestureRecognizer:tapGesture];
+        
     }
     return _headPortraitIV;
 }

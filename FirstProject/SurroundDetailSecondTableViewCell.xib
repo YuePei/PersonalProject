@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="423" id="KGk-i7-Jjw" customClass="SurroundDetailSecondTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="351" height="423"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="351" height="422.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="商品详情" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JbB-dH-krY">
+                        <rect key="frame" x="20" y="10" width="311" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L0K-P1-4ic">
+                        <rect key="frame" x="0.0" y="46" width="351" height="0.5"/>
+                        <color key="backgroundColor" red="0.80129679570000001" green="0.80129679570000001" blue="0.80129679570000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="dwD-Is-lPA"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="材质: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="veK-i9-rn0">
+                        <rect key="frame" x="20" y="61.5" width="36.5" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="配件: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gQp-is-FKk">
+                        <rect key="frame" x="20" y="86.5" width="36.5" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="适用人群: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ECv-xW-DvO">
+                        <rect key="frame" x="20" y="111.5" width="65" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="原价: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cAh-cc-3xH">
+                        <rect key="frame" x="20" y="136.5" width="36.5" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="现价: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rc9-dV-wMU">
+                        <rect key="frame" x="20" y="161.5" width="36.5" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="主材: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3do-6I-WOu">
+                        <rect key="frame" x="20" y="186.5" width="36.5" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="配饰: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XXu-6B-H0Y">
+                        <rect key="frame" x="20" y="211.5" width="36.5" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="工艺: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xt3-TW-YMd">
+                        <rect key="frame" x="20" y="236.5" width="36.5" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RPX-Ej-xfT">
+                        <rect key="frame" x="20" y="263.5" width="311" height="117"/>
+                        <string key="text">石榴石对血液循环与荷尔蒙分泌都有一定的刺激作用，有益生殖系统及相关器官的健康。将石榴石放在脊椎最下端尾骨的部位，可慢慢感受其振动，可增加性能力并可净化脾脏，据说对关节炎治疗也有效，但若是敏感体质或是对此做法没有心理准备的人最好避免这样做，以免带来伤害。
+所以叫女性之石。</string>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="RPX-Ej-xfT" firstAttribute="top" secondItem="Xt3-TW-YMd" secondAttribute="bottom" constant="10" id="0fH-NO-HjX"/>
+                    <constraint firstItem="gQp-is-FKk" firstAttribute="leading" secondItem="veK-i9-rn0" secondAttribute="leading" id="1WL-gW-ysn"/>
+                    <constraint firstItem="gQp-is-FKk" firstAttribute="top" secondItem="veK-i9-rn0" secondAttribute="bottom" constant="8" id="1qq-YE-ipM"/>
+                    <constraint firstItem="rc9-dV-wMU" firstAttribute="leading" secondItem="veK-i9-rn0" secondAttribute="leading" id="4iL-vV-DGy"/>
+                    <constraint firstItem="ECv-xW-DvO" firstAttribute="top" secondItem="gQp-is-FKk" secondAttribute="bottom" constant="8" id="A75-t5-a5b"/>
+                    <constraint firstItem="cAh-cc-3xH" firstAttribute="leading" secondItem="veK-i9-rn0" secondAttribute="leading" id="BW2-Fm-Ta0"/>
+                    <constraint firstItem="veK-i9-rn0" firstAttribute="leading" secondItem="JbB-dH-krY" secondAttribute="leading" id="IhB-Ja-Wfb"/>
+                    <constraint firstItem="rc9-dV-wMU" firstAttribute="top" secondItem="cAh-cc-3xH" secondAttribute="bottom" constant="8" id="LfV-hv-83d"/>
+                    <constraint firstItem="RPX-Ej-xfT" firstAttribute="leading" secondItem="veK-i9-rn0" secondAttribute="leading" id="MwX-8V-sAV"/>
+                    <constraint firstItem="cAh-cc-3xH" firstAttribute="top" secondItem="ECv-xW-DvO" secondAttribute="bottom" constant="8" id="Nth-FZ-vEU"/>
+                    <constraint firstItem="XXu-6B-H0Y" firstAttribute="leading" secondItem="veK-i9-rn0" secondAttribute="leading" id="PIT-G4-ua2"/>
+                    <constraint firstAttribute="trailing" secondItem="JbB-dH-krY" secondAttribute="trailing" constant="20" id="Y2n-xr-atQ"/>
+                    <constraint firstItem="3do-6I-WOu" firstAttribute="leading" secondItem="veK-i9-rn0" secondAttribute="leading" id="ceq-W4-6TN"/>
+                    <constraint firstItem="veK-i9-rn0" firstAttribute="top" secondItem="L0K-P1-4ic" secondAttribute="bottom" constant="15" id="g3k-ru-Irc"/>
+                    <constraint firstItem="ECv-xW-DvO" firstAttribute="leading" secondItem="veK-i9-rn0" secondAttribute="leading" id="hQk-Yk-dFw"/>
+                    <constraint firstItem="L0K-P1-4ic" firstAttribute="top" secondItem="JbB-dH-krY" secondAttribute="bottom" constant="15" id="l6R-lw-I3N"/>
+                    <constraint firstItem="JbB-dH-krY" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="sY6-SN-Go3"/>
+                    <constraint firstAttribute="trailing" secondItem="RPX-Ej-xfT" secondAttribute="trailing" constant="20" id="tLo-Fr-545"/>
+                    <constraint firstItem="Xt3-TW-YMd" firstAttribute="top" secondItem="XXu-6B-H0Y" secondAttribute="bottom" constant="8" id="tea-Y6-Kgd"/>
+                    <constraint firstItem="Xt3-TW-YMd" firstAttribute="leading" secondItem="veK-i9-rn0" secondAttribute="leading" id="tfo-y0-JCB"/>
+                    <constraint firstItem="JbB-dH-krY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="vu6-6S-T4p"/>
+                    <constraint firstAttribute="trailing" secondItem="L0K-P1-4ic" secondAttribute="trailing" id="wrk-W1-MbT"/>
+                    <constraint firstItem="XXu-6B-H0Y" firstAttribute="top" secondItem="3do-6I-WOu" secondAttribute="bottom" constant="8" id="xsD-h7-H6c"/>
+                    <constraint firstItem="3do-6I-WOu" firstAttribute="top" secondItem="rc9-dV-wMU" secondAttribute="bottom" constant="8" id="yEo-Id-Fxx"/>
+                    <constraint firstItem="L0K-P1-4ic" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="zTe-yd-Mg0"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <point key="canvasLocation" x="-103.5" y="186.5"/>
+        </tableViewCell>
+    </objects>
+</document>

@@ -17,30 +17,34 @@
 
 @end
 @implementation SurroundVM
-
+static int page = 2;
 - (void)getGoodsListWithType:(NSInteger)type CallBack:(void (^)(NSError *error))callBack {
-    [SUNetwork getGoodslistWithPageNumber:1 CallBack:^(NSDictionary * obj, NSError *error) {
-        if(!error) {
-            if (type == 1) {
-                //刷新
+    if (type == 1) {
+        //刷新
+        [SUNetwork getGoodslistWithPageNumber:1 CallBack:^(id obj, NSError *error) {
+            if (!error) {
                 [self.dataArray removeAllObjects];
                 GoodsModel *goodsModel = [[GoodsModel alloc]init];
                 goodsModel = [GoodsModel mj_objectWithKeyValues:obj];
                 [self.dataArray addObjectsFromArray:goodsModel.data];
                 self.model = self.dataArray[1];
-            }else {
+            }
+            callBack(error);
+        }];
+    }else {
+        //加载更多
+        [SUNetwork getGoodslistWithPageNumber:page CallBack:^(id obj, NSError *error) {
+            if (!error) {
                 //加载更多
                 GoodsModel *goodsModel = [[GoodsModel alloc]init];
                 goodsModel = [GoodsModel mj_objectWithKeyValues:obj];
                 [self.dataArray addObjectsFromArray:goodsModel.data];
                 self.model = self.dataArray[1];
+                page ++;
             }
-        }
-        
-        
-        
-        callBack(error);
-    }];
+            callBack(error);
+        }];
+    }
 }
 
 //获取大图

@@ -25,7 +25,7 @@
 //状态栏高度
 #define ysStatusBarHeight CGRectGetHeight([UIApplication sharedApplication].statusBarFrame)
 //导航栏高度
-#define ysNavBarHeight CGRectGetHeight(self.navigationController.navigationBar.frame)
+#define ysNavBarHeight ([[UIApplication sharedApplication] statusBarFrame].size.height>20?66:44)
 //tabbar高度
 #define ysTabBarHeight ([[UIApplication sharedApplication] statusBarFrame].size.height>20?83:49)
 #define ysTopHeight (ysStatusBarHeight + ysNavBarHeight)

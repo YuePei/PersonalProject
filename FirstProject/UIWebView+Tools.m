@@ -6,6 +6,7 @@
 //  Copyright © 2018年 BJ. All rights reserved.
 //
 
+//webView截图
 #import "UIWebView+Tools.h"
 
 @implementation UIWebView (Tools)

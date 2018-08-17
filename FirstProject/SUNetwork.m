@@ -14,9 +14,13 @@
     
     //http://life2.pianke.me/product?sortby=default&page=1
     [FQLHttpTools get:[NSString stringWithFormat:@"http://life2.pianke.me/product?sortby=default&page=%ld",page] parameters:nil success:^(id obj) {
+        
         callBack(obj,nil);
+        
     } failure:^(NSError *error) {
+        
         callBack(nil,error);
+        
     }];
 }
 @end

@@ -26,11 +26,17 @@
 		9F21BA922101BD7E0044467D /* UserInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F21BA902101BD7E0044467D /* UserInfoTableViewCell.xib */; };
 		9F32861220FDE00300ECC350 /* ShareCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F32861120FDE00300ECC350 /* ShareCollectionViewCell.xib */; };
 		9F3EE7B7205F8B3C002B5527 /* CustomNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3EE7B6205F8B3C002B5527 /* CustomNavigationController.m */; };
+		9F5C89252126A76000F8785C /* NSString+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5C89242126A76000F8785C /* NSString+Tools.m */; };
+		9F62272E2122AB980022C20F /* SurroundDetailSecondTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F62272C2122AB980022C20F /* SurroundDetailSecondTableViewCell.m */; };
+		9F62272F2122AB980022C20F /* SurroundDetailSecondTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F62272D2122AB980022C20F /* SurroundDetailSecondTableViewCell.xib */; };
+		9F6227322122C6590022C20F /* UITabBarController+tabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6227312122C6590022C20F /* UITabBarController+tabBarController.m */; };
 		9F6E628D2106BAB5007289B0 /* UIView+Operations.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6E628C2106BAB5007289B0 /* UIView+Operations.m */; };
 		9F6E62902106F7CC007289B0 /* NSObject+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6E628F2106F7CC007289B0 /* NSObject+Tools.m */; };
 		9F6E62932106FA69007289B0 /* UIWebView+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6E62922106FA69007289B0 /* UIWebView+Tools.m */; };
 		9F793BAD209AFE7D009EE379 /* MainPageHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F793BAC209AFE7D009EE379 /* MainPageHeaderView.m */; };
 		9F7AA8222092FFE7003D0C5A /* BottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F7AA8202092FFE7003D0C5A /* BottomView.m */; };
+		9F8353032122792C0028F63D /* UIViewController+AlertTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F8353022122792C0028F63D /* UIViewController+AlertTool.m */; };
+		9F835307212288470028F63D /* SurroundPresentAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F835306212288470028F63D /* SurroundPresentAnimation.m */; };
 		9F83CAF0210EE25E009EE989 /* FourButtonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F83CAED210EE25D009EE989 /* FourButtonTableViewCell.m */; };
 		9F83CAF1210EE25E009EE989 /* FourButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F83CAEE210EE25D009EE989 /* FourButtonTableViewCell.xib */; };
 		9F87242C2105682B00BBFF0A /* NSString+CurrentDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F87242B2105682B00BBFF0A /* NSString+CurrentDate.m */; };
@@ -152,6 +158,13 @@
 		9F32861120FDE00300ECC350 /* ShareCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShareCollectionViewCell.xib; sourceTree = "<group>"; };
 		9F3EE7B5205F8B3C002B5527 /* CustomNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNavigationController.h; sourceTree = "<group>"; };
 		9F3EE7B6205F8B3C002B5527 /* CustomNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNavigationController.m; sourceTree = "<group>"; };
+		9F5C89232126A76000F8785C /* NSString+Tools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Tools.h"; sourceTree = "<group>"; };
+		9F5C89242126A76000F8785C /* NSString+Tools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Tools.m"; sourceTree = "<group>"; };
+		9F62272B2122AB980022C20F /* SurroundDetailSecondTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SurroundDetailSecondTableViewCell.h; sourceTree = "<group>"; };
+		9F62272C2122AB980022C20F /* SurroundDetailSecondTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SurroundDetailSecondTableViewCell.m; sourceTree = "<group>"; };
+		9F62272D2122AB980022C20F /* SurroundDetailSecondTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SurroundDetailSecondTableViewCell.xib; sourceTree = "<group>"; };
+		9F6227302122C6590022C20F /* UITabBarController+tabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarController+tabBarController.h"; sourceTree = "<group>"; };
+		9F6227312122C6590022C20F /* UITabBarController+tabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarController+tabBarController.m"; sourceTree = "<group>"; };
 		9F6E628B2106BAB5007289B0 /* UIView+Operations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+Operations.h"; sourceTree = "<group>"; };
 		9F6E628C2106BAB5007289B0 /* UIView+Operations.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+Operations.m"; sourceTree = "<group>"; };
 		9F6E628E2106F7CC007289B0 /* NSObject+Tools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+Tools.h"; sourceTree = "<group>"; };
@@ -162,6 +175,10 @@
 		9F793BAC209AFE7D009EE379 /* MainPageHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainPageHeaderView.m; sourceTree = "<group>"; };
 		9F7AA8202092FFE7003D0C5A /* BottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomView.m; sourceTree = "<group>"; };
 		9F7AA8212092FFE7003D0C5A /* BottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomView.h; sourceTree = "<group>"; };
+		9F8353012122792C0028F63D /* UIViewController+AlertTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+AlertTool.h"; sourceTree = "<group>"; };
+		9F8353022122792C0028F63D /* UIViewController+AlertTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+AlertTool.m"; sourceTree = "<group>"; };
+		9F835305212288470028F63D /* SurroundPresentAnimation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SurroundPresentAnimation.h; sourceTree = "<group>"; };
+		9F835306212288470028F63D /* SurroundPresentAnimation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SurroundPresentAnimation.m; sourceTree = "<group>"; };
 		9F83CAED210EE25D009EE989 /* FourButtonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FourButtonTableViewCell.m; sourceTree = "<group>"; };
 		9F83CAEE210EE25D009EE989 /* FourButtonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FourButtonTableViewCell.xib; sourceTree = "<group>"; };
 		9F83CAEF210EE25E009EE989 /* FourButtonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FourButtonTableViewCell.h; sourceTree = "<group>"; };
@@ -380,6 +397,17 @@
 			name = Tools;
 			sourceTree = "<group>";
 		};
+		9F8353042122876D0028F63D /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				9F835305212288470028F63D /* SurroundPresentAnimation.h */,
+				9F835306212288470028F63D /* SurroundPresentAnimation.m */,
+				9F5C89232126A76000F8785C /* NSString+Tools.h */,
+				9F5C89242126A76000F8785C /* NSString+Tools.m */,
+			);
+			name = Tools;
+			sourceTree = "<group>";
+		};
 		9FA3CBE020F5DC6C00EEE999 /* ShareTool */ = {
 			isa = PBXGroup;
 			children = (
@@ -479,6 +507,9 @@
 			children = (
 				D044D2EA2047E03000209493 /* GoodsCell.h */,
 				D044D2EB2047E03000209493 /* GoodsCell.m */,
+				9F62272B2122AB980022C20F /* SurroundDetailSecondTableViewCell.h */,
+				9F62272C2122AB980022C20F /* SurroundDetailSecondTableViewCell.m */,
+				9F62272D2122AB980022C20F /* SurroundDetailSecondTableViewCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -514,6 +545,7 @@
 		D04B56462047AB0200C95B0C /* Surround */ = {
 			isa = PBXGroup;
 			children = (
+				9F8353042122876D0028F63D /* Tools */,
 				D04B56472047AB5900C95B0C /* SurroundMPVC.h */,
 				D04B56482047AB5900C95B0C /* SurroundMPVC.m */,
 				9C847A052056B7370067F5CA /* SDetailVc.h */,
@@ -738,6 +770,10 @@
 				9F6E628F2106F7CC007289B0 /* NSObject+Tools.m */,
 				9F6E62912106FA69007289B0 /* UIWebView+Tools.h */,
 				9F6E62922106FA69007289B0 /* UIWebView+Tools.m */,
+				9F8353012122792C0028F63D /* UIViewController+AlertTool.h */,
+				9F8353022122792C0028F63D /* UIViewController+AlertTool.m */,
+				9F6227302122C6590022C20F /* UITabBarController+tabBarController.h */,
+				9F6227312122C6590022C20F /* UITabBarController+tabBarController.m */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -900,6 +936,7 @@
 			files = (
 				D08326171F95A0E4008AF378 /* LaunchScreen.storyboard in Resources */,
 				9F83CAF1210EE25E009EE989 /* FourButtonTableViewCell.xib in Resources */,
+				9F62272F2122AB980022C20F /* SurroundDetailSecondTableViewCell.xib in Resources */,
 				D07984B7200753C9004193C6 /* Assets.xcassets in Resources */,
 				9FFB1F1E2091B91800641F49 /* PCTableViewCell.xib in Resources */,
 				9F32861220FDE00300ECC350 /* ShareCollectionViewCell.xib in Resources */,
@@ -1085,6 +1122,7 @@
 				9F6E62932106FA69007289B0 /* UIWebView+Tools.m in Sources */,
 				9FFB1F1D2091B91800641F49 /* PCTableViewCell.m in Sources */,
 				9F04BB6F2060F574002B5046 /* CustomMBProgressHUD.m in Sources */,
+				9F8353032122792C0028F63D /* UIViewController+AlertTool.m in Sources */,
 				D048C67B1FAC5056007FFB1C /* PersonCenterVC.m in Sources */,
 				D03490F1203FC57C0009BF2E /* GifViewModel.m in Sources */,
 				9F07345520902B9D005173A3 /* NewCommunityVC.m in Sources */,
@@ -1100,10 +1138,12 @@
 				D083260C1F95A0E4008AF378 /* AppDelegate.m in Sources */,
 				D0A3C4851F9F07FC00747C67 /* CommunityVC.m in Sources */,
 				D083263C1F95A11C008AF378 /* MainPageVC.m in Sources */,
+				9F62272E2122AB980022C20F /* SurroundDetailSecondTableViewCell.m in Sources */,
 				D08326091F95A0E4008AF378 /* main.m in Sources */,
 				D044D2EC2047E03000209493 /* GoodsCell.m in Sources */,
 				9F21BA912101BD7E0044467D /* UserInfoTableViewCell.m in Sources */,
 				D03415DE203C7257003186B4 /* WaterFallFlowLayout.m in Sources */,
+				9F835307212288470028F63D /* SurroundPresentAnimation.m in Sources */,
 				D00FFE1C1FBF1D4600886330 /* GroupAnimationVC.m in Sources */,
 				9F07345820902C28005173A3 /* SlideTableViewCell.m in Sources */,
 				9C8C4DAF20597C870093380D /* CustomCollectionReusableView.m in Sources */,
@@ -1123,9 +1163,11 @@
 				D052D949203C4CB00008469B /* PictureList.m in Sources */,
 				D00FFE221FBF1E4A00886330 /* TransitionAnimationVC.m in Sources */,
 				D04B564D2047C1BC00C95B0C /* SUNetwork.m in Sources */,
+				9F5C89252126A76000F8785C /* NSString+Tools.m in Sources */,
 				D04B56552047C55900C95B0C /* SurroundVM.m in Sources */,
 				9CA67CCC205BD5F00048B1AC /* AdversementView.m in Sources */,
 				9F793BAD209AFE7D009EE379 /* MainPageHeaderView.m in Sources */,
+				9F6227322122C6590022C20F /* UITabBarController+tabBarController.m in Sources */,
 				9C8C4DA920595EE50093380D /* SettingVC.m in Sources */,
 				D06439B61FAAC130005BDCB2 /* ArticleModel.m in Sources */,
 				D08326441F95D3C9008AF378 /* FQLLoginVC.m in Sources */,

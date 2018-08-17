@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface SurroundMPVC : UIViewController
-
+//collectionView
+@property(nonatomic,strong)UICollectionView *collectionView;
 @end

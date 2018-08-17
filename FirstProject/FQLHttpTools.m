@@ -21,28 +21,16 @@
     manager.requestSerializer.timeoutInterval = 5;
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
-    [manager GET:url parameters:parameters progress:^(NSProgress * _Nonnull downloadProgress) {
-        NSLog(@"Why not excute?");
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         //解析成json
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         //回调
         successInfo(dic);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         failure(error);
     }];
-//    [manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//
-//        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-//        //解析成json
-//        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-//        //回调
-//        successInfo(dic);
-//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        failure(error);
-//    }];
 }
 
 - (void)valueProgress {

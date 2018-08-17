@@ -115,7 +115,7 @@
         [_cancleButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(0);
             make.top.mas_equalTo(10);
-            make.width.height.mas_equalTo(50);
+            make.width.height.mas_equalTo(70);
         }];
         [_cancleButton setImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
 //        [_cancleButton setBackgroundImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
@@ -135,19 +135,16 @@
             make.width.height.mas_equalTo(150 * SCREEN_PROPORTION);
             make.top.mas_equalTo(SCREEN_HEIGHT / 7);
         }];
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://mingxing.facang.com/uploads/allimg/151229/1H54C520-4.jpg"]];
-        UIImage *img = [UIImage imageWithData:data];
-        _logoIV.image = img;
+        _logoIV.image = [UIImage imageNamed:@"头像"];
         
         //设置圆角
         [_logoIV.superview layoutIfNeeded];
-        UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:_logoIV.bounds cornerRadius:_logoIV.frame.size.width / 2.0];
-        CAShapeLayer *circleLayer = [CAShapeLayer layer];
-        circleLayer.path = path.CGPath;
-        
-        [circleLayer setFrame:_logoIV.bounds];
-        _logoIV.layer.mask = circleLayer;
-//        _logoIV.layer.cornerRadius = SCREEN_WIDTH / 8;
+        _logoIV.backgroundColor = [UIColor redColor];
+        CAShapeLayer *layer = [CAShapeLayer layer];
+        [layer setFrame:_logoIV.bounds];
+        UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:_logoIV.bounds];
+        layer.path = path.CGPath;
+        _logoIV.layer.mask = layer;
     }
     return _logoIV;
 }
@@ -165,9 +162,11 @@
         }];
         _userNameTF.borderStyle = UITextBorderStyleRoundedRect;
         [_userNameTF setPlaceholder:@"用户名/手机号"];
+        _userNameTF.text = @"村里小花";
     }
     return _userNameTF;
 }
+
 - (UITextField *)pwdTF {
     if (_pwdTF == nil) {
         _pwdTF = [[UITextField alloc]init];
@@ -182,6 +181,7 @@
         [_pwdTF setSecureTextEntry:YES];
         _pwdTF.borderStyle = UITextBorderStyleRoundedRect;
         [_pwdTF setPlaceholder:@"密码"];
+        _pwdTF.text = @"123";
     }
     return _pwdTF;
 }
@@ -194,9 +194,9 @@
             make.centerX.equalTo(self.view.centerX);
             make.top.equalTo(self.pwdTF.bottom).offset(SCREEN_HEIGHT / 20);
             make.width.mas_equalTo(SCREEN_WIDTH / 5 * 3);
-            make.height.mas_equalTo(SCREEN_HEIGHT / 20);
+            make.height.mas_equalTo(SCREEN_HEIGHT / 18);
         }];
-        [_loginBtn setTitle:@"登录" forState:UIControlStateNormal];
+        [_loginBtn setTitle:@"登 录" forState:UIControlStateNormal];
         [_loginBtn setBackgroundColor:MAIN_COLOR];
         
         _loginBtn.layer.masksToBounds = YES;
