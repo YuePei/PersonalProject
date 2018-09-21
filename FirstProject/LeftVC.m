@@ -7,6 +7,12 @@
 //
 
 #import "LeftVC.h"
+#import "BasicAnimationVC.h"
+#import "KeyFrameAnimationVC.h"
+#import "GroupAnimationVC.h"
+#import "TransitionAnimationVC.h"
+#import "SurroundMPVC.h"
+#import "ComprehensiveAnimationVC.h"
 
 @interface LeftVC ()<UITableViewDelegate,UITableViewDataSource>
 

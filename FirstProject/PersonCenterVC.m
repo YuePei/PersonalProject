@@ -10,8 +10,10 @@
 #import "PCTableViewCell.h"
 #import "FourButtonTableViewCell.h"
 #import "UIViewController+AlertTool.h"
+#import "FQLLoginVC.h"
+#import "SettingVC.h"
 
-@interface PersonCenterVC ()<UITableViewDelegate,UITableViewDataSource,BringBackUserNameDelegate>
+@interface PersonCenterVC ()<UITableViewDelegate,UITableViewDataSource, BringBackUserNameDelegate>
 //tableVIew
 @property(nonatomic,strong)UITableView *tableView;
 //headView
@@ -39,39 +41,18 @@
     if (@available(iOS 11.0, *)) {
         self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     } else {
-        
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
     
-    [self.navigationController.navigationBar setTranslucent:YES];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
-    [self setUpUI];
-    [self tableView];
-    [self topBigIV];
-    [self headPortraitIV];
-    [self userNameLabel];
-    [self userIntroductionLabel];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeNavBarTranslucent) name:@"navBarTranslucent" object:nil];
+    [self setUpUI];
+    
 }
-
-- (void)changeNavBarTranslucent {
-    [self.navigationController.navigationBar setTranslucent:YES];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
-}
-
 
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-//    [self addTempNavigationBar];
-//    [self.navigationController.navigationBar setTranslucent:YES];
-//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-//    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
-    
 //    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 //    if ([userDefaults boolForKey:@"status"]) {
 //        NSLog(@"He logined!");
@@ -86,7 +67,16 @@
 
 #pragma mark Tool Methods
 - (void)setUpUI {
-    //设置右边的设置控件
+    [self.navigationController.navigationBar setTranslucent:YES];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+    
+    [self tableView];
+    [self topBigIV];
+    [self headPortraitIV];
+    [self userNameLabel];
+    [self userIntroductionLabel];
+    //导航栏右边的设置控件
     UIBarButtonItem *settingItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"设置"] style:UIBarButtonItemStylePlain target:self action:@selector(goToSettingPage)];
     [self.navigationItem setRightBarButtonItem:settingItem];
 }
@@ -167,22 +157,21 @@
         if (!cell) {
             cell = [[NSBundle mainBundle] loadNibNamed:@"PCTableViewCell" owner:self options:nil].firstObject;
         }
-        cell.titleLabel.font = [UIFont fontWithName:@"AppleGothic" size:15];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if(indexPath.row == 0) {
             
-            cell.iconIV.image = [UIImage imageNamed:@"消息"];
+            cell.iconIV.image = [UIImage imageNamed:@"remind_fill"];
             cell.titleLabel.text = @"消息";
         }else if(indexPath.row == 1) {
             
             cell.titleLabel.text = @"购物车";
-            cell.iconIV.image = [UIImage imageNamed:@"购物车"];
+            cell.iconIV.image = [UIImage imageNamed:@"publish goods_fill"];
         }else if( indexPath.row == 2) {
             
             
             cell.titleLabel.text = @"帮助";
-            cell.iconIV.image = [UIImage imageNamed:@"帮助"];
+            cell.iconIV.image = [UIImage imageNamed:@"group_fill"];
         }
         
         return cell;
@@ -192,21 +181,20 @@
         if (!cell) {
             cell = [[NSBundle mainBundle] loadNibNamed:@"PCTableViewCell" owner:self options:nil].firstObject;
         }
-        cell.titleLabel.font = [UIFont fontWithName:@"AppleGothic" size:15];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if(indexPath.row == 0) {
             cell.titleLabel.text = @"我的文章";
-            cell.iconIV.image = [UIImage imageNamed:@"关于我们"];
+            cell.iconIV.image = [UIImage imageNamed:@"activity_fill"];
         }else if(indexPath.row == 1) {
             cell.rightLabel.hidden = NO;
             cell.rightLabel.text = [NSString stringWithFormat:@"1.3M"];
             cell.titleLabel.text = @"清除缓存";
-            cell.iconIV.image = [UIImage imageNamed:@"清除"];
+            cell.iconIV.image = [UIImage imageNamed:@"trash_fill"];
         }else if(indexPath.row == 2) {
             cell.rightLabel.hidden = YES;
             cell.titleLabel.text = @"其他";
-            cell.iconIV.image = [UIImage imageNamed:@"其它"];
+            cell.iconIV.image = [UIImage imageNamed:@"marketing_fill"];
         }
         return cell;
     }else {
@@ -240,7 +228,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return 115;
+        return 85;
     }else {
         return 55;
     }

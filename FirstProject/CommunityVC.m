@@ -7,6 +7,7 @@
 //
 
 #import "CommunityVC.h"
+#import "PhotosListVC.h"
 
 @interface CommunityVC ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
@@ -24,9 +25,6 @@
     self.navigationItem.title = @"足迹";
 }
 
-//- (void)viewWillAppear:(BOOL)animated {
-//    self.tabBarController.tabBar.hidden = NO;
-//}
 #pragma mark UIScrollViewDelegate
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
@@ -60,19 +58,6 @@
     
     return cell;
 }
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    CustomCollectionReusableView *reusableView = nil;
-    if (kind == UICollectionElementKindSectionHeader) {
-        reusableView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerView" forIndexPath:indexPath];
-    }
-    [reusableView.rightButton setTitle:@"More pictures >" forState:UIControlStateNormal];
-    [reusableView.leftButton setTitle:@"今日最佳推荐" forState:UIControlStateNormal];
-    
-//    reusableView.backgroundColor = BACK_COLOR;
-    //设置触发方法
-    [reusableView.rightButton addTarget:self action:@selector(pushMorePicturesPage) forControlEvents:UIControlEventTouchUpInside];
-    return reusableView;
-}
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
@@ -90,11 +75,6 @@
     }
 }
 
-#pragma mark tools
-- (void)pushMorePicturesPage {
-    NSLog(@"----1------");
-}
-
 #pragma mark lazy
 
 - (UICollectionView *)collectionView {
@@ -107,7 +87,7 @@
     }else {
         flowLayout.itemSize = CGSizeMake(SCREEN_WIDTH, (SCREEN_WIDTH - 20) / 2.0 + 72);
     }
-    flowLayout.headerReferenceSize = CGSizeMake(SCREEN_WIDTH, 228);
+//    flowLayout.headerReferenceSize = CGSizeMake(SCREEN_WIDTH, 228);
     
     if (!_collectionView) {
         _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - self.tabBarController.tabBar.bounds.size.height) collectionViewLayout:flowLayout];
@@ -130,4 +110,12 @@
     return _collectionView;
 }
 
+//- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+//    CustomCollectionReusableView *reusableView = nil;
+//    if (kind == UICollectionElementKindSectionHeader) {
+//        reusableView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerView" forIndexPath:indexPath];
+//    }
+//    [reusableView.leftButton setTitle:@"今日最佳推荐" forState:UIControlStateNormal];
+//    return reusableView;
+//}
 @end

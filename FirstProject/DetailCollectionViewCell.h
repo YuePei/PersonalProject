@@ -11,5 +11,7 @@
 @interface DetailCollectionViewCell : UICollectionViewCell
 //mainPic
 @property (nonatomic, strong)UIImageView *mainIV;
+//titleLabel
+@property (nonatomic, strong)UILabel *titleLabel;
 
 @end

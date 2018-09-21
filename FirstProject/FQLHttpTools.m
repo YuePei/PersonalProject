@@ -18,7 +18,7 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-    manager.requestSerializer.timeoutInterval = 5;
+    manager.requestSerializer.timeoutInterval = 10;
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     [manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -29,6 +29,7 @@
         //回调
         successInfo(dic);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         failure(error);
     }];
 }

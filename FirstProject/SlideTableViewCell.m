@@ -29,9 +29,9 @@
     }
     return self;
 }
+
 - (void)awakeFromNib {
     [super awakeFromNib];
-    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -43,15 +43,16 @@
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
 }
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return 4;
 }
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     DetailCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     if (!cell) {
         cell = [[DetailCollectionViewCell alloc]init];
     }
-//    cell.backgroundColor = [UIColor brownColor];
     int i = 1 + arc4random() % 4;
     cell.mainIV.image = [UIImage imageNamed:[NSString stringWithFormat:@"%d",i]];
     return cell;
@@ -89,7 +90,6 @@
             make.left.mas_equalTo(0);
             make.top.mas_equalTo(self.topLeftLabel.mas_bottom);
             make.right.mas_equalTo(0);
-//            make.bottom.mas_equalTo(-10);
             make.height.mas_equalTo(collectionViewCellHeight + 20);
         }];
         

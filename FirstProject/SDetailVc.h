@@ -11,7 +11,8 @@
 @interface SDetailVc : UIViewController
 //大图链接
 @property (nonatomic, strong)NSString *imageString;
-
+//tv
+@property (nonatomic, strong)UITableView *tableView;
 //商品大图
 @property (strong, nonatomic) UIImageView *bigImageView;
 //商品名称

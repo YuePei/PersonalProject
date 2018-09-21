@@ -40,7 +40,6 @@ static int const showTime = 3;
 //1.展示广告
 - (void)showAdvertisement {
     [self startCount];
-    
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     [window addSubview:self];
 }
@@ -57,8 +56,8 @@ static int const showTime = 3;
     //停掉定时器
     [self.countTimer invalidate];
     self.countTimer = nil;
-    [UIView animateWithDuration:0.3f animations:^{
-        self.alpha = 0.f;
+    [UIView transitionWithView:self duration:0.3f options:UIViewAnimationOptionCurveLinear animations:^{
+        self.alpha = 0;
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
     }];
@@ -101,13 +100,13 @@ static int const showTime = 3;
         _countButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self insertSubview:_countButton aboveSubview:self.adView];
         [_countButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.width.mas_equalTo(60);
+            make.width.mas_equalTo(80);
             make.height.mas_equalTo(30);
-            make.top.mas_equalTo(30);
-            make.right.mas_equalTo(-20);
+            make.bottom.mas_equalTo(-40);
+            make.right.mas_equalTo(-25);
         }];
         [_countButton addTarget:self action:@selector(skipAdvertisement) forControlEvents:UIControlEventTouchUpInside];
-        [_countButton setTitle:[NSString stringWithFormat:@"跳过%d",showTime] forState:UIControlStateNormal];
+        [_countButton setTitle:[NSString stringWithFormat:@"跳过 %d",showTime] forState:UIControlStateNormal];
         _countButton.backgroundColor = [UIColor colorWithRed:38 /255.0 green:38 /255.0 blue:38 /255.0 alpha:0.6];
         [_countButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         //设置圆角

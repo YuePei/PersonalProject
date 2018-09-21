@@ -13,6 +13,8 @@
 #import "SurroundPresentAnimation.h"
 #import <objc/runtime.h>
 #import "NSString+Tools.h"
+#import "BottomBuyView.h"
+
 
 @interface SDetailVc ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -21,8 +23,6 @@
 @property (nonatomic, strong)NSArray *iconsArray;
 
 
-//tv
-@property (nonatomic, strong)UITableView *tableView;
 //tableView的headerView
 @property (nonatomic, strong)UIView *headView;
 //商品名称
@@ -31,6 +31,9 @@
 @property (strong, nonatomic) UILabel *deliveryLabel;
 //headView底部的灰条
 @property (nonatomic, strong)UIView *grayView;
+
+//底部功能条
+@property (nonatomic, strong)BottomBuyView *buyView;
 
 @end
 
@@ -50,26 +53,9 @@
     [self deliveryLabel];
     [self grayView];
     
-    UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - ysTabBarHeight, SCREEN_WIDTH, ysTabBarHeight)];
-    UIBarButtonItem *item1 = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"分享"] style:UIBarButtonItemStylePlain target:self action:@selector(function1)];
-    UIBarButtonItem *item2 = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"购物车"] style:UIBarButtonItemStylePlain target:self action:@selector(function2)];
-    UIBarButtonItem *item3 = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"购物车"] style:UIBarButtonItemStylePlain target:self action:@selector(function3)];
-    UIBarButtonItem *item4 = [[UIBarButtonItem alloc]initWithTitle:@"加入购物车" style:UIBarButtonItemStylePlain target:self action:@selector(function1)];
-    [toolBar setItems:@[item1, item2,item3,item4]];
-    [self.view addSubview:toolBar];
+    [self buyView];
 }
 
-- (void)function1 {
-    
-}
-
-- (void)function2 {
-    
-}
-
-- (void)function3 {
-    
-}
 //本页面快要显示时 隐藏navigationBar
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -137,12 +123,12 @@
 
 - (UIView *)headView {
     if (!_headView) {
-        _headView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 560)];
+        _headView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 525)];
         _headView.backgroundColor = [UIColor whiteColor];
     }
     
     if ([self.goodsNameString charNumber]  / 2.0> 14) {
-        [_headView setFrame:CGRectMake(0, 0, SCREEN_WIDTH, 590)];
+        [_headView setFrame:CGRectMake(0, 0, SCREEN_WIDTH, 555)];
     }
     return _headView;
 }
@@ -244,8 +230,8 @@
         _deliveryLabel = [UILabel new];
         [self.headView addSubview:_deliveryLabel];
         [_deliveryLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(self.goodsNameLabel.mas_left);
-            make.top.mas_equalTo(self.soldCount.mas_bottom).offset(15);
+            make.right.mas_equalTo(-20);
+            make.centerY.mas_equalTo(self.soldCount.mas_centerY);
         }];
         _deliveryLabel.text = @"| 5个工作日内发货";
         _deliveryLabel.font = [UIFont systemFontOfSize:15];
@@ -265,5 +251,17 @@
         _grayView.backgroundColor = BackgroundColor;
     }
     return _grayView;
+}
+
+- (BottomBuyView *)buyView {
+    if (!_buyView) {
+        _buyView = [[BottomBuyView alloc]init];
+        [self.view addSubview:_buyView];
+        [_buyView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.bottom.mas_equalTo(0);
+            make.height.mas_equalTo(ysTabBarHeight);
+        }];
+    }
+    return _buyView;
 }
 @end

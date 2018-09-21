@@ -7,6 +7,11 @@
 //
 
 #import "AppDelegate.h"
+#import "MainPageVC.h"
+#import "CommunityVC.h"
+#import "PersonCenterVC.h"
+#import "SurroundVM.h"
+#import "SurroundMPVC.h"
 
 @interface AppDelegate ()
 
@@ -16,6 +21,8 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    
     
     [Bmob registerWithAppKey:@"da271e047204ec4a26f4137cc7237530"];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -32,7 +39,7 @@
     [nav2 setTabBarItem:[[UITabBarItem alloc]initWithTitle:@"足迹" image:[UIImage imageNamed:@"拖鞋(g)"] selectedImage:[UIImage imageNamed:@"拖鞋"]]];
     [tb addChildViewController:nav2];
     
-    //动画
+    //周边
     SurroundMPVC *sMPVC = [[SurroundMPVC alloc]init];
     CustomNavigationController *nav3 = [[CustomNavigationController alloc]initWithRootViewController:sMPVC];
 //    SWRevealViewController *revealVC = [[SWRevealViewController alloc]initWithRearViewController:[LeftVC new] frontViewController:nav3];
@@ -49,7 +56,10 @@
     
     [tb.tabBar setBackgroundImage:[UIImage new]];
     [tb.tabBar setShadowImage:[UIImage new]];
-    [tb.tabBar setBackgroundImage:[UIImage imageNamed:@"底部条"]];
+//    [tb.tabBar setBackgroundImage:[UIImage imageNamed:@"底部条"]];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]} forState:UIControlStateSelected];
+    [[UITabBar appearance] setBackgroundColor:[UIColor colorWithRed:33 / 255.0 green:36 / 255.0 blue:41 / 255.0 alpha:1]];
+    
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     self.window.rootViewController = tb;
@@ -83,7 +93,7 @@
 }
 
 - (void)setUpAdvertisementView {
-    AdversementView *adView = [[AdversementView alloc]initWithFrame:self.window.frame];
+    AdversementView *adView = [[AdversementView alloc]initWithFrame:self.window.bounds];
     [adView showAdvertisement];
 }
 

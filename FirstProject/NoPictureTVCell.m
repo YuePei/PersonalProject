@@ -17,6 +17,7 @@
     }
     return self;
 }
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     
@@ -24,7 +25,6 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-    
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -89,8 +89,8 @@
         }];
         _contentLabel.numberOfLines = 3;
         _contentLabel.lineBreakMode = NSLineBreakByTruncatingTail;
-        _contentLabel.font = [UIFont systemFontOfSize:16];
-        _contentLabel.textColor = [UIColor darkGrayColor];
+        _contentLabel.font = [UIFont boldSystemFontOfSize:14];
+        _contentLabel.textColor = [UIColor grayColor];
     }
     return _contentLabel;
 }

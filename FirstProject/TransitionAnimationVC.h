@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AnimationCenterVC.h"
 
 @interface TransitionAnimationVC : AnimationCenterVC
 

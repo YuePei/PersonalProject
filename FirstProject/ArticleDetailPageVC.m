@@ -13,6 +13,7 @@
 #import "ShareListView.h"
 #import "UIView+Operations.h"
 #import "UIWebView+Tools.h"
+#import "UIView+Removable.h"
 
 
 @interface ArticleDetailPageVC ()<UITextViewDelegate,UITextFieldDelegate>
@@ -29,7 +30,6 @@
 @property (nonatomic, strong)CommentView *commentView;
 //分享控件
 @property (nonatomic, strong)ShareListView *shareView;
-
 
 @end
 
@@ -51,7 +51,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-
+    
 }
 
 - (void)dealloc {
@@ -167,7 +167,7 @@
     CGFloat animationTime  = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
     // 定义好动作
     void (^animation)(void) = ^void(void) {
-        self.commentView.transform = CGAffineTransformMakeTranslation(0, -(keyBoardHeight + 150));
+        self.commentView.transform = CGAffineTransformMakeTranslation(0, -(keyBoardHeight + 210));
     };
     if (animationTime > 0) {
         [UIView animateWithDuration:animationTime animations:animation];
@@ -270,7 +270,6 @@
     }
     return _commentView;
 }
-
 
 
 

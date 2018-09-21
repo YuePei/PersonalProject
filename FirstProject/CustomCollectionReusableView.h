@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CustomCollectionReusableView : UICollectionReusableView
+@interface CustomCollectionReusableView : UIView
 //右侧的label
 @property (nonatomic , strong) UIButton *rightButton;
 //左侧的label

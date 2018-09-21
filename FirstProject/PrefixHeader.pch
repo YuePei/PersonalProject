@@ -19,31 +19,7 @@
 
 //VC
 #import "CustomNavigationController.h"
-#import "MainPageVC.h"
-#import "CommunityVC.h"
-#import "FQLLoginVC.h"
-#import "ArticleDetailPageVC.h"
-#import "PersonCenterVC.h"
-#import "AnimationCenterVC.h"
-#import "LeftVC.h"
-#import "BasicAnimationVC.h"
-#import "KeyFrameAnimationVC.h"
-#import "GroupAnimationVC.h"
-#import "TransitionAnimationVC.h"
-#import "KeyFrameAnimationVC.h"
-#import "GroupAnimationVC.h"
-#import "TransitionAnimationVC.h"
-#import "ComprehensiveAnimationVC.h"
-#import "PictureList.h"
-#import "PhotosListVC.h"
-#import "WaterFallFlowLayout.h"
 #import "CommunityNetwork.h"
-#import "SDetailVc.h"
-#import "SettingVC.h"
-
-
-//周边
-#import "SurroundMPVC.h"
 
 //Category
 #import "UINavigationBar+NavigationBarBGColor.h"

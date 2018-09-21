@@ -22,12 +22,14 @@
 #define ARTICLE_DETAIL_URL @"article/detail"
 
 
+//是否是iPhone X
+#define IsiPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
 //状态栏高度
 #define ysStatusBarHeight CGRectGetHeight([UIApplication sharedApplication].statusBarFrame)
 //导航栏高度
-#define ysNavBarHeight ([[UIApplication sharedApplication] statusBarFrame].size.height>20?66:44)
+#define ysNavBarHeight 44
 //tabbar高度
-#define ysTabBarHeight ([[UIApplication sharedApplication] statusBarFrame].size.height>20?83:49)
+#define ysTabBarHeight 49
 #define ysTopHeight (ysStatusBarHeight + ysNavBarHeight)
 
 //屏幕宽高
@@ -36,12 +38,19 @@
 //适配
 #define SCREEN_PROPORTION [UIScreen mainScreen].bounds.size.width / 375.0
 
+//KWindow
+#define KWINDOW [UIApplication sharedApplication].keyWindow
+
+
+
+
+
 //RGB颜色
 #define RGBColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
 #define RGBAColor(r, g, b, a) [UIColor colorWithRed:(r)/255.0 green:(r)/255.0 blue:(r)/255.0 alpha:a]
 
 /* !weak self*/
-#define WEAKSELF typeof(self) __weak weakSelf = self
+#define WEAKSELF typeof(self) __weak weakSelf = self;
 #define PRO_WeakSelf(type)  __weak typeof(type) weak##type = type;
 
 /*Font size*/
@@ -114,6 +123,7 @@ return instanceName;\
 
 //背景颜色，浅灰色
 #define BackgroundColor [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:1]
+#define blackMainColor [UIColor colorWithRed:33 / 255.0 green:36 / 255.0 blue:41 / 255.0 alpha:1]
 
 #define DEFAULT_USER_NAME @"村里小芳";
 

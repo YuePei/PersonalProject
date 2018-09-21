@@ -10,6 +10,7 @@
 #import "UIViewController+AlertTool.h"
 #import "SurroundPresentAnimation.h"
 #import "UITabBarController+tabBarController.h"
+#import "SDetailVc.h"
 
 @interface SurroundMPVC ()<UICollectionViewDelegate,UICollectionViewDataSource, UINavigationControllerDelegate>
 //viewModel
@@ -25,13 +26,12 @@
     [super viewDidLoad];
     
     if (@available(iOS 11, *)) {
-        self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        [UIScrollView appearance].contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     } else {
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
-//    self.hidesBottomBarWhenPushed = NO;
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = BackgroundColor;
     self.navigationItem.title = @"周边";
     self.navigationController.delegate = self;
     _presentAnimation = [SurroundPresentAnimation new];
@@ -49,12 +49,6 @@
             } completion:nil];
         }
     }];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
-    
 }
 
 - (void)showLeftSideMenu {
@@ -135,6 +129,7 @@
     sdVC.oldPriceLabel.text = @"原价 998";
     sdVC.soldCount.text = [NSString stringWithFormat:@"包邮  已售: %ld",[self.viewModel getSellNumberAtIndex:indexPath.row]];
     [self.tabBarController hideTabBarWithAnimationDuration:0.3f];
+
     [self.navigationController pushViewController:sdVC animated:YES];
 }
 
@@ -168,10 +163,10 @@
         flowLayout.minimumInteritemSpacing = 15;
         flowLayout.itemSize = CGSizeMake((SCREEN_WIDTH - 35) / 2.0, (SCREEN_WIDTH - 35) / 2.0 + 80);
         
-        _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - self.tabBarController.tabBar.frame.size.height) collectionViewLayout:flowLayout];
+        _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - self.tabBarController.tabBar.frame.size.height - 20) collectionViewLayout:flowLayout];
         [self.view addSubview:_collectionView];
 //        _collectionView.backgroundColor = [UIColor colorWithRed:244 / 255.0 green:244 / 255.0 blue:244 / 255.0 alpha:1];
-        _collectionView.backgroundColor = [UIColor darkGrayColor];
+        _collectionView.backgroundColor = BackgroundColor;
         [_collectionView registerClass:[GoodsCell class] forCellWithReuseIdentifier:@"goodsCell"];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;

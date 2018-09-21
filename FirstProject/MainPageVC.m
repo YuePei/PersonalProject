@@ -13,6 +13,11 @@
 #import <objc/message.h>
 #import "FMDB.h"
 #import "MainPageHeaderView.h"
+#import "YYFPSLabel.h"
+#import "UIView+Removable.h"
+#import "ArticleDetailModel.h"
+#import "ArticleDetailPageVC.h"
+#import "MainTitleView.h"
 
 #define NAVBAR_CHANGE_POINT 10
 
@@ -33,6 +38,10 @@
 @property(nonatomic,assign)NSInteger page;
 //FMDB
 @property (nonatomic, strong)FMDatabase *db;
+//FPSLabel
+@property (nonatomic, strong)YYFPSLabel *fpsLabel;
+//mainTitleView
+@property (nonatomic, strong)MainTitleView *titleView;
 
 @end
 
@@ -43,20 +52,21 @@ static int networkSituation = 1;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"好文";
+    self.view.backgroundColor = [UIColor whiteColor];
+    if (@available(iOS 11, *)) {
+        [UIScrollView appearance].contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }else {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
     [self setUpUI];
     [self configFMDB];
     [self refreshData];
+    [self fpsLabel];
+    self.navigationItem.titleView = self.titleView;
 }
 
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES animated:animated];
-}
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:animated];
-}
 #pragma mark TableView Delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (networkSituation) {
@@ -84,7 +94,7 @@ static int networkSituation = 1;
             [UILabel changeWordSpaceForLabel:cell.userName WithSpace:1];
             cell.contentLabel.text = [self.articleVM getContentLabelWithIndex:indexPath.section];
             //设置行间距和字间距
-            [UILabel changeLineSpacingForLabel:cell.contentLabel WithSpace:11];
+            [UILabel changeLineSpacingForLabel:cell.contentLabel WithSpace:6];
             return cell;
         }else {
             NSLog(@"...................有图...................");
@@ -98,7 +108,7 @@ static int networkSituation = 1;
             [UILabel changeWordSpaceForLabel:cell.userName WithSpace:1];
             cell.contentLabel.text = [self.articleVM getContentLabelWithIndex:indexPath.section];
             //设置行间距和字间距
-            [UILabel changeLineSpacingForLabel:cell.contentLabel WithSpace:11];
+            [UILabel changeLineSpacingForLabel:cell.contentLabel WithSpace:6];
             [cell.contentIV sd_setImageWithURL:[NSURL URLWithString:[self.articleVM getBigImageWithIndex:indexPath.section]]];
 //            [cell.contentIV setImage:[UIImage imageNamed:@"4"]];
             
@@ -117,7 +127,7 @@ static int networkSituation = 1;
             cell.contentLabel.text = [self getAbstractFromFMDB][indexPath.section];
             //设置行间距和字间距
             [UILabel changeWordSpaceForLabel:cell.userName WithSpace:1];
-            [UILabel changeLineSpacingForLabel:cell.contentLabel WithSpace:11];
+            [UILabel changeLineSpacingForLabel:cell.contentLabel WithSpace:6];
         }
         
         return cell;
@@ -132,7 +142,7 @@ static int networkSituation = 1;
                 //无图
                 cell.userName.text = [self.articleVM getArticleTitleWithIndex:indexPath.section];
                 cell.contentLabel.text = [self.articleVM getContentLabelWithIndex:indexPath.section];
-                [UILabel changeLineSpacingForLabel:cell.contentLabel WithSpace:11];
+                [UILabel changeLineSpacingForLabel:cell.contentLabel WithSpace:6];
             }];
             
         }else {
@@ -141,7 +151,7 @@ static int networkSituation = 1;
                 cell.userName.text = [self.articleVM getArticleTitleWithIndex:indexPath.section];
                 cell.contentLabel.text = [self.articleVM getContentLabelWithIndex:indexPath.section];
                 //设置label的行间距
-                [UILabel changeLineSpacingForLabel:cell.contentLabel WithSpace:11];
+                [UILabel changeLineSpacingForLabel:cell.contentLabel WithSpace:6];
                 //            [cell.contentIV sd_setImageWithURL:[NSURL URLWithString:[self.articleVM getBigImageWithIndex:indexPath.section]] placeholderImage:[UIImage imageNamed:@"test"]];
                 [cell.contentIV sd_setImageWithURL:[NSURL URLWithString:[self.articleVM getBigImageWithIndex:indexPath.section]]];
             }];
@@ -154,7 +164,7 @@ static int networkSituation = 1;
                 cell.contentLabel.text = [self getAbstractFromFMDB][indexPath.section];
                 //设置行间距和字间距
                 [UILabel changeWordSpaceForLabel:cell.userName WithSpace:1];
-                [UILabel changeLineSpacingForLabel:cell.contentLabel WithSpace:11];
+                [UILabel changeLineSpacingForLabel:cell.contentLabel WithSpace:6];
             }
         }];
     }
@@ -185,11 +195,13 @@ static int networkSituation = 1;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if(section == 0) {
-        return 0;
+        return 15;
     }else {
         return 6;
     }
 }
+
+
 
 #pragma mark UIScrollViewDelegate
 //- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -289,25 +301,17 @@ static int networkSituation = 1;
 #pragma mark ToolMethods
 - (void)setUpUI {
     [self tableView];
-    [self searchBar];
     //gif刷新方式
     MJRefreshGifHeader *gifHeader = [MJRefreshGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshData)];
     gifHeader.lastUpdatedTimeLabel.hidden = YES;
 //    gifHeader.stateLabel.hidden = YES;
     [gifHeader setTitle:@"正在刷新..." forState:MJRefreshStateRefreshing];
-    //设置刷新动画gif
-//    [gifHeader setImages:self.imagesArray duration:10 forState:MJRefreshStateIdle];
-//    [gifHeader setImages:self.pullingArray duration:1 forState:MJRefreshStatePulling];
-//    [gifHeader setImages:self.imagesArray duration:0.7 forState:MJRefreshStateRefreshing];
     self.tableView.mj_header = gifHeader;
     
     //上拉加载更多
     MJRefreshAutoGifFooter *gifFooter = [MJRefreshAutoGifFooter footerWithRefreshingBlock:^{
         [self loadNextPageData];
     }];
-//    [gifFooter setImages:self.imagesArray duration:0.3 forState:MJRefreshStateIdle];
-//    [gifFooter setImages:self.imagesArray duration:0.3 forState:MJRefreshStatePulling];
-//    [gifFooter setImages:self.imagesArray duration:0.3 forState:MJRefreshStateRefreshing];
 //    gifFooter.refreshingTitleHidden = YES;
 //    gifFooter.stateLabel.hidden = YES;
     self.tableView.mj_footer = gifFooter;
@@ -334,7 +338,6 @@ static int networkSituation = 1;
     [self.articleVM getArticlesInfoByPage:self.page Size:10 andType:-1 callBack:^(NSDictionary * dic,NSError *err) {
         if (!err) {
             [self.tableView.mj_header endRefreshing];
-            NSLog(@"---网络请求完毕-----------------------刷新");
             [self.tableView reloadData];
             //缓存数据
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -428,13 +431,10 @@ static int networkSituation = 1;
 }
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -20, SCREEN_WIDTH, SCREEN_HEIGHT + 74) style:UITableViewStyleGrouped];
-        //解决cell距wrapperView的偏移
-//        CGRect frame = CGRectMake(0, 0, 0,CGFLOAT_MIN);
-        CGRect frame = CGRectMake(0, 0, 0,20);
-        _tableView.tableHeaderView = [[UIView alloc]initWithFrame:frame];
+        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT + 74) style:UITableViewStyleGrouped];
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self.view addSubview:_tableView];
         
         [_tableView registerClass:[FirstKindTableViewCell class] forCellReuseIdentifier:@"cell1"];
@@ -445,7 +445,7 @@ static int networkSituation = 1;
         _tableView.estimatedSectionFooterHeight = 0;
         _tableView.estimatedSectionHeaderHeight = 0;
         
-        MainPageHeaderView *view = [[MainPageHeaderView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200)];
+        MainPageHeaderView *view = [[MainPageHeaderView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 410)];
         view.backgroundColor = [UIColor whiteColor];
         _tableView.tableHeaderView = view;
     }
@@ -478,19 +478,19 @@ static int networkSituation = 1;
     return _pullingArray;
 }
 
-- (UISearchBar *)searchBar {
-    if (!_searchBar) {
-        _searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(20, 2, SCREEN_WIDTH - 40, 40)];
-        
-//        [self.navigationController.navigationBar addSubview:_searchBar];
-        UIView *searchBarFirstSubView = _searchBar.subviews.firstObject;
-        UIView *secondSubview = [searchBarFirstSubView.subviews firstObject];
-        [secondSubview removeFromSuperview];
-        _searchBar.placeholder = @"搜索内容";
-//        _searchBar.hidden = YES;
+- (YYFPSLabel *)fpsLabel {
+    if (!_fpsLabel) {
+        _fpsLabel = [[YYFPSLabel alloc]initWithFrame:CGRectMake(10, 70, 60, 30)];
+        [[UIApplication sharedApplication].keyWindow addSubview:_fpsLabel];
+        [_fpsLabel makeRemovable];
     }
-    return _searchBar;
+    return _fpsLabel;
 }
 
-
+- (MainTitleView *)titleView {
+    if (!_titleView) {
+        _titleView = [[MainTitleView alloc]initWithFrame:CGRectMake(0, 0, 200, 40)];
+    }
+    return _titleView;
+}
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "PhotosListVC.h"
+#import "WaterFallFlowLayout.h"
 
 @interface PhotosListVC ()<UICollectionViewDelegate,UICollectionViewDataSource,WaterFallDelegate>
 //collectionView
@@ -73,7 +74,7 @@ static int offset = 0;
         cell = [[PhotoCollectionViewCell alloc]init];
         
     }
-    cell.photoIV.backgroundColor = [UIColor yellowColor];
+    cell.photoIV.backgroundColor = [UIColor darkGrayColor];
     [cell.photoIV sd_setImageWithURL:[NSURL URLWithString:[self.gifVM getUrlAtIndexPathRow:indexPath.row]]];
     NSLog(@".................%@",[self.gifVM getUrlAtIndexPathRow:indexPath.row]);
     return cell;
