@@ -24,19 +24,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.view.backgroundColor = BackgroundColor;
+    self.navigationItem.title = @"周边";
     if (@available(iOS 11, *)) {
         [UIScrollView appearance].contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     } else {
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
-    
-    self.view.backgroundColor = BackgroundColor;
-    self.navigationItem.title = @"周边";
+    //设置转场动画代理
     self.navigationController.delegate = self;
     _presentAnimation = [SurroundPresentAnimation new];
 //    [self showLeftSideMenu];
-    [self collectionView];
+    
     [self setUpUI];
     [self.viewModel getGoodsListWithType:1 CallBack:^(NSError *error) {
         if (!error) {
@@ -44,8 +43,7 @@
             [self.collectionView reloadData];
         }else {
             //失败
-            [self presentAlertWithTitle:@"提示" message:@"网络有点慢, 请稍后" alertStyle:UIAlertControllerStyleAlert cancleActionTitle:nil cancelBlock:nil sureActionTitle:@"确定" sureBlock:^{
-                [self refreshData];
+            [self presentAlertWithTitle:@"提示" message:@"网络有点慢, 请稍后再试" alertStyle:UIAlertControllerStyleAlert cancleActionTitle:nil cancelBlock:nil sureActionTitle:@"确定" sureBlock:^{
             } completion:nil];
         }
     }];
@@ -60,6 +58,7 @@
 }
 
 - (void)setUpUI {
+    [self collectionView];
     MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshData)];
     self.collectionView.mj_header = header;
     
@@ -76,8 +75,7 @@
         }
         else {
             //失败
-            [self presentAlertWithTitle:@"提示" message:@"网络有点慢, 请稍后" alertStyle:UIAlertControllerStyleAlert cancleActionTitle:nil cancelBlock:nil sureActionTitle:@"确定" sureBlock:^{
-                [self refreshData];
+            [self presentAlertWithTitle:@"提示" message:@"网络有点慢, 请稍后再试" alertStyle:UIAlertControllerStyleAlert cancleActionTitle:nil cancelBlock:nil sureActionTitle:@"确定" sureBlock:^{
             } completion:nil];
         }
     }];

@@ -19,21 +19,20 @@
     return self;
 }
 
-#pragma mark clickMethod
-- (void)didClickRecommendButton {
-    [self.indicatorView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.recommendButton.mas_left);
-    }];
-    [UIView animateWithDuration:0.3f animations:^{
-        [self layoutIfNeeded];
-    }];
+- (CGSize)intrinsicContentSize {
+    return CGSizeMake(100, 40);
 }
 
-- (void)didClickAllButton {
-    [self.indicatorView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.allButton.mas_left);
+#pragma mark clickMethod
+- (void)clickButton:(id)sender {
+    UIButton *selectButton = sender;
+    [self.indicatorView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(selectButton.mas_left);
+        make.right.mas_equalTo(selectButton.mas_right);
+        make.height.mas_equalTo(3);
+        make.top.mas_equalTo(self.mas_bottom).offset(-3);
     }];
-    [UIView animateWithDuration:0.3f animations:^{
+    [UIView animateWithDuration:0.2f animations:^{
         [self layoutIfNeeded];
     }];
 }
@@ -48,9 +47,11 @@
             make.centerY.mas_equalTo(self.centerY).mas_offset(5);
             make.left.mas_equalTo(0);
         }];
-        _recommendButton.titleLabel.textColor = blackMainColor;
-        _recommendButton.titleLabel.font = [UIFont systemFontOfSize:15];
+        [_recommendButton setTitleColor:blackMainColor forState:UIControlStateNormal];
+        _recommendButton.titleLabel.font = [UIFont systemFontOfSize:16];
         [_recommendButton setTitle:@"推 荐" forState:UIControlStateNormal];
+        
+        [_recommendButton addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _recommendButton;
 }
@@ -64,9 +65,11 @@
             make.centerY.mas_equalTo(self.centerY).mas_offset(5);
             make.right.mas_equalTo(0);
         }];
-        _allButton.titleLabel.textColor = blackMainColor;
-        _allButton.titleLabel.font = [UIFont systemFontOfSize:15];
+        [_allButton setTitleColor:blackMainColor forState:UIControlStateNormal];
+        _allButton.titleLabel.font = [UIFont systemFontOfSize:16];
         [_allButton setTitle:@"全 部" forState:UIControlStateNormal];
+        
+        [_allButton addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _allButton;
 }
@@ -78,9 +81,9 @@
         [self addSubview:_indicatorView];
         [_indicatorView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(self.recommendButton.mas_left);
-            make.width.mas_equalTo(self.recommendButton.mas_width);
-            make.top.mas_equalTo(self.mas_bottom).offset(-2);
-            make.height.mas_equalTo(2);
+            make.right.mas_equalTo(self.recommendButton.mas_right);
+            make.top.mas_equalTo(self.mas_bottom).offset(-3);
+            make.height.mas_equalTo(3);
         }];
     }
     _indicatorView.backgroundColor = blackMainColor;

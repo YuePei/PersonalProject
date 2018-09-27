@@ -54,6 +54,7 @@ static int networkSituation = 1;
     [super viewDidLoad];
     self.title = @"好文";
     self.view.backgroundColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : blackMainColor}];
     if (@available(iOS 11, *)) {
         [UIScrollView appearance].contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     }else {
@@ -431,7 +432,9 @@ static int networkSituation = 1;
 }
 - (UITableView *)tableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT + 74) style:UITableViewStyleGrouped];
+        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - self.tabBarController.tabBar.frame.size.height - 64) style:UITableViewStyleGrouped];
+        NSLog(@"%f",SCREEN_HEIGHT);
+        NSLog(@"----....:%@",_tableView);
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -489,7 +492,7 @@ static int networkSituation = 1;
 
 - (MainTitleView *)titleView {
     if (!_titleView) {
-        _titleView = [[MainTitleView alloc]initWithFrame:CGRectMake(0, 0, 200, 40)];
+        _titleView = [[MainTitleView alloc]initWithFrame:CGRectMake(0, 0, 120, 40)];
     }
     return _titleView;
 }

@@ -171,7 +171,7 @@
             
             
             cell.titleLabel.text = @"帮助";
-            cell.iconIV.image = [UIImage imageNamed:@"group_fill"];
+            cell.iconIV.image = [UIImage imageNamed:@"feedback_fill"];
         }
         
         return cell;
@@ -185,7 +185,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if(indexPath.row == 0) {
             cell.titleLabel.text = @"我的文章";
-            cell.iconIV.image = [UIImage imageNamed:@"activity_fill"];
+            cell.iconIV.image = [UIImage imageNamed:@"createtask_fill"];
         }else if(indexPath.row == 1) {
             cell.rightLabel.hidden = NO;
             cell.rightLabel.text = [NSString stringWithFormat:@"1.3M"];
